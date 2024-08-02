@@ -10,3 +10,15 @@ body {
 .text-hana {
   color: #069178;
 }
+
+.btn-hana-green {
+  background-color: #069178;
+}
+
+.btn-hana-blue {
+  background-color: #393f57;
+}
+
+.bg-hana {
+  background-color: #f2f5f1;
+}
