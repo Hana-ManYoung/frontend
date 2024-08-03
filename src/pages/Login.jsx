@@ -3,6 +3,10 @@ import Logo from "../components/Logo";
 
 export default function Login() {
   const navigate = useNavigate();
+  const handleSubmit = () => {
+    // TODO: axios 추가
+    navigate("/main");
+  };
   return (
     <>
       <div className="relative w-screen h-full min-h-screen bg-hana animate__animated animate__fadeIn">
@@ -11,7 +15,7 @@ export default function Login() {
           <div className="w-[80%]">
             <h1 className="my-7 text-2xl font-bold">로그인</h1>
             <div className="w-full">
-              <form onSubmit={() => {}}>
+              <form onSubmit={() => handleSubmit()}>
                 <div className="my-5">
                   <h2 className="ml-2">아이디</h2>
                   <input

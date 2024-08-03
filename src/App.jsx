@@ -1,15 +1,32 @@
 import "./App.css";
 import "animate.css";
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Main from "./pages/Main";
+import Header from "./components/Header";
+import Planner from "./pages/Planner";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/main" element={<PagesOutlet />}>
+        <Route path="" element={<Main />} />
+        <Route path="planner" element={<Planner />} />
+        <Route path="challenge" element={"챌린지입니다"} />
+      </Route>
     </Routes>
+  );
+}
+
+function PagesOutlet() {
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
   );
 }
 
