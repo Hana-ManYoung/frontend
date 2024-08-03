@@ -25,11 +25,13 @@ export default function AccountInfo({ accountCheck, setAccountCheck }) {
       <ModalCloseButton />
       <ModalBody>
         <Accordion>
-          <Section1 />
-          <Section2 />
-          <Section3 />
-          <Section4 />
-          <Section5 />
+          <div className="font-basic">
+            <Section1 />
+            <Section2 />
+            <Section3 />
+            <Section4 />
+            <Section5 />
+          </div>
         </Accordion>
         <div className="mt-3 pb-3 text-lg flex justify-center items-center">
           모든 내용을 숙지하였으며 약관에 동의합니다

@@ -3,8 +3,17 @@
   src: url(./etc/fonts/Hana2-Medium.ttf);
 }
 
+@font-face {
+  font-family: "BASIC";
+  src: url(./etc/fonts/NotoSansKR-Medium.ttf);
+}
+
 body {
   font-family: "HANA" !important;
+}
+
+.font-basic {
+  font-family: "BASIC" !important;
 }
 
 .text-hana {
