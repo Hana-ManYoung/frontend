@@ -5,7 +5,7 @@ export default function Login() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="w-screen h-full min-h-screen bg-hana">
+      <div className="relative w-screen h-full min-h-screen bg-hana animate__animated animate__fadeIn">
         <div className="w-full max-w-[1024px] min-h-screen mx-auto bg-white shadow-xl flex flex-col justify-center items-center">
           <Logo />
           <div className="w-[80%]">
@@ -30,7 +30,7 @@ export default function Login() {
                 </div>
                 <button
                   type="submit"
-                  className="my-5 py-4 text-center text-2xl text-white btn-hana-green rounded-2xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out w-full"
+                  className="w-full my-5 py-4 text-center text-2xl text-white btn-hana-green rounded-2xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out"
                 >
                   로그인
                 </button>
@@ -40,13 +40,18 @@ export default function Login() {
               <h2 className="ml-2">아직 회원이 아니라면?</h2>
               <button
                 type="submit"
-                className="mt-2 py-4 text-center text-2xl text-white btn-hana-blue rounded-2xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out w-full"
+                className="w-full mt-2 py-4 text-center text-2xl text-white btn-hana-blue rounded-2xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out"
                 onClick={() => navigate("/register")}
               >
                 회원가입
               </button>
             </div>
           </div>
+          <img
+            src="/ayj1.png"
+            className="absolute right-0 bottom-0 w-0 md:w-32 lg:w-48"
+            alt=""
+          />
         </div>
       </div>
     </>
