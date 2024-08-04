@@ -16,7 +16,7 @@ export default function Header() {
           <MenuBtn name={"채팅"} target={"chat"} />
         </div>
         <Link
-          to="/profile"
+          to="/main/profile"
           className="w-[20%] flex justify-center items-center"
         >
           <p className="mr-2">규은님 안녕하세요!</p>
