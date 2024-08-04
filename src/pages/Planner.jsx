@@ -43,9 +43,12 @@ function Section2() {
             오늘의 가계부를 작성해주세요!
           </span>
         </h2>
-        <h3 className="mr-4 text-xs border-b border-black cursor-pointer">
+        <a
+          href="/main/challenge"
+          className="mr-4 text-xs border-b border-black cursor-pointer"
+        >
           가계부 챌린지
-        </h3>
+        </a>
       </div>
       <div className="mt-2 flex justify-between items-center">
         <div className="w-[39%] h-60 overflow-y-auto bg-white">

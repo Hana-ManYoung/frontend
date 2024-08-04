@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Main from "./pages/Main";
 import Header from "./components/Header";
 import Planner from "./pages/Planner";
+import Challenge from "./pages/Challenge";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="" element={<Main />} />
         <Route path="profile" element={"프로필입니다"} />
         <Route path="planner" element={<Planner />} />
-        <Route path="challenge" element={"챌린지입니다"} />
+        <Route path="challenge" element={<Challenge />} />
         <Route path="rank" element={"랭킹입니다"} />
         <Route path="chat" element={"채팅입니다"} />
       </Route>
