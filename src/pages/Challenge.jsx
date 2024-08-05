@@ -5,14 +5,10 @@ import Calendar from "../components/Calendar";
 
 export default function Challenge() {
   return (
-    <div className="relative h-full min-h-[calc(100vh-78px)] bg-hana animate__animated animate__fadeIn">
-      <div className="w-full max-w-[1024px] min-h-[calc(100vh-78px)] mx-auto py-6 bg-white shadow-xl flex flex-col">
-        <div className="w-[90%] mx-auto flex-1 flex flex-col">
-          <Section1 />
-          <Section2 />
-          <Section3 />
-        </div>
-      </div>
+    <div className="w-[90%] mx-auto flex-1 flex flex-col animate__animated animate__fadeIn">
+      <Section1 />
+      <Section2 />
+      <Section3 />
     </div>
   );
 }

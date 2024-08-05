@@ -4,21 +4,17 @@ import { IoMdSquare } from "react-icons/io";
 
 export default function Planner() {
   return (
-    <div className="relative h-full min-h-[calc(100vh-78px)] bg-hana animate__animated animate__fadeIn">
-      <div className="w-full max-w-[1024px] min-h-[calc(100vh-78px)] mx-auto py-6 bg-white shadow-xl flex flex-col">
-        <div className="w-[90%] mx-auto">
-          <Section1 />
-          <Section2 />
-          <Section3 />
-        </div>
-      </div>
+    <div className="w-[90%] mx-auto">
+      <Section1 />
+      <Section2 />
+      <Section3 />
     </div>
   );
 }
 
 function Section1() {
   return (
-    <div className="w-full px-8 py-8 bg-stone-50 rounded-xl shadow-md">
+    <div className="w-full px-8 py-8 bg-stone-50 rounded-xl shadow-md animate__animated animate__fadeIn">
       <h1 className="text-2xl font-bold">내 소비 동향</h1>
       <div className="w-full mt-4 flex">
         <div className="w-[30%] text-center">
