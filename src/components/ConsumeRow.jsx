@@ -1,5 +1,6 @@
-export default function ConsumeRow({ data }) {
+export default function ConsumeRow({ data, type }) {
   let amountColor = data.amount.includes("+") ? "text-hana" : "text-orange-500";
+
   return (
     <div className="py-3 border-b flex flex-col">
       <div className="text-[0.6rem] py-1 text-gray-400 flex-1 flex justify-between">

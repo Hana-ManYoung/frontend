@@ -9,9 +9,8 @@ import {
   YAxis,
 } from "recharts";
 import ConsumeRow from "../components/ConsumeRow";
-import { consumeData } from "../data/consumeData";
 import { IoMdSquare } from "react-icons/io";
-
+import { consumeData } from "../data/consumeData";
 export default function Planner() {
   return (
     <div className="w-[90%] mx-auto">
@@ -59,7 +58,7 @@ function Section2() {
           href="/main/challenge"
           className="mr-4 text-xs border-b border-black cursor-pointer"
         >
-          가계부 챌린지
+          가계부 / 소비계획 챌린지
         </a>
       </div>
       <div className="mt-2 flex justify-between items-center">

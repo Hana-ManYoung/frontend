@@ -53,13 +53,11 @@ export default function Main() {
         </div>
         <div className="mt-10 text-2xl">
           <h1 className="flex items-center">
-            오늘의{" "}
-            <strong className="ml-2 text-3xl text-red-500">챌린지</strong>가
-            기다리고 있어요{" "}
-            <img src="/flame.png" width="30px" className="ml-1" alt="" />
+            오늘의 <strong className="ml-2 text-3xl">챌린지</strong>가 기다리고
+            있어요 <img src="/flame.png" width="30px" className="ml-1" alt="" />
           </h1>
         </div>
-        <div className="w-[80%] mt-4 mx-auto">
+        <div className="w-[80%] mt-6 mx-auto">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             navigation

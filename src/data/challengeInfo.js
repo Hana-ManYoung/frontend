@@ -1,5 +1,6 @@
 export const challengeInfo = [
   {
+    id: 0,
     name: "오늘의 퀴즈",
     explain: "오늘도 경제 상식을 길러봐요",
     point: 15 + "P",
@@ -7,6 +8,7 @@ export const challengeInfo = [
     url: "/challenge/quiz.png",
   },
   {
+    id: 1,
     name: "소비계획 / 가계부",
     explain: "소비계획과 가계부를 작성해봐요",
     point: 10 + "P",
@@ -14,6 +16,7 @@ export const challengeInfo = [
     url: "/challenge/plan.png",
   },
   {
+    id: 2,
     name: "챌린지 적금",
     explain: "사고 싶은 물건을 위해 함께 돈을 모아요",
     point: "진행중",
@@ -21,6 +24,7 @@ export const challengeInfo = [
     url: "/challenge/account.png",
   },
   {
+    id: 3,
     name: "하나타로",
     explain: "오늘의 금전운은 어떨까요?",
     point: 5 + "P",
@@ -28,6 +32,7 @@ export const challengeInfo = [
     url: "/challenge/tarot.png",
   },
   {
+    id: 4,
     name: "용돈 조르기",
     explain: "부모님의 미션을 받아보세요",
     point: 10 + "P",
