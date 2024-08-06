@@ -99,7 +99,7 @@ function RankTab({ selectedRank }) {
 }
 function SelectTabBtn({ selectedRank, setSelectedRank }) {
   return (
-    <div className="mt-10 text-gray-400 text-center text-xl font-basic flex justify-center gap-5">
+    <div className="mt-4 text-gray-300 text-center text-xl font-basic flex justify-center gap-5">
       <div
         className={
           "w-[15%] py-2 rounded-md cursor-pointer hover:bg-cyan-500 hover:text-white transition-all duration-300 " +
@@ -179,7 +179,7 @@ function MyRankTab({ selectedRank }) {
 }
 function TopRankTab({ selectedRank }) {
   return (
-    <div className="mt-6">
+    <div className="mt-10">
       <h2 className="text-2xl font-bold flex items-center">
         <FaCrown size="30" className="text-yellow-500 mr-4" /> TOP 5 둘러보기
       </h2>
@@ -301,8 +301,15 @@ function TopRankTab({ selectedRank }) {
 
 function RankCard({ bgColor, rank, title }) {
   return (
-    <div className={"px-10 py-5 rounded-xl shadow-md " + bgColor}>
-      {rank}위 {title}
+    <div
+      className={
+        "px-10 py-5 rounded-xl shadow-md flex justify-between " + bgColor
+      }
+    >
+      <div>
+        {rank}위 {title}
+      </div>
+      <div>206</div>
     </div>
   );
 }

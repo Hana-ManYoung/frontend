@@ -15,7 +15,7 @@ export const challengeInfo = [
   },
   {
     name: "챌린지 적금",
-    explain: "사고 싶은 품목을 위해 함께 돈을 모아요",
+    explain: "사고 싶은 물건을 위해 함께 돈을 모아요",
     point: "진행중",
     bg: "bg-amber-50",
     url: "/challenge/account.png",

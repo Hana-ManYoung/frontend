@@ -30,7 +30,7 @@ export default function Header() {
 function MenuBtn({ name, target }) {
   return (
     <Link to={target} className="w-full">
-      <div className="py-2 text-center text-xl text-white btn-hana-green rounded-md cursor-pointer hover:opacity-80 transition-all duration-300 ease-in-out">
+      <div className="py-2 text-center text-xl text-emerald-600 font-bold rounded-md cursor-pointer hover:bg-emerald-600 hover:text-white transition-all duration-300 ease-in-out">
         {name}
       </div>
     </Link>

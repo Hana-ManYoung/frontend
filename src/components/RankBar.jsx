@@ -19,7 +19,7 @@ export default function RankBar({ data, rankBarColor }) {
         <div className="text-sm font-bold">{data.score}</div>
         <FaTrophy size="35" className={trophyColor} />
       </div>
-      <div className={barHeight + rankBarColor}></div>
+      <div className={"rounded-lg " + barHeight + rankBarColor}></div>
       <div className="text-lg font-bold">{data.rank}위</div>
       <div className="text-lg">{data.school}</div>
     </div>
