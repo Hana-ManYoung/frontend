@@ -10,7 +10,7 @@ export default function MainCard({ name, id, target }) {
         (id % 2 === 0 ? "btn-hana-blue" : "btn-hana-green")
         // + "bg-gradient-to-r from-cyan-500 to-teal-300"
       }
-      onClick={() => navigate("/main" + target)}
+      onClick={() => navigate(process.env.PUBLIC_URL + "/main" + target)}
     >
       <div className="flex items-center">
         <p>{name}</p>

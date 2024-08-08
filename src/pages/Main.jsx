@@ -15,7 +15,6 @@ export default function Main() {
   const swiperStyle = {
     width: "100%",
     height: "350px",
-    // textAlign: "center",
   };
   return (
     <>
@@ -46,7 +45,9 @@ export default function Main() {
               </p>
               <div
                 className="w-[45%] mt-2 mx-auto py-4 text-center text-xl text-black "
-                onClick={() => navigate("/main/planner")}
+                onClick={() =>
+                  navigate(process.env.PUBLIC_URL + "/main/planner")
+                }
               >
                 <span className="border-b border-black cursor-pointer hover:opacity-40 transition-all duration-300 ease-in-out">
                   내 소비동향 확인하기
@@ -78,7 +79,7 @@ export default function Main() {
             speed={1000}
             autoplay={{ delay: 3500, disableOnInteraction: false }}
             loop={true}
-            onClick={() => navigate("/main/challenge")}
+            onClick={() => navigate(process.env.PUBLIC_URL + "/main/challenge")}
             className="cursor-pointer"
           >
             <SwiperSlide style={swiperStyle}>

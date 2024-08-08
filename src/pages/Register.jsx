@@ -513,7 +513,7 @@ export default function Register() {
                 onClick={
                   currentSlide === 5
                     ? () => {
-                        navigate("/");
+                        navigate(process.env.PUBLIC_URL + "/");
                       }
                     : currentSlide === 4
                     ? () => handleRegist()

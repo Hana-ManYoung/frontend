@@ -5,7 +5,7 @@ export default function Login() {
   const navigate = useNavigate();
   const handleSubmit = () => {
     // TODO: axios 추가
-    navigate("/main");
+    navigate(process.env.PUBLIC_URL + "/main");
   };
   return (
     <>

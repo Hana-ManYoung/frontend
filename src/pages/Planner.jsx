@@ -10,13 +10,48 @@ import {
 } from "recharts";
 import ConsumeRow from "../components/ConsumeRow";
 import { IoMdSquare } from "react-icons/io";
-import { consumeData } from "../data/consumeData";
+import axios from "axios";
+import { SERVER_URL } from "../etc/url";
+import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
+
 export default function Planner() {
+  const [useHistory, setUseHistory] = useState({
+    income: 0,
+    remain: 0,
+    consume: 0,
+    most: { type: "", amount: 0 },
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [consumeData, setConsumeData] = useState([]);
+  const [consumeChartData, setConsumeChartData] = useState([]);
+  const [monthlyChartData, setMonthlyChartData] = useState([]);
+
+  useEffect(() => {
+    const getUseHistory = async () => {
+      try {
+        const result = await axios.get(SERVER_URL + "consume.json");
+        setUseHistory(result.data.data);
+        setConsumeData(result.data.data.consumeData);
+        setConsumeChartData(result.data.data.consumeChartData);
+        setMonthlyChartData(result.data.data.monthlyChartData);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getUseHistory();
+  }, []);
+
+  if (isLoading) return <Loading />;
+
   return (
     <div className="w-[90%] mx-auto">
-      <Section1 />
-      <Section2 />
-      <Section3 />
+      <Section1 data={consumeChartData} />
+      <Section2 useHistory={useHistory} consumeData={consumeData} />
+      <Section3 data={monthlyChartData} />
     </div>
   );
 }
@@ -27,7 +62,7 @@ export default function Planner() {
 //   "bg-gradient-to-t from-indigo-200 to-fuchsia-200",
 // ];
 
-function Section1() {
+function Section1({ data }) {
   return (
     <div className="w-full px-8 py-6 bg-stone-50 rounded-xl shadow-md animate__animated animate__fadeIn">
       <h1 className="text-2xl font-bold">내 소비 동향</h1>
@@ -41,14 +76,14 @@ function Section1() {
           <p className="mt-2 text-lg">간편 소비가 최고!</p>
         </div>
         <div className="w-[70%] px-5 font-basic text-base bg-white flex justify-center items-center">
-          <ConsumeChart />
+          <ConsumeChart data={data} />
         </div>
       </div>
     </div>
   );
 }
 
-function Section2() {
+function Section2({ useHistory, consumeData }) {
   return (
     <div className="w-full mt-10 px-8 py-8 rounded-xl bg-stone-50 shadow-md">
       <div className="flex justify-between items-end">
@@ -86,13 +121,13 @@ function Section2() {
             <div className="w-[50%] px-5">
               <h3>이번달 수입</h3>
               <p className="mt-2 text-2xl font-bold text-hana flex justify-center items-center">
-                570,000원
+                {useHistory.income}원
               </p>
             </div>
             <div className="w-[50%] px-5">
               <h3>잔고</h3>
               <p className="mt-2 text-2xl font-bold bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-transparent bg-clip-text flex justify-center items-center">
-                324,600원
+                {useHistory.remain}원
               </p>
             </div>
           </div>
@@ -100,14 +135,14 @@ function Section2() {
             <div className="w-[50%] px-5">
               <h3>이번달 소비</h3>
               <p className="mt-2 text-2xl font-bold text-orange-500 flex justify-center items-center">
-                254,400원
+                {useHistory.consume}원
               </p>
             </div>
             <div className="w-[50%] px-5">
               <h3>가장 많은 지출</h3>
               <p className="mt-3 text-xl flex justify-center items-center">
                 <IoMdSquare className="text-orange-500" size="25" />
-                식비 145,500원
+                {useHistory.most.type} {useHistory.most.amount}원
               </p>
             </div>
           </div>
@@ -117,7 +152,7 @@ function Section2() {
   );
 }
 
-function Section3() {
+function Section3({ data }) {
   return (
     <div className="w-full mt-10 px-8 py-8 rounded-xl bg-stone-50 shadow-md">
       <h1 className="text-2xl">
@@ -125,27 +160,13 @@ function Section3() {
         <span className="text-xs text-gray-400">(최근 6개월)</span>
       </h1>
       <div className="w-full mt-5 pt-8 pb-4 bg-white flex items-center justify-center">
-        <MonthlyLineChart />
+        <MonthlyLineChart data={data} />
       </div>
     </div>
   );
 }
 
-function ConsumeChart() {
-  const data = [
-    {
-      name: "내 소비 동향",
-      "쇼핑/뷰티": 30000,
-      "여행/숙박": 0,
-      식비: 120000,
-      "주거/통신": 30000,
-      "편의점/마트": 50000,
-      "교통/자동차": 0,
-      "카페/디저트": 70000,
-      "문화/여가": 50000,
-      기타: 45000,
-    },
-  ];
+function ConsumeChart({ data }) {
   return (
     <BarChart width={700} height={350} data={data}>
       <XAxis dataKey="name" />
@@ -172,39 +193,7 @@ function ConsumeChart() {
   );
 }
 
-function MonthlyLineChart() {
-  const data = [
-    {
-      name: "2월",
-      지출: 239000,
-      수입: 380000,
-    },
-    {
-      name: "3월",
-      지출: 400000,
-      수입: 240000,
-    },
-    {
-      name: "4월",
-      지출: 300000,
-      수입: 139800,
-    },
-    {
-      name: "5월",
-      지출: 200000,
-      수입: 500000,
-    },
-    {
-      name: "6월",
-      지출: 278000,
-      수입: 390800,
-    },
-    {
-      name: "7월",
-      지출: 189000,
-      수입: 480000,
-    },
-  ];
+function MonthlyLineChart({ data }) {
   return (
     <LineChart width={700} height={300} data={data}>
       <XAxis dataKey="name" />

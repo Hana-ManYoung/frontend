@@ -21,7 +21,7 @@ export default function RankBar({ data, rankBarColor }) {
       </div>
       <div className={"rounded-lg " + barHeight + rankBarColor}></div>
       <div className="text-lg font-bold">{data.rank}위</div>
-      <div className="text-lg">{data.school}</div>
+      <div className="text-lg">{data.name}</div>
     </div>
   );
 }

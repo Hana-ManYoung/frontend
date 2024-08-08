@@ -1,21 +1,43 @@
 import { FaRankingStar } from "react-icons/fa6";
 import RankBar from "../components/RankBar";
-import { useState } from "react";
-import {
-  rankCategoryInfo,
-  rankRegionInfo,
-  rankSchoolInfo,
-} from "../data/rankInfo";
+import { useEffect, useState } from "react";
 
 import { FaCrown } from "react-icons/fa6";
 import { FaSchoolFlag } from "react-icons/fa6";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 
-import { myRankData } from "../data/myRankData";
+import Loading from "../components/Loading";
+import axios from "axios";
+import { SERVER_URL } from "../etc/url";
 
 export default function Ranking() {
   const [selectedRank, setSelectedRank] = useState(0);
+  const [rankSchoolInfo, setRankSchoolInfo] = useState([]);
+  const [rankRegionInfo, setRankRegionInfo] = useState([]);
+  const [rankCategoryInfo, setRankCategoryInfo] = useState([]);
+  const [myRank, setMyRank] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getRankData = async () => {
+      try {
+        const result = await axios.get(SERVER_URL + "rank.json");
+        setMyRank(result.data.data.myRank);
+        setRankCategoryInfo(result.data.data.rankCategoryInfo);
+        setRankRegionInfo(result.data.data.rankRegionInfo);
+        setRankSchoolInfo(result.data.data.rankSchoolInfo);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getRankData();
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-[90%] mt-4 mx-auto animate__animated animate__fadeIn">
@@ -29,18 +51,37 @@ export default function Ranking() {
         </div>
       </div>
 
-      <RankTab selectedRank={selectedRank} />
+      <RankTab
+        selectedRank={selectedRank}
+        rankSchoolInfo={rankSchoolInfo}
+        rankRegionInfo={rankRegionInfo}
+        rankCategoryInfo={rankCategoryInfo}
+      />
       <SelectTabBtn
         selectedRank={selectedRank}
         setSelectedRank={setSelectedRank}
+        rankSchoolInfo={rankSchoolInfo}
+        rankRegionInfo={rankRegionInfo}
+        rankCategoryInfo={rankCategoryInfo}
       />
-      <MyRankTab selectedRank={selectedRank} />
-      <TopRankTab selectedRank={selectedRank} />
+      <MyRankTab selectedRank={selectedRank} myRankData={myRank} />
+      <TopRankTab
+        selectedRank={selectedRank}
+        rankSchoolInfo={rankSchoolInfo}
+        rankRegionInfo={rankRegionInfo}
+        rankCategoryInfo={rankCategoryInfo}
+        myRankData={myRank}
+      />
     </div>
   );
 }
 
-function RankTab({ selectedRank }) {
+function RankTab({
+  selectedRank,
+  rankSchoolInfo,
+  rankRegionInfo,
+  rankCategoryInfo,
+}) {
   let rankBarBgColor = [
     "bg-gradient-to-t from-cyan-500 to-teal-300",
     "bg-gradient-to-t from-green-300 to-lime-200",
@@ -52,11 +93,11 @@ function RankTab({ selectedRank }) {
         [
           <>
             <RankBar
-              data={rankSchoolInfo[0]}
+              data={rankSchoolInfo[1]}
               rankBarColor={rankBarBgColor[0]}
             />
             <RankBar
-              data={rankSchoolInfo[1]}
+              data={rankSchoolInfo[0]}
               rankBarColor={rankBarBgColor[0]}
             />
             <RankBar
@@ -66,11 +107,11 @@ function RankTab({ selectedRank }) {
           </>,
           <>
             <RankBar
-              data={rankRegionInfo[0]}
+              data={rankRegionInfo[1]}
               rankBarColor={rankBarBgColor[1]}
             />
             <RankBar
-              data={rankRegionInfo[1]}
+              data={rankRegionInfo[0]}
               rankBarColor={rankBarBgColor[1]}
             />
             <RankBar
@@ -80,11 +121,11 @@ function RankTab({ selectedRank }) {
           </>,
           <>
             <RankBar
-              data={rankCategoryInfo[0]}
+              data={rankCategoryInfo[1]}
               rankBarColor={rankBarBgColor[2]}
             />
             <RankBar
-              data={rankCategoryInfo[1]}
+              data={rankCategoryInfo[0]}
               rankBarColor={rankBarBgColor[2]}
             />
             <RankBar
@@ -130,7 +171,7 @@ function SelectTabBtn({ selectedRank, setSelectedRank }) {
     </div>
   );
 }
-function MyRankTab({ selectedRank }) {
+function MyRankTab({ selectedRank, myRankData }) {
   return (
     <div className="w-[full] mt-6 text-2xl font-bold">
       {
@@ -166,7 +207,7 @@ function MyRankTab({ selectedRank }) {
               {myRankData[2].title}
             </h3>
             <p className="mr-3 text-3xl">
-              {myRankData[2].rank}
+              {myRankData[2].rank}위
               <span className="ml-3 text-sm text-gray-400">
                 {myRankData[2].content}
               </span>
@@ -177,7 +218,13 @@ function MyRankTab({ selectedRank }) {
     </div>
   );
 }
-function TopRankTab({ selectedRank }) {
+function TopRankTab({
+  selectedRank,
+  rankSchoolInfo,
+  rankRegionInfo,
+  rankCategoryInfo,
+  myRankData,
+}) {
   return (
     <div className="mt-10">
       <h2 className="text-2xl font-bold flex items-center">
@@ -190,52 +237,61 @@ function TopRankTab({ selectedRank }) {
               <>
                 <RankCard
                   bgColor={"bg-blue-100"}
-                  rank={1}
-                  title={"당산서중학교"}
+                  rank={rankSchoolInfo[0].rank}
+                  title={rankSchoolInfo[0].name}
+                  score={rankSchoolInfo[0].score}
                 />
                 <RankCard
                   bgColor={"bg-red-100"}
-                  rank={2}
-                  title={"여의도고등학교"}
+                  rank={rankSchoolInfo[1].rank}
+                  name={rankSchoolInfo[1].name}
+                  score={rankSchoolInfo[1].score}
                 />
                 <RankCard
                   bgColor={"bg-green-100"}
-                  rank={3}
-                  title={"선유고등학교"}
+                  rank={rankSchoolInfo[2].rank}
+                  name={rankSchoolInfo[2].name}
+                  score={rankSchoolInfo[1].score}
                 />
               </>,
               <>
                 <RankCard
                   bgColor={"bg-blue-100"}
-                  rank={1}
-                  title={"서울시 영등포구"}
+                  rank={rankRegionInfo[0].rank}
+                  name={rankRegionInfo[0].name}
+                  score={rankRegionInfo[0].score}
                 />
                 <RankCard
                   bgColor={"bg-red-100"}
-                  rank={2}
-                  title={"경기도 수원시"}
+                  rank={rankRegionInfo[1].rank}
+                  name={rankRegionInfo[1].name}
+                  score={rankRegionInfo[1].score}
                 />
                 <RankCard
                   bgColor={"bg-green-100"}
-                  rank={3}
-                  title={"인천시 남동구"}
+                  rank={rankRegionInfo[2].rank}
+                  name={rankRegionInfo[2].name}
+                  score={rankRegionInfo[2].score}
                 />
               </>,
               <>
                 <RankCard
                   bgColor={"bg-blue-100"}
-                  rank={1}
-                  title={"쇼핑/뷰티"}
+                  rank={rankCategoryInfo[0].rank}
+                  name={rankCategoryInfo[0].name}
+                  score={rankCategoryInfo[0].score}
                 />
                 <RankCard
                   bgColor={"bg-red-100"}
-                  rank={2}
-                  title={"편의점/마트"}
+                  rank={rankCategoryInfo[1].rank}
+                  name={rankCategoryInfo[1].name}
+                  score={rankCategoryInfo[1].score}
                 />
                 <RankCard
                   bgColor={"bg-green-100"}
-                  rank={3}
-                  title={"여행/숙박"}
+                  rank={rankCategoryInfo[2].rank}
+                  name={rankCategoryInfo[2].name}
+                  score={rankCategoryInfo[2].score}
                 />
               </>,
             ][selectedRank]
@@ -247,48 +303,58 @@ function TopRankTab({ selectedRank }) {
               <>
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={4}
-                  title={"선유중학교"}
+                  rank={rankSchoolInfo[3].rank}
+                  name={rankSchoolInfo[3].name}
+                  score={rankSchoolInfo[3].score}
                 />
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={5}
-                  title={"관악고등학교"}
+                  rank={rankSchoolInfo[4].rank}
+                  name={rankSchoolInfo[4].name}
+                  score={rankSchoolInfo[4].score}
                 />
                 <RankCard
                   bgColor={"bg-yellow-100"}
-                  rank={1}
-                  title={"우리 학교 (당산서중학교)"}
+                  rank={myRankData[0].rank}
+                  name={"우리 학교 (" + myRankData[0].content + ")"}
                 />
               </>,
               <>
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={4}
-                  title={"부산시 해운대구"}
+                  rank={rankRegionInfo[3].rank}
+                  name={rankRegionInfo[3].name}
+                  score={rankRegionInfo[3].score}
                 />
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={5}
-                  title={"경기도 김포시"}
+                  rank={rankRegionInfo[4].rank}
+                  name={rankRegionInfo[4].name}
+                  score={rankRegionInfo[4].score}
                 />
                 <RankCard
                   bgColor={"bg-yellow-100"}
-                  rank={1}
-                  title={"우리 지역 (서울시 영등포구)"}
+                  rank={myRankData[1].rank}
+                  name={"우리 지역 (" + myRankData[1].content + ")"}
                 />
               </>,
               <>
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={4}
-                  title={"문화/여가"}
+                  rank={rankCategoryInfo[3].rank}
+                  name={rankCategoryInfo[3].name}
+                  score={rankCategoryInfo[3].score}
                 />
-                <RankCard bgColor={"bg-slate-200"} rank={5} title={"기타"} />
+                <RankCard
+                  bgColor={"bg-slate-200"}
+                  rank={rankCategoryInfo[4].rank}
+                  name={rankCategoryInfo[4].name}
+                  score={rankCategoryInfo[4].score}
+                />
                 <RankCard
                   bgColor={"bg-yellow-100"}
-                  rank={2}
-                  title={"나의 소비 (편의점/마트)"}
+                  rank={myRankData[2].rank}
+                  name={"나의 소비 (" + myRankData[2].content + ")"}
                 />
               </>,
             ][selectedRank]
@@ -299,7 +365,7 @@ function TopRankTab({ selectedRank }) {
   );
 }
 
-function RankCard({ bgColor, rank, title }) {
+function RankCard({ bgColor, rank, name, score }) {
   return (
     <div
       className={
@@ -307,9 +373,9 @@ function RankCard({ bgColor, rank, title }) {
       }
     >
       <div>
-        {rank}위 {title}
+        {rank}위 {name}
       </div>
-      <div>206</div>
+      <div>{score}</div>
     </div>
   );
 }

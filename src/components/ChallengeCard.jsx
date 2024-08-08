@@ -7,20 +7,26 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { FaCircleDot } from "react-icons/fa6";
 import { FaRegCircleDot } from "react-icons/fa6";
+import axios from "axios";
+import { SERVER_URL } from "../etc/url";
+import LoadingModal from "./LoadingModal";
 
-export default function ChallengeCard({ data }) {
+export default function ChallengeCard({ data, bg, imgUrl }) {
   const navigate = useNavigate();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalSize, setModalSize] = useState("lg");
+  const [isProceeding, setIsProceeding] = useState(true);
+
   const handleClick = () => {
     if (data.id === 1) {
       console.log("소비계획/가계부 페이지 전환");
-      navigate("/main/planner");
+      navigate(process.env.PUBLIC_URL + "/main/planner");
     } else if (data.id === 0) {
       setModalSize("sm");
       onOpen();
@@ -35,14 +41,14 @@ export default function ChallengeCard({ data }) {
     <div
       className={
         "w-[50%] h-28 px-4 py-4 text-2xl font-basic rounded-lg flex items-center justify-between shadow-md shadow-gray-200 hover:opacity-70 transition-all duration-300 ease-in-out cursor-pointer group " +
-        data.bg
+        bg
       }
       onClick={() => handleClick()}
     >
       <div className="ml-2">
         <div className="flex items-center">
           <img
-            src={process.env.PUBLIC_URL + data.url}
+            src={process.env.PUBLIC_URL + imgUrl}
             alt=""
             className="mr-2 w-5"
           />
@@ -51,7 +57,15 @@ export default function ChallengeCard({ data }) {
         <p className="text-xs text-gray-500">{data.explain}</p>
       </div>
       <div className="flex items-center">
-        <div className="text-xl font-bold mr-5">{data.point}</div>
+        <div className="text-xl font-bold mr-5">
+          {data.point !== "" ? (
+            <>{data.point + "P"}</>
+          ) : isProceeding ? (
+            "진행중"
+          ) : (
+            "참여하기"
+          )}
+        </div>
         <IoIosArrowForward
           size="25"
           className="mr-1 text-gray-500 duration-300 group-hover:translate-x-2"
@@ -118,14 +132,35 @@ function ChallengeContent({ data }) {
 
 function Quiz() {
   const [selected, setSelected] = useState(0);
+  const [quizData, setQuizData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getQuiz = async () => {
+      const result = await axios.get(SERVER_URL + "quiz.json");
+      setQuizData(result.data.data[0]);
+    };
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 50000);
+    getQuiz();
+  }, []);
+
+  const handleSubmit = () => {
+    if (selected === quizData.answer) {
+      alert("정답입니다!");
+    } else {
+      alert("틀렸습니다!");
+    }
+  };
+
+  if (isLoading) return <LoadingModal />;
   return (
     <ModalBody>
       <div className="text-xl font-basic">
         <div className="font-bold flex">
           <div className="mr-2 text-emerald-600">Q. </div>
-          <div className="leading-8">
-            은행에서 돈을 빌릴 때, 원금에 더해 지불해야하는 금액은 OO이다
-          </div>
+          <div className="leading-8">{quizData.question}</div>
         </div>
         <div className="my-8">
           <div
@@ -140,7 +175,7 @@ function Quiz() {
             ) : (
               <FaRegCircleDot className="mr-4 text-gray-400" size="25" />
             )}
-            <p>① 세금</p>
+            <p>① {quizData.options[0]}</p>
           </div>
           <div
             className={
@@ -154,7 +189,7 @@ function Quiz() {
             ) : (
               <FaRegCircleDot className="mr-4 text-gray-400" size="25" />
             )}
-            <p>② 이자</p>
+            <p>② {quizData.options[1]}</p>
           </div>
           <div
             className={
@@ -168,7 +203,7 @@ function Quiz() {
             ) : (
               <FaRegCircleDot className="mr-4 text-gray-400" size="25" />
             )}
-            <p>③ 보너스</p>
+            <p>③ {quizData.options[2]}</p>
           </div>
           <div
             className={
@@ -182,11 +217,14 @@ function Quiz() {
             ) : (
               <FaRegCircleDot className="mr-4 text-gray-400" size="25" />
             )}
-            <p>④ 상환</p>
+            <p>④ {quizData.options[3]}</p>
           </div>
         </div>
       </div>
-      <div className="mb-4 py-3 text-white text-xl text-center rounded-xl btn-hana-green cursor-pointer hover:opacity-85 transition-all duration-300">
+      <div
+        className="mb-4 py-3 text-white text-xl text-center rounded-xl btn-hana-green cursor-pointer hover:opacity-85 transition-all duration-300"
+        onClick={() => handleSubmit()}
+      >
         제출하기
       </div>
     </ModalBody>

@@ -1,5 +1,4 @@
 import { IoIosArrowForward } from "react-icons/io";
-import { challengeInfo } from "../data/challengeInfo";
 import ChallengeCard from "../components/ChallengeCard";
 import Calendar from "../components/Calendar";
 import {
@@ -11,22 +10,50 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { pointData } from "../data/pointData";
 import PointRow from "../components/PointRow";
 import { useEffect, useState } from "react";
 import { Cell, Legend, Pie, PieChart } from "recharts";
+import { SERVER_URL } from "../etc/url";
+import axios from "axios";
+import Loading from "../components/Loading";
 
 export default function Challenge() {
+  const [savingData, setSavingData] = useState({});
+  const [hanaMoneyData, setHanaMoneyData] = useState({});
+  const [challengeInfo, setChallengeInfo] = useState([]);
+  const [calendarData, setCalendarData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getChallenge = async () => {
+      try {
+        const result = await axios.get(SERVER_URL + "challenge.json");
+        setSavingData(result.data.data.saving);
+        setHanaMoneyData(result.data.data.hanaMoney);
+        setChallengeInfo(result.data.data.challengeInfo);
+        setCalendarData(result.data.data.calendar);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getChallenge();
+  }, []);
+
+  if (isLoading) return <Loading />;
+
   return (
-    <div className="w-[90%] mx-auto flex-1 flex flex-col animate__animated animate__fadeIn">
-      <Section1 />
-      <Section2 />
-      <Section3 />
+    <div className="w-[90%] mx-auto flex flex-col animate__animated animate__fadeIn">
+      <Section1 savingData={savingData} hanaMoneyData={hanaMoneyData} />
+      <Section2 challengeInfo={challengeInfo} />
+      <Section3 calendarData={calendarData} />
     </div>
   );
 }
 
-function Section1() {
+function Section1({ savingData, hanaMoneyData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalId, setModalId] = useState(0);
   const [modalSize, setModalSize] = useState("lg");
@@ -75,16 +102,18 @@ function Section1() {
                 </div>
               </div>
               <div className="ml-2 text-gray-500">
-                <h2 className="text-lg">에어팟 구매</h2>
+                <h2 className="text-lg">{savingData.name}</h2>
                 <div className="text-center text-[0.55rem]">
-                  월 30,000원 (1달 남음)
+                  월 {savingData.monthlyMoney}원 ({savingData.remainMonth} 남음)
                 </div>
               </div>
             </div>
             <div className="flex items-center">
               <div className="mr-5 text-lg">
-                <span className="text-gray-400">90,000원 </span>
-                <span className="black">/ 120,000원</span>
+                <span className="text-gray-400">
+                  {savingData.currentMoney}원{" "}
+                </span>
+                <span className="black">/ {savingData.targetMoney}원</span>
               </div>
               <IoIosArrowForward
                 size="25"
@@ -112,7 +141,9 @@ function Section1() {
               </p>
             </div>
             <div className="flex items-center">
-              <div className="mr-5 text-xl font-bold">3,000P</div>
+              <div className="mr-5 text-xl font-bold">
+                {hanaMoneyData.total}P
+              </div>
               <IoIosArrowForward
                 size="25"
                 className="mr-1 text-gray-500 duration-300 group-hover:translate-x-2"
@@ -125,9 +156,12 @@ function Section1() {
         <ModalOverlay />
         <ModalContent>
           {modalId === 1 ? (
-            <SavingAccount setIsSavingGiveUp={setIsSavingGiveUp} />
+            <SavingAccount
+              savingData={savingData}
+              setIsSavingGiveUp={setIsSavingGiveUp}
+            />
           ) : (
-            <HanaMoneyPoint />
+            <HanaMoneyPoint pointData={hanaMoneyData.pointData} />
           )}
         </ModalContent>
       </Modal>
@@ -135,7 +169,7 @@ function Section1() {
   );
 }
 
-function SavingAccount({ setIsSavingGiveUp }) {
+function SavingAccount({ savingData, setIsSavingGiveUp }) {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   // const handleGiveUpClick = () => {
   //   onClose();
@@ -160,9 +194,9 @@ function SavingAccount({ setIsSavingGiveUp }) {
         <div className="ml-3 font-basic">
           <div className="flex justify-between items-start">
             <h3 className="text-xl font-bold">
-              에어팟 구매{" "}
+              {savingData.name + " "}
               <span className="ml-2 text-gray-400 text-xs font-normal">
-                7월 21일 ~ 10월 21일
+                {savingData.period}
               </span>
             </h3>
             <div
@@ -173,36 +207,39 @@ function SavingAccount({ setIsSavingGiveUp }) {
             </div>
           </div>
           <div className="pr-3 overflow-y-auto">
-            <HalfDoughnutChart />
+            <HalfDoughnutChart savingData={savingData} />
             <div className="flex justify-between">
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">목표 금액</p>
-                <p className="font-bold">120,000원</p>
+                <p className="font-bold">{savingData.targetMoney}원</p>
               </div>
               <div className="border"></div>
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">남은 기간</p>
-                <p className="font-bold">1달</p>
+                <p className="font-bold">{savingData.remainMonth}</p>
               </div>
             </div>
             <div className="my-2 flex justify-between">
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">현재 금액</p>
-                <p className="font-bold">90,000원</p>
+                <p className="font-bold">{savingData.currentMoney}원</p>
               </div>
               <div className="border"></div>
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">남은 금액</p>
-                <p className="font-bold">30,000원</p>
+                <p className="font-bold">{savingData.remainMoney}원</p>
               </div>
             </div>
             <div className="my-2 flex justify-between">
               <div className="w-[45%] flex justify-between items-center">
-                <p className="text-gray-400 text-sm">적립 포인트</p>
-                <p className="font-bold">250P</p>
+                <p className="text-gray-400 text-sm">월납입액</p>
+                <p className="font-bold">{savingData.monthlyMoney}원</p>
               </div>
-              {/* <div className="border"></div> */}
-              <div className="w-[45%] flex justify-between items-center"></div>
+              <div className="border"></div>
+              <div className="w-[45%] flex justify-between items-center">
+                <p className="text-gray-400 text-sm">적립 포인트</p>
+                <p className="font-bold">{savingData.point}P</p>
+              </div>
             </div>
           </div>
         </div>
@@ -223,7 +260,40 @@ function SavingAccount({ setIsSavingGiveUp }) {
   );
 }
 
-function HanaMoneyPoint() {
+function HalfDoughnutChart({ savingData }) {
+  const data = [
+    { name: "현재 금액", value: savingData.currentMoney, color: "#9a9ef7" },
+    { name: "남은 금액", value: savingData.remainMoney, color: "#acadc6" },
+  ];
+
+  return (
+    <div className="flex justify-center">
+      <PieChart width={300} height={200}>
+        <Pie
+          data={data}
+          cy={125}
+          innerRadius={60}
+          outerRadius={100}
+          startAngle={180}
+          endAngle={0}
+          dataKey="value"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+          ))}
+        </Pie>
+        <Legend
+          cy={100}
+          wrapperStyle={{
+            bottom: 20,
+          }}
+        />
+      </PieChart>
+    </div>
+  );
+}
+
+function HanaMoneyPoint({ pointData }) {
   return (
     <>
       <ModalHeader>
@@ -252,7 +322,7 @@ function HanaMoneyPoint() {
   );
 }
 
-function Section2() {
+function Section2({ challengeInfo }) {
   return (
     <div className="mt-8 flex-1">
       <h1 className="text-2xl font-bold flex items-center">
@@ -265,22 +335,42 @@ function Section2() {
         />
       </h1>
       <div className="mt-4 flex gap-5">
-        <ChallengeCard data={challengeInfo[0]} />
-        <ChallengeCard data={challengeInfo[1]} />
+        <ChallengeCard
+          data={challengeInfo[0]}
+          bg={"bg-blue-50"}
+          imgUrl={"/images/challenge/quiz.png"}
+        />
+        <ChallengeCard
+          data={challengeInfo[1]}
+          bg={"bg-red-50"}
+          imgUrl={"/images/challenge/quiz.png"}
+        />
       </div>
       <div className="mt-4 flex gap-5">
-        <ChallengeCard data={challengeInfo[2]} />
-        <ChallengeCard data={challengeInfo[3]} />
+        <ChallengeCard
+          data={challengeInfo[2]}
+          bg={"bg-amber-50"}
+          imgUrl={"/images/challenge/quiz.png"}
+        />
+        <ChallengeCard
+          data={challengeInfo[3]}
+          bg={"bg-purple-50"}
+          imgUrl={"/images/challenge/quiz.png"}
+        />
       </div>
       <div className="mt-4 flex gap-5">
-        <ChallengeCard data={challengeInfo[4]} />
+        <ChallengeCard
+          data={challengeInfo[4]}
+          bg={"bg-stone-100"}
+          imgUrl={"/images/challenge/quiz.png"}
+        />
         <div className="w-[50%]"></div>
       </div>
     </div>
   );
 }
 
-function Section3() {
+function Section3({ calendarData }) {
   return (
     <div className="mt-8 w-full flex">
       <div className="relative w-full">
@@ -295,41 +385,8 @@ function Section3() {
           className="absolute w-24 z-10 -top-[4.25rem] right-40"
           alt=""
         />
-        <Calendar />
+        <Calendar events={calendarData} />
       </div>
     </div>
   );
 }
-
-const HalfDoughnutChart = () => {
-  const data = [
-    { name: "현재 금액", value: 90000, color: "#9a9ef7" },
-    { name: "남은 금액", value: 30000, color: "#acadc6" },
-  ];
-
-  return (
-    <div className="flex justify-center">
-      <PieChart width={300} height={200}>
-        <Pie
-          data={data}
-          cy={125}
-          innerRadius={60}
-          outerRadius={100}
-          startAngle={180}
-          endAngle={0}
-          dataKey="value"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
-          ))}
-        </Pie>
-        <Legend
-          cy={100}
-          wrapperStyle={{
-            bottom: 20, // 위치 조정
-          }}
-        />
-      </PieChart>
-    </div>
-  );
-};

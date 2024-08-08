@@ -1,4 +1,4 @@
-export default function ConsumeRow({ data, type }) {
+export default function ConsumeRow({ data }) {
   let amountColor = data.amount.includes("+") ? "text-hana" : "text-orange-500";
 
   return (
@@ -13,7 +13,7 @@ export default function ConsumeRow({ data, type }) {
           <div className={"text-sm font-bold " + amountColor}>
             {data.amount}
           </div>
-          <div className="text-[0.65rem] text-gray-500">0,000원</div>
+          <div className="text-[0.65rem] text-gray-500">{data.remain}원</div>
         </div>
       </div>
     </div>

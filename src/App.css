@@ -31,3 +31,25 @@ body {
 .bg-hana {
   background-color: #f2f5f1;
 }
+
+.animate-dots::after {
+  content: "";
+  display: inline-block;
+  animation: dots 2s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%,
+  20% {
+    content: ".";
+  }
+  40% {
+    content: "..";
+  }
+  60% {
+    content: "...";
+  }
+  80% {
+    content: "";
+  }
+}
