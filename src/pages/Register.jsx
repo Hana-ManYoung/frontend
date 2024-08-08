@@ -60,9 +60,9 @@ export default function Register() {
   const navigate = useNavigate();
 
   const checkCards = [
-    { name: "T1 체크카드", image: "/cards/card_t1.png" },
-    { name: "MULTI 체크카드", image: "/cards/card_plus.png" },
-    { name: "축덕 체크카드", image: "/cards/card_fb.png" },
+    { name: "T1 체크카드", image: "/images/cards/card_t1.png" },
+    { name: "MULTI 체크카드", image: "/images/cards/card_plus.png" },
+    { name: "축덕 체크카드", image: "/images/cards/card_fb.png" },
   ];
 
   const swiperStyle = {
@@ -200,7 +200,7 @@ export default function Register() {
           <Logo />
           <div className="w-[80%] mt-8">
             <img
-              src="/ayj1.png"
+              src={process.env.PUBLIC_URL + "/images/ayj/1.png"}
               className="absolute right-0 bottom-0 w-0 md:w-32 lg:w-48"
               alt=""
             />
@@ -426,7 +426,10 @@ export default function Register() {
                       </p>
                     </div>
                     <img
-                      src="/young_account.png"
+                      src={
+                        process.env.PUBLIC_URL +
+                        "/images/hana/young_account.png"
+                      }
                       className="w-[85%] mx-auto mt-4"
                       alt=""
                     />
@@ -459,7 +462,7 @@ export default function Register() {
                         }}
                       >
                         <img
-                          src={card.image}
+                          src={process.env.PUBLIC_URL + card.image}
                           className="shadow-md shadow-gray-700 rounded-md"
                           alt=""
                         />
@@ -477,7 +480,11 @@ export default function Register() {
               <SwiperSlide style={swiperStyle}>
                 <div className="w-full flex flex-col justify-center items-center">
                   <div className="py-4 text-3xl">회원가입이 완료되었어요!</div>
-                  <img src="/byeoldol1.png" alt="" className="w-44" />
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/hana/byeoldol1.png"}
+                    alt=""
+                    className="w-44"
+                  />
                   <div className="py-4 text-lg">
                     다양한 챌린지와 컨텐츠가 기다리고 있어요
                   </div>

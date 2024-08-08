@@ -2,7 +2,7 @@ export default function PointRow({ data, type }) {
   let amountColor = data.amount.includes("+") ? "text-hana" : "text-orange-500";
 
   return (
-    <div className="py-3 border-t flex flex-col">
+    <div className="py-3 border-t font-basic flex flex-col">
       <div className="text-xs py-1 text-gray-400 flex-1 flex justify-between">
         <div className="">{data.time}</div>
         <div className="">{data.type}</div>

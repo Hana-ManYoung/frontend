@@ -52,7 +52,7 @@ export default function Login() {
             </div>
           </div>
           <img
-            src="/ayj1.png"
+            src={process.env.PUBLIC_URL + "/images/ayj/1.png"}
             className="absolute right-0 bottom-0 w-0 md:w-32 lg:w-48"
             alt=""
           />

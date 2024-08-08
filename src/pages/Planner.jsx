@@ -33,7 +33,11 @@ function Section1() {
       <h1 className="text-2xl font-bold">내 소비 동향</h1>
       <div className="w-full flex items-center">
         <div className="w-[30%] text-center">
-          <img src="/ayj2.png" width="100%" alt="" />
+          <img
+            src={process.env.PUBLIC_URL + "/images/ayj/2.png"}
+            width="100%"
+            alt=""
+          />
           <p className="mt-2 text-lg">간편 소비가 최고!</p>
         </div>
         <div className="w-[70%] px-5 font-basic text-base bg-white flex justify-center items-center">
@@ -66,7 +70,11 @@ function Section2() {
           <div className="w-[90%] py-2 mx-auto font-basic">
             <div className="pt-1 pb-2 border-b-2 flex justify-between items-center">
               <p className="text-xs ">2024.08.04 (금)</p>
-              <img src="/hana_1q.jpg" alt="" className="h-5" />
+              <img
+                src={process.env.PUBLIC_URL + "/images/hana/hana_1q.jpg"}
+                alt=""
+                className="h-5"
+              />
             </div>
             {consumeData.map((data, index) => (
               <ConsumeRow key={index} data={data} />

@@ -63,7 +63,11 @@ function Section1() {
         <div className="max-h-[400px] overflow-y-auto">
           <div className="mt-2 flex flex-col">
             <div className="py-3 border-t-2 flex items-center">
-              <img className="w-[10%]" src="/cards/hana_money.png" alt="" />
+              <img
+                src={process.env.PUBLIC_URL + "/images/cards/hana_money.png"}
+                className="w-[10%]"
+                alt=""
+              />
               <div className="w-[30%] px-2 text-sm border-r-2">
                 하나머니 적립
               </div>
@@ -82,7 +86,11 @@ function Section1() {
               </p>
             </div>
             <div className="py-3 border-t flex items-center">
-              <img className="w-[10%]" src="/cards/card_info2.png" alt="" />
+              <img
+                src={process.env.PUBLIC_URL + "/images/cards/card_info2.png"}
+                className="w-[10%]"
+                alt=""
+              />
               <div className="w-[30%] px-2 text-sm border-r-2">
                 OK캐쉬백 플러스
               </div>
@@ -98,7 +106,11 @@ function Section1() {
               </p>
             </div>
             <div className="py-3 border-t flex items-center">
-              <img className="w-[10%]" src="/cards/card_info3.png" alt="" />
+              <img
+                src={process.env.PUBLIC_URL + "/images/cards/card_info3.png"}
+                className="w-[10%]"
+                alt=""
+              />
               <div className="w-[30%] px-2 text-sm border-r-2">
                 헤외이용 수수료 우대
               </div>
@@ -114,7 +126,11 @@ function Section1() {
             </div>
           </div>
           <div className="py-3 border-t flex items-center">
-            <img className="w-[10%]" src="/cards/card_info4.png" alt="" />
+            <img
+              src={process.env.PUBLIC_URL + "/images/cards/card_info4.png"}
+              className="w-[10%]"
+              alt=""
+            />
             <div className="w-[30%] px-2 text-sm border-r-2">놀이공원</div>
             <p className="w-[60%] px-3 text-xs">
               <div className="py-1">
@@ -123,7 +139,11 @@ function Section1() {
             </p>
           </div>
           <div className="py-3 border-t flex items-center">
-            <img className="w-[10%]" src="/cards/hana_money.png" alt="" />
+            <img
+              src={process.env.PUBLIC_URL + "/images/cards/hana_money.png"}
+              className="w-[10%]"
+              alt=""
+            />
             <div className="w-[30%] px-2 text-sm border-r-2">
               하나마니 서비스
             </div>
