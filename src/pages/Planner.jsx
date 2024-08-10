@@ -28,21 +28,23 @@ export default function Planner() {
   const [monthlyChartData, setMonthlyChartData] = useState([]);
 
   useEffect(() => {
-    const getUseHistory = async () => {
-      try {
-        const result = await axios.get(SERVER_URL + "consume.json");
-        setUseHistory(result.data.data);
-        setConsumeData(result.data.data.consumeData);
-        setConsumeChartData(result.data.data.consumeChartData);
-        setMonthlyChartData(result.data.data.monthlyChartData);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    setTimeout(() => {
+      const getUseHistory = async () => {
+        try {
+          const result = await axios.get(SERVER_URL + "consume.json");
+          setUseHistory(result.data.data);
+          setConsumeData(result.data.data.consumeData);
+          setConsumeChartData(result.data.data.consumeChartData);
+          setMonthlyChartData(result.data.data.monthlyChartData);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
 
-    getUseHistory();
+      getUseHistory();
+    }, [3000]);
   }, []);
 
   if (isLoading) return <Loading />;
@@ -55,12 +57,6 @@ export default function Planner() {
     </div>
   );
 }
-
-// const textColor = [
-//   "bg-gradient-to-t from-cyan-500 to-teal-300",
-//   "bg-gradient-to-t from-green-300 to-lime-200",
-//   "bg-gradient-to-t from-indigo-200 to-fuchsia-200",
-// ];
 
 function Section1({ data }) {
   return (
@@ -121,13 +117,13 @@ function Section2({ useHistory, consumeData }) {
             <div className="w-[50%] px-5">
               <h3>이번달 수입</h3>
               <p className="mt-2 text-2xl font-bold text-hana flex justify-center items-center">
-                {useHistory.income}원
+                {useHistory.income.toLocaleString("ko-KR")}원
               </p>
             </div>
             <div className="w-[50%] px-5">
               <h3>잔고</h3>
               <p className="mt-2 text-2xl font-bold bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-transparent bg-clip-text flex justify-center items-center">
-                {useHistory.remain}원
+                {useHistory.remain.toLocaleString("ko-KR")}원
               </p>
             </div>
           </div>
@@ -135,14 +131,15 @@ function Section2({ useHistory, consumeData }) {
             <div className="w-[50%] px-5">
               <h3>이번달 소비</h3>
               <p className="mt-2 text-2xl font-bold text-orange-500 flex justify-center items-center">
-                {useHistory.consume}원
+                {useHistory.consume.toLocaleString("ko-KR")}원
               </p>
             </div>
             <div className="w-[50%] px-5">
               <h3>가장 많은 지출</h3>
               <p className="mt-3 text-xl flex justify-center items-center">
                 <IoMdSquare className="text-orange-500" size="25" />
-                {useHistory.most.type} {useHistory.most.amount}원
+                {useHistory.most.type}{" "}
+                {useHistory.most.amount.toLocaleString("ko-KR")}원
               </p>
             </div>
           </div>
@@ -159,7 +156,12 @@ function Section3({ data }) {
         <span className="font-bold">월별 가계부 추이 </span>
         <span className="text-xs text-gray-400">(최근 6개월)</span>
       </h1>
-      <div className="w-full mt-5 pt-8 pb-4 bg-white flex items-center justify-center">
+      <div className="relative w-full mt-5 pt-8 pb-4 bg-white flex items-center justify-center">
+        <img
+          src={process.env.PUBLIC_URL + "/images/hana/monthly.gif"}
+          alt=""
+          className="absolute bottom-0 left-0"
+        />
         <MonthlyLineChart data={data} />
       </div>
     </div>

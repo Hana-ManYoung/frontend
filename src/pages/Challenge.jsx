@@ -111,9 +111,11 @@ function Section1({ savingData, hanaMoneyData }) {
             <div className="flex items-center">
               <div className="mr-5 text-lg">
                 <span className="text-gray-400">
-                  {savingData.currentMoney}원{" "}
+                  {savingData.currentMoney.toLocaleString("ko-KR")}원{" "}
                 </span>
-                <span className="black">/ {savingData.targetMoney}원</span>
+                <span className="black">
+                  / {savingData.targetMoney.toLocaleString("ko-KR")}원
+                </span>
               </div>
               <IoIosArrowForward
                 size="25"
@@ -142,7 +144,7 @@ function Section1({ savingData, hanaMoneyData }) {
             </div>
             <div className="flex items-center">
               <div className="mr-5 text-xl font-bold">
-                {hanaMoneyData.total}P
+                {hanaMoneyData.total.toLocaleString("ko-KR")}P
               </div>
               <IoIosArrowForward
                 size="25"
@@ -211,7 +213,9 @@ function SavingAccount({ savingData, setIsSavingGiveUp }) {
             <div className="flex justify-between">
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">목표 금액</p>
-                <p className="font-bold">{savingData.targetMoney}원</p>
+                <p className="font-bold">
+                  {savingData.targetMoney.toLocaleString("ko-KR")}원
+                </p>
               </div>
               <div className="border"></div>
               <div className="w-[45%] flex justify-between items-center">
@@ -222,23 +226,31 @@ function SavingAccount({ savingData, setIsSavingGiveUp }) {
             <div className="my-2 flex justify-between">
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">현재 금액</p>
-                <p className="font-bold">{savingData.currentMoney}원</p>
+                <p className="font-bold">
+                  {savingData.currentMoney.toLocaleString("ko-KR")}원
+                </p>
               </div>
               <div className="border"></div>
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">남은 금액</p>
-                <p className="font-bold">{savingData.remainMoney}원</p>
+                <p className="font-bold">
+                  {savingData.remainMoney.toLocaleString("ko-KR")}원
+                </p>
               </div>
             </div>
             <div className="my-2 flex justify-between">
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">월납입액</p>
-                <p className="font-bold">{savingData.monthlyMoney}원</p>
+                <p className="font-bold">
+                  {savingData.monthlyMoney.toLocaleString("ko-KR")}원
+                </p>
               </div>
               <div className="border"></div>
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">적립 포인트</p>
-                <p className="font-bold">{savingData.point}P</p>
+                <p className="font-bold">
+                  {savingData.point.toLocaleString("ko-KR")}P
+                </p>
               </div>
             </div>
           </div>

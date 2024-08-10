@@ -238,7 +238,7 @@ function TopRankTab({
                 <RankCard
                   bgColor={"bg-blue-100"}
                   rank={rankSchoolInfo[0].rank}
-                  title={rankSchoolInfo[0].name}
+                  name={rankSchoolInfo[0].name}
                   score={rankSchoolInfo[0].score}
                 />
                 <RankCard
@@ -317,6 +317,7 @@ function TopRankTab({
                   bgColor={"bg-yellow-100"}
                   rank={myRankData[0].rank}
                   name={"우리 학교 (" + myRankData[0].content + ")"}
+                  score={myRankData[0].score}
                 />
               </>,
               <>
@@ -336,6 +337,7 @@ function TopRankTab({
                   bgColor={"bg-yellow-100"}
                   rank={myRankData[1].rank}
                   name={"우리 지역 (" + myRankData[1].content + ")"}
+                  score={myRankData[1].score}
                 />
               </>,
               <>
@@ -355,6 +357,7 @@ function TopRankTab({
                   bgColor={"bg-yellow-100"}
                   rank={myRankData[2].rank}
                   name={"나의 소비 (" + myRankData[2].content + ")"}
+                  score={myRankData[2].score}
                 />
               </>,
             ][selectedRank]

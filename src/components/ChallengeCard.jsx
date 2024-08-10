@@ -26,7 +26,7 @@ export default function ChallengeCard({ data, bg, imgUrl }) {
   const handleClick = () => {
     if (data.id === 1) {
       console.log("소비계획/가계부 페이지 전환");
-      navigate(process.env.PUBLIC_URL + "/main/planner");
+      navigate(process.env.PUBLIC_URL + "/main/challenge/diary");
     } else if (data.id === 0) {
       setModalSize("sm");
       onOpen();
@@ -136,14 +136,20 @@ function Quiz() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getQuiz = async () => {
-      const result = await axios.get(SERVER_URL + "quiz.json");
-      setQuizData(result.data.data[0]);
-    };
     setTimeout(() => {
-      setIsLoading(false);
-    }, 50000);
-    getQuiz();
+      const getQuiz = async () => {
+        try {
+          const result = await axios.get(SERVER_URL + "quiz.json");
+          setQuizData(result.data.data[0]);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      getQuiz();
+    }, 3000);
   }, []);
 
   const handleSubmit = () => {

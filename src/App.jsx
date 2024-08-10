@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Planner from "./pages/Planner";
 import Challenge from "./pages/Challenge";
 import Ranking from "./pages/Ranking";
+import Diary from "./pages/Diary";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="profile" element={"프로필입니다"} />
         <Route path="planner" element={<Planner />} />
         <Route path="challenge" element={<Challenge />} />
+        <Route path="challenge/diary" element={<Diary />} />
         <Route path="rank" element={<Ranking />} />
         <Route path="chat" element={"채팅입니다"} />
       </Route>
