@@ -1,9 +1,4 @@
-export default function Section5({
-  setEmail,
-  setEmailDomain,
-  setPhoneNumber1,
-  setPhoneNumber2,
-}) {
+export default function Section5({ setAccountNumber }) {
   return (
     <div className="w-full">
       <div className="text-xl flex justify-between items-center">
@@ -37,11 +32,12 @@ export default function Section5({
             type="number"
             className="w-full h-16 mt-2 pl-5 text-xl border-2 rounded-2xl border-gray-400"
             placeholder="계좌 번호 입력"
-            onInput={(e) => {
-              if (e.target.value.length > 4) {
-                e.target.value = e.target.value.slice(0, 4);
-              }
-            }}
+            onChange={(e) => setAccountNumber(e.target.value)}
+            // onInput={(e) => {
+            //   if (e.target.value.length > 4) {
+            //     e.target.value = e.target.value.slice(0, 4);
+            //   }
+            // }}
           />
         </div>
       </div>

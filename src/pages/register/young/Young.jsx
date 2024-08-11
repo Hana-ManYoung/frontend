@@ -12,7 +12,6 @@ import JSConfetti from "js-confetti";
 import {
   Section1,
   Section2,
-  Section3,
   Section4,
   Section5,
   Section6,
@@ -22,6 +21,7 @@ import {
 
 import SwipeButton from "./components/SwipeButton";
 import InfoModal from "./components/InfoModal";
+import AddressFinder from "../../common/AddressFinder";
 
 export default function Young() {
   const swiperRef = useRef(0);
@@ -36,7 +36,13 @@ export default function Young() {
   const [ssnBack, setBackSsn] = useState("");
   const [phoneNumber1, setPhoneNumber1] = useState("");
   const [phoneNumber2, setPhoneNumber2] = useState("");
-  const [address, setAddress] = useState("");
+
+  const [postcode, setPostcode] = useState("");
+  const [roadAddress, setRoadAddress] = useState("");
+  const [jibunAddress, setJibunAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+  const [extraAddress, setExtraAddress] = useState("");
+
   const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [school, setSchool] = useState("");
@@ -91,13 +97,7 @@ export default function Young() {
             id.length > 0 && isValidPassword === 1 && password === passwordCheck
           );
         case 2:
-          return true;
-        // return (
-        //   address.length > 0 &&
-        //   email.length > 0 &&
-        //   phoneNumber1.length > 0 &&
-        //   phoneNumber2.length > 0
-        // );
+          return roadAddress.length > 0 && detailAddress.length > 0;
         case 3:
           return (
             email.length > 0 &&
@@ -105,8 +105,7 @@ export default function Young() {
             phoneNumber2.length === 4
           );
         case 4:
-          // return school.length > 0;
-          return true;
+          return school.length > 0;
         case 5:
           return accountCheck;
         case 6:
@@ -125,7 +124,7 @@ export default function Young() {
       userName: userName,
       ssn: ssnFront + "-" + ssnBack,
       phoneNumber: "010" + phoneNumber1 + phoneNumber2,
-      address: address,
+      address: roadAddress + " " + detailAddress,
       email: email + "@" + emailDomain,
       school: school,
       id: id,
@@ -138,7 +137,6 @@ export default function Young() {
     ssnBack,
     phoneNumber1,
     phoneNumber2,
-    address,
     email,
     school,
     id,
@@ -149,6 +147,8 @@ export default function Young() {
     isValidPassword,
     cardCheck,
     emailDomain,
+    roadAddress,
+    detailAddress,
   ]);
 
   useEffect(() => {
@@ -201,7 +201,18 @@ export default function Young() {
           />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
-          <Section3 setAddress={setAddress} />
+          <AddressFinder
+            setPostcode={setPostcode}
+            setRoadAddress={setRoadAddress}
+            setJibunAddress={setJibunAddress}
+            setExtraAddress={setExtraAddress}
+            setDetailAddress={setDetailAddress}
+            postcode={postcode}
+            roadAddress={roadAddress}
+            jibunAddress={jibunAddress}
+            detailAddress={detailAddress}
+            extraAddress={extraAddress}
+          />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
           <Section4

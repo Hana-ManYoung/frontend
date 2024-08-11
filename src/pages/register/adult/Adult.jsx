@@ -11,13 +11,13 @@ import JSConfetti from "js-confetti";
 import {
   Section1,
   Section2,
-  Section3,
   Section4,
   Section5,
   Section6,
 } from "./sections/Sections";
 
 import SwipeButton from "./components/SwipeButton";
+import AddressFinder from "../../common/AddressFinder";
 
 export default function Adult() {
   const swiperRef = useRef(0);
@@ -28,9 +28,17 @@ export default function Adult() {
   const [userName, setUserName] = useState("");
   const [ssnFront, setFrontSsn] = useState("");
   const [ssnBack, setBackSsn] = useState("");
+
   const [phoneNumber1, setPhoneNumber1] = useState("");
   const [phoneNumber2, setPhoneNumber2] = useState("");
-  const [address, setAddress] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+
+  const [postcode, setPostcode] = useState("");
+  const [roadAddress, setRoadAddress] = useState("");
+  const [jibunAddress, setJibunAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+  const [extraAddress, setExtraAddress] = useState("");
+
   const [email, setEmail] = useState("");
   const [emailDomain, setEmailDomain] = useState("naver.com");
   const [id, setId] = useState("");
@@ -42,7 +50,7 @@ export default function Adult() {
     userName: "",
     ssn: "",
     phoneNumber: "",
-    address: "",
+    address: roadAddress + " " + detailAddress,
     email: "",
     school: "",
     id: "",
@@ -82,13 +90,7 @@ export default function Adult() {
             id.length > 0 && isValidPassword === 1 && password === passwordCheck
           );
         case 2:
-          return true;
-        // return (
-        //   address.length > 0 &&
-        //   email.length > 0 &&
-        //   phoneNumber1.length > 0 &&
-        //   phoneNumber2.length > 0
-        // );
+          return roadAddress.length > 0 && detailAddress.length > 0;
         case 3:
           return (
             email.length > 0 &&
@@ -113,11 +115,12 @@ export default function Adult() {
       userName: userName,
       ssn: ssnFront + "-" + ssnBack,
       phoneNumber: "010" + phoneNumber1 + phoneNumber2,
-      address: address,
+      address: roadAddress + " " + detailAddress,
       email: email + "@" + emailDomain,
       school: "",
       id: id,
       password: password,
+      accountNumber: accountNumber,
     });
   }, [
     currentSlide,
@@ -126,13 +129,15 @@ export default function Adult() {
     ssnBack,
     phoneNumber1,
     phoneNumber2,
-    address,
     email,
     id,
     password,
     passwordCheck,
     isValidPassword,
     emailDomain,
+    roadAddress,
+    detailAddress,
+    accountNumber,
   ]);
 
   useEffect(() => {
@@ -196,7 +201,18 @@ export default function Adult() {
           />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
-          <Section3 setAddress={setAddress} />
+          <AddressFinder
+            setPostcode={setPostcode}
+            setRoadAddress={setRoadAddress}
+            setJibunAddress={setJibunAddress}
+            setExtraAddress={setExtraAddress}
+            setDetailAddress={setDetailAddress}
+            postcode={postcode}
+            roadAddress={roadAddress}
+            jibunAddress={jibunAddress}
+            detailAddress={detailAddress}
+            extraAddress={extraAddress}
+          />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
           <Section4
@@ -207,7 +223,7 @@ export default function Adult() {
           />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
-          <Section5 />
+          <Section5 setAccountNumber={setAccountNumber} />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
           <Section6 />
