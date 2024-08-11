@@ -51,14 +51,12 @@ export default function CheckCardInfo({ cardCheck, setCardCheck }) {
 function Section1() {
   return (
     <AccordionItem>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex="1" textAlign="left">
-            주요혜택
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
+      <AccordionButton>
+        <Box as="span" flex="1" textAlign="left">
+          주요혜택
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
       <AccordionPanel pb={4}>
         <div className="max-h-[400px] overflow-y-auto">
           <div className="mt-2 flex flex-col">
@@ -71,7 +69,7 @@ function Section1() {
               <div className="w-[30%] px-2 text-sm border-r-2">
                 하나머니 적립
               </div>
-              <p className="w-[60%] px-3 text-xs">
+              <div className="w-[60%] px-3 text-xs">
                 <div className="py-1">커피, 영화, 편의점 10~20% 적립</div>
                 <div className="py-1">
                   버스, 지하철, 통신자동이체 1,000 하나머니 적립
@@ -83,7 +81,7 @@ function Section1() {
                   OK캐쉬백 가맹점 OK캐쉬백 결제 시 OK캐쉬백 사용금액의 30%
                   하나머니 적립
                 </div>
-              </p>
+              </div>
             </div>
             <div className="py-3 border-t flex items-center">
               <img
@@ -94,7 +92,7 @@ function Section1() {
               <div className="w-[30%] px-2 text-sm border-r-2">
                 OK캐쉬백 플러스
               </div>
-              <p className="w-[60%] px-3 text-xs">
+              <div className="w-[60%] px-3 text-xs">
                 <div className="py-1">
                   OK캐쉬백 플러스 적립 서비스
                   <br />
@@ -103,7 +101,7 @@ function Section1() {
                   <br />
                   (지난달 이용 조건 없음)
                 </div>
-              </p>
+              </div>
             </div>
             <div className="py-3 border-t flex items-center">
               <img
@@ -114,7 +112,7 @@ function Section1() {
               <div className="w-[30%] px-2 text-sm border-r-2">
                 헤외이용 수수료 우대
               </div>
-              <p className="w-[60%] px-3 text-xs">
+              <div className="w-[60%] px-3 text-xs">
                 <div className="py-1">
                   해외ATM인출 수수료 우대
                   <br />
@@ -122,7 +120,7 @@ function Section1() {
                   <br />
                   (해외 인출 이용 수수료 3.0$ 면제)
                 </div>
-              </p>
+              </div>
             </div>
           </div>
           <div className="py-3 border-t flex items-center">
@@ -132,11 +130,11 @@ function Section1() {
               alt=""
             />
             <div className="w-[30%] px-2 text-sm border-r-2">놀이공원</div>
-            <p className="w-[60%] px-3 text-xs">
+            <div className="w-[60%] px-3 text-xs">
               <div className="py-1">
                 롯데월드/에버랜드 자유이용권 50% 할인 (월1회/연6회 제공)
               </div>
-            </p>
+            </div>
           </div>
           <div className="py-3 border-t flex items-center">
             <img
@@ -147,11 +145,11 @@ function Section1() {
             <div className="w-[30%] px-2 text-sm border-r-2">
               하나마니 서비스
             </div>
-            <p className="w-[60%] px-3 text-xs">
+            <div className="w-[60%] px-3 text-xs">
               <div className="py-1">
                 하나금융그룹에서 제공하는 생활금융플랫폼
               </div>
-            </p>
+            </div>
           </div>
         </div>
       </AccordionPanel>
@@ -162,21 +160,19 @@ function Section1() {
 function Section2() {
   return (
     <AccordionItem>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex="1" textAlign="left">
-            부가서비스 유지 및 변경 안내
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
+      <AccordionButton>
+        <Box as="span" flex="1" textAlign="left">
+          부가서비스 유지 및 변경 안내
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
       <AccordionPanel pb={4}>
         <div className="max-h-[400px] overflow-y-auto">
-          <p className="py-1 text-sm">
+          <div className="py-1 text-sm">
             - 카드이용시 제공되는 포인트 및 할인혜택 등의 부가서비스는 카드
             신규출시 (20201년 6월 07일) 이후 3년 이상 축소·폐지 없이 유지됩니다.
-          </p>
-          <p className="py-1 text-sm">
+          </div>
+          <div className="py-1 text-sm">
             - 다만, 다음과 같은 사유가 발생한 경우 카드사는 부가서비스를 변경할
             수 있습니다.
             <div className="py-1 text-xs">
@@ -188,8 +184,8 @@ function Section2() {
               <br />③ 부가서비스를 3년 이상 제공한 상태에서 해당 부가서비스로
               인해 상품의 수익성이 현저히 낮아진 경우
             </div>
-          </p>
-          <p className="py-1 text-sm">
+          </div>
+          <div className="py-1 text-sm">
             - 카드사가 부가서비스를 변경하는 경우 변경 사유, 변경 내용 등을 다음
             각 호에서 정하는 기간에 따라 서면, 우편, 또는 팩스에 따른 서신전달,
             전화, 전자우편 또는 이에 준하는 전자적 의사표시, 그 밖에 상대방에
@@ -203,7 +199,7 @@ function Section2() {
               1. ①,② : 사유발생 즉시 <br />
               2. ③ : 부가서비스 변경일 6개월 이전
             </div>
-          </p>
+          </div>
         </div>
       </AccordionPanel>
     </AccordionItem>
@@ -213,17 +209,15 @@ function Section2() {
 function Section3() {
   return (
     <AccordionItem>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex="1" textAlign="left">
-            해외결제 및 기타 안내
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
+      <AccordionButton>
+        <Box as="span" flex="1" textAlign="left">
+          해외결제 및 기타 안내
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
       <AccordionPanel pb={4}>
         <div className="max-h-[400px] overflow-y-auto">
-          <p className="py-1 text-sm">
+          <div className="py-1 text-sm">
             <div className="py-1">
               ① 해외 이용 시(해외사이트 거래 포함) 미화(USD)기준 거래 금액에
               카드 승인시점의 하나은행이 고시한 전신환매도율을 적용한 금액으로
@@ -245,12 +239,12 @@ function Section3() {
               국제브랜드수수료(mastercard 1.0%)와 하나카드가 부과하는
               해외서비스수수료(US$0.5)가 포함됩니다.
             </div>
-          </p>
+          </div>
           <div className="px-3 py-3 bg-stone-100">
             <div className="text-sm">
               <strong>해외 이용 시 청구 금액 산출 방법</strong>
             </div>
-            <p className="text-xs">
+            <div className="text-xs">
               <div className="py-[0.1rem]">
                 - 해외 이용 시 청구금액 = (거래미화금액 X 전신환매도율¹) +
                 국제브랜드수수료² + 해외서비스수수료³
@@ -266,9 +260,9 @@ function Section3() {
               <div className="py-[0.1rem]">
                 3.해외서비스수수료 = (거래건수 X US$0.5) X 전신환매도율
               </div>
-            </p>
+            </div>
           </div>
-          <p className="mt-3 text-sm">
+          <div className="mt-3 text-sm">
             <div>
               {" "}
               - 해외 가맹점에서 원화로 결제할 경우(DCC) 추가 수수료가 발생하므로
@@ -305,7 +299,7 @@ function Section3() {
               점검시에는 23:00~06:00 중 체크카드 이용이 일시적으로 제한될 수
               있습니다.
             </div>
-          </p>
+          </div>
         </div>
       </AccordionPanel>
     </AccordionItem>
@@ -315,17 +309,15 @@ function Section3() {
 function Section4() {
   return (
     <AccordionItem>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex="1" textAlign="left">
-            하이브리드 서비스 및 후불교통카드 안내
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
+      <AccordionButton>
+        <Box as="span" flex="1" textAlign="left">
+          하이브리드 서비스 및 후불교통카드 안내
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
       <AccordionPanel pb={4}>
         <div className="max-h-[400px] overflow-y-auto">
-          <p className="py-1 text-sm">
+          <div className="py-1 text-sm">
             <div>
               - 체크카드 이용 중 통장 잔액이 부족할 경우 월 최대 30만원 한도
               내에서 신용거래로 결제되는 서비스
@@ -386,7 +378,7 @@ function Section4() {
                 <a href="www.hanacard.co.kr"> www.hanacard.co.kr</a>
               </div>
             </div>
-          </p>
+          </div>
         </div>
       </AccordionPanel>
     </AccordionItem>
@@ -396,17 +388,15 @@ function Section4() {
 function Section5() {
   return (
     <AccordionItem>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex="1" textAlign="left">
-            가족카드 이용 안내
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
+      <AccordionButton>
+        <Box as="span" flex="1" textAlign="left">
+          가족카드 이용 안내
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
       <AccordionPanel pb={4}>
         <div className="max-h-[400px] overflow-y-auto">
-          <p className="text-sm">
+          <div className="text-sm">
             - 가족카드 연회비는 각 상품별 연회비 부과 기준을 따르며 가족카드
             발급매수에는 제한이 없습니다.
             <div className="py-1">
@@ -447,7 +437,7 @@ function Section5() {
               - 본인회원이 요청할 경우 가족회원의 동의 없이 가족카드가
               한도감액/정지/해지될 수 있습니다.
             </div>
-          </p>
+          </div>
         </div>
       </AccordionPanel>
     </AccordionItem>
@@ -456,17 +446,15 @@ function Section5() {
 function Section6() {
   return (
     <AccordionItem>
-      <h2>
-        <AccordionButton>
-          <Box as="span" flex="1" textAlign="left">
-            미성년자 체크카드 발급안내
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
+      <AccordionButton>
+        <Box as="span" flex="1" textAlign="left">
+          미성년자 체크카드 발급안내
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
       <AccordionPanel pb={4}>
         <div className="max-h-[400px] overflow-y-auto">
-          <p className="text-sm">
+          <div className="text-sm">
             - 비교통 체크카드
             <div className="pl-2 text-xs">
               - 영업점 : 만 14~ 17세 본인 카드 발급 가능(리틀프렌즈 체크카드는
@@ -474,15 +462,15 @@ function Section6() {
               <br />- 홈페이지/앱 : 만 17세 이상(주민등록증 혹은 운전면허증
               소지) 홈페이지/앱으로 카드 신청 가능
             </div>
-          </p>
-          <p className="py-2 text-sm">
+          </div>
+          <div className="py-2 text-sm">
             - 후불교통 체크카드(BC 리틀프렌즈 틴에이저 체크카드)
             <div className="pl-2 text-xs">
               - 영업점 : 만 12~17세 미성년자의 법정대리인 신청 가능(본인 신청
               불가)
             </div>
-          </p>
-          <p className="py-2 text-sm">
+          </div>
+          <div className="py-2 text-sm">
             - 신청서류 안내
             <div className="pl-2 text-xs">
               - 법정대리인 신청 시 : 법정대리인 신분증, 미성년자 기준
@@ -496,7 +484,7 @@ function Section6() {
               <br />※ 미성년자 본인 신청 시 주민등록증/청소년증/운전면허증
               소지한 경우 제출서류 없음
             </div>
-          </p>
+          </div>
         </div>
       </AccordionPanel>
     </AccordionItem>
