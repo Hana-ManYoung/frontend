@@ -28,7 +28,7 @@ function App() {
         <Route path="profile" element={"프로필입니다"} />
         <Route path="planner" element={<Planner />} />
         <Route path="challenge" element={<Challenge />} />
-        <Route path="challenge/diary" element={<Diary />} />
+        {/* <Route path="challenge/diary" element={<Diary />} /> */}
         <Route path="rank" element={<Ranking />} />
         <Route path="chat" element={"채팅입니다"} />
       </Route>
