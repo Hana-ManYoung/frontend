@@ -1,5 +1,4 @@
 import { FaRankingStar } from "react-icons/fa6";
-import RankBar from "../components/RankBar";
 import { useEffect, useState } from "react";
 
 import { FaCrown } from "react-icons/fa6";
@@ -7,9 +6,10 @@ import { FaSchoolFlag } from "react-icons/fa6";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 
-import Loading from "../components/Loading";
 import axios from "axios";
-import { SERVER_URL } from "../etc/url";
+import Loading from "../../common/Loading";
+import { SERVER_URL } from "../../../etc/url";
+import RankBar from "./components/RankBar";
 
 export default function Ranking() {
   const [selectedRank, setSelectedRank] = useState(0);

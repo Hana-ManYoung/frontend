@@ -3,7 +3,7 @@ import { IoMdSquare } from "react-icons/io";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "@fullcalendar/core/locales/ko";
-import "../css/calendar.css";
+import "../../../../css/calendar.css";
 
 export default function Calendar({ events }) {
   return (

@@ -1,15 +1,14 @@
 import axios from "axios";
-import { SERVER_URL } from "../etc/url";
 import { useEffect, useRef, useState } from "react";
-import Loading from "../components/Loading";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { IoIosArrowForward } from "react-icons/io";
-import { getCategoryBgColor, getCategoryKor } from "../js/getCategoryKor";
+import { getCategoryBgColor, getCategoryKor } from "../../../js/getCategoryKor";
 import { IoMdSquare } from "react-icons/io";
+import { SERVER_URL } from "../../../etc/url";
+import Loading from "../../common/Loading";
 
-// 초기 카테고리 설정
 const INITIAL_CATEGORY_SUMS = {
   sho: 0,
   tra: 0,
@@ -77,7 +76,6 @@ export default function Diary() {
 
       setCategorySums(sums);
 
-      // convert categorySums to format suitable for PieChart
       const chartData = Object.keys(sums).map((key) => ({
         name: getCategoryKor(key),
         value: sums[key],

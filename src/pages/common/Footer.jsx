@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="w-full mt-10">
+    <div className="w-full mt-10 border-t">
       <div className="w-[70%] pt-5 mx-auto flex items-center">
         <div className="w-full flex justify-between ">
           <a href="https://www.kebhana.com/cont/smartapp/smartapp14/smartapp1401/index.jsp">

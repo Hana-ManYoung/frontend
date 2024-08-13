@@ -13,8 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { FaCircleDot } from "react-icons/fa6";
 import { FaRegCircleDot } from "react-icons/fa6";
 import axios from "axios";
-import { SERVER_URL } from "../etc/url";
-import LoadingModal from "./LoadingModal";
+import LoadingModal from "../../../common/LoadingModal";
+import { SERVER_URL } from "../../../../etc/url";
 
 export default function ChallengeCard({ data, bg, imgUrl }) {
   const navigate = useNavigate();

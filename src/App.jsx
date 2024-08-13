@@ -1,17 +1,17 @@
 import "./App.css";
 import "animate.css";
 import { Outlet, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Main from "./pages/Main";
-import Header from "./components/Header";
-import Planner from "./pages/Planner";
-import Challenge from "./pages/Challenge";
-import Ranking from "./pages/Ranking";
-import Diary from "./pages/Diary";
 import Register from "./pages/register/Register";
-import Logo from "./components/Logo";
 import Young from "./pages/register/young/Young";
 import Adult from "./pages/register/adult/Adult";
+import Main from "./pages/main/root/Main";
+import Login from "./pages/login/Login";
+import Planner from "./pages/main/planner/Planner";
+import Challenge from "./pages/main/challenge/Challenge";
+import Header from "./pages/common/Header";
+import Logo from "./pages/common/Logo";
+import Ranking from "./pages/main/ranking/Ranking";
+import Diary from "./pages/main/diary/Diary";
 
 function App() {
   return (

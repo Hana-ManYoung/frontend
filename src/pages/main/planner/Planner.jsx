@@ -8,12 +8,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import ConsumeRow from "../components/ConsumeRow";
 import { IoMdSquare } from "react-icons/io";
 import axios from "axios";
-import { SERVER_URL } from "../etc/url";
 import { useEffect, useState } from "react";
-import Loading from "../components/Loading";
+import Loading from "../../common/Loading";
+import ConsumeRow from "./components/ConsumeRow";
+import { SERVER_URL } from "../../../etc/url";
 
 export default function Planner() {
   const [useHistory, setUseHistory] = useState({
@@ -44,7 +44,7 @@ export default function Planner() {
       };
 
       getUseHistory();
-    }, [3000]);
+    }, [2000]);
   }, []);
 
   if (isLoading) return <Loading />;

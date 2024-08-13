@@ -1,6 +1,4 @@
 import { IoIosArrowForward } from "react-icons/io";
-import ChallengeCard from "../components/ChallengeCard";
-import Calendar from "../components/Calendar";
 import {
   Modal,
   ModalBody,
@@ -10,12 +8,14 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import PointRow from "../components/PointRow";
+import PointRow from "./components/PointRow";
 import { useEffect, useState } from "react";
 import { Cell, Legend, Pie, PieChart } from "recharts";
-import { SERVER_URL } from "../etc/url";
 import axios from "axios";
-import Loading from "../components/Loading";
+import Loading from "../../common/Loading";
+import ChallengeCard from "./components/ChallengeCard";
+import { SERVER_URL } from "../../../etc/url";
+import Calendar from "./components/Calendar";
 
 export default function Challenge() {
   const [savingData, setSavingData] = useState({});
