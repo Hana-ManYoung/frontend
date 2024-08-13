@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { HeaderLogo } from "./Logo";
 import { IoPersonCircleOutline } from "react-icons/io5";
+import { HeaderLogo } from "./Logo";
 
 export default function Header() {
   return (

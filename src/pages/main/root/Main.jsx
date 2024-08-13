@@ -2,9 +2,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../../../css/swiper-custom.css";
+
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import { useNavigate } from "react-router-dom";
 
 import Footer from "../../common/Footer";

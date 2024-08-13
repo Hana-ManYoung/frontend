@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Modal,
   ModalBody,
@@ -7,14 +8,14 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { IoIosArrowForward } from "react-icons/io";
+
 import { useNavigate } from "react-router-dom";
-import { FaCircleDot } from "react-icons/fa6";
-import { FaRegCircleDot } from "react-icons/fa6";
+import { IoIosArrowForward } from "react-icons/io";
+import { FaCircleDot, FaRegCircleDot } from "react-icons/fa6";
+import { SERVER_URL } from "../../../../etc/url";
+
 import axios from "axios";
 import LoadingModal from "../../../common/LoadingModal";
-import { SERVER_URL } from "../../../../etc/url";
 
 export default function ChallengeCard({ data, bg, imgUrl }) {
   const navigate = useNavigate();

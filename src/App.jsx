@@ -7,11 +7,12 @@ import Adult from "./pages/register/adult/Adult";
 import Main from "./pages/main/root/Main";
 import Login from "./pages/login/Login";
 import Planner from "./pages/main/planner/Planner";
-import Challenge from "./pages/main/challenge/Challenge";
 import Header from "./pages/common/Header";
 import Logo from "./pages/common/Logo";
 import Ranking from "./pages/main/ranking/Ranking";
 import Diary from "./pages/main/diary/Diary";
+import AyjImg from "./pages/common/AyjImg";
+import Challenge from "./pages/main/challenge/Challenge";
 
 function App() {
   return (
@@ -52,11 +53,7 @@ function RegisterOutlet() {
   return (
     <div className="relative w-screen h-full min-h-screen bg-hana">
       <div className="w-full max-w-[1024px] min-h-screen mx-auto bg-white shadow-xl flex flex-col justify-center items-center">
-        <img
-          src={process.env.PUBLIC_URL + "/images/ayj/1.png"}
-          className="absolute right-0 bottom-0 w-0 md:w-32 lg:w-48"
-          alt=""
-        />
+        {/* <AyjImg /> */}
         <Logo />
         <Outlet />
       </div>

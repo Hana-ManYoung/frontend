@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Logo from "../common/Logo";
+import AyjImg from "../common/AyjImg";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -51,11 +52,7 @@ export default function Login() {
               </button>
             </div>
           </div>
-          <img
-            src={process.env.PUBLIC_URL + "/images/ayj/1.png"}
-            className="absolute right-0 bottom-0 w-0 md:w-32 lg:w-48"
-            alt=""
-          />
+          {/* <AyjImg /> */}
         </div>
       </div>
     </>
