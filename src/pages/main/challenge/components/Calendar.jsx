@@ -8,7 +8,7 @@ import "../../../../css/calendar.css";
 
 export default function Calendar({ events }) {
   return (
-    <div className="relative mt-4 h-[26rem] px-6 pt-4 pb-6 bg-emerald-50 rounded-xl shadow-md shadow-gray-200">
+    <div className="relative mt-4 h-[26rem] px-6 pt-4 pb-6 bg-emerald-100 rounded-xl shadow-md shadow-gray-200">
       <div className="absolute text-xs text-gray-500 bottom-1 right-7 z-10 flex">
         <div className="mr-1 flex items-center">
           <IoMdSquare className="text-blue-300 mr-1" /> <p>참여 O</p>

@@ -7,7 +7,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 
-import Footer from "../../common/Footer";
+import BottomNav from "../../common/BottomNav";
 import Section1 from "./sections/Section1";
 import { Slides1, Slides2, Slides3, Slides4, Slides5 } from "./sections/Slides";
 
@@ -19,7 +19,7 @@ export default function Main() {
   };
   return (
     <>
-      <div className="w-[90%] mx-auto  animate__animated animate__fadeIn">
+      <div className="w-[90%] mx-auto animate__animated animate__fadeIn">
         <Section1 />
         <div className="mt-10 text-2xl">
           <h1 className="flex items-center">
@@ -43,7 +43,7 @@ export default function Main() {
             speed={1000}
             autoplay={{ delay: 3500, disableOnInteraction: false }}
             loop={true}
-            onClick={() => navigate(process.env.PUBLIC_URL + "/main/challenge")}
+            onClick={() => navigate(process.env.PUBLIC_URL + "/challenge")}
             className="cursor-pointer"
           >
             <SwiperSlide style={swiperStyle}>
@@ -64,7 +64,7 @@ export default function Main() {
           </Swiper>
         </div>
       </div>
-      <Footer />
+      <BottomNav />
     </>
   );
 }

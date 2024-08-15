@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { IoIosArrowForward } from "react-icons/io";
-import { getCategoryBgColor, getCategoryKor } from "../../../js/getCategoryKor";
+import { getCategoryKor } from "../../../js/getCategoryKor";
 import { SERVER_URL } from "../../../etc/url";
 import Loading from "../../common/Loading";
 import Section1 from "./sections/Section1";
@@ -143,7 +143,7 @@ export default function Diary() {
         onClick={() => swiperRef.current && swiperRef.current.slideNext()}
         className="w-full my-5 py-4 text-center text-2xl text-white btn-hana-blue rounded-2xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out"
       >
-        <div className="relative flex justify-center items-center group">
+        <div className ="relative flex justify-center items-center group">
           <p>
             {currentSlide === 0 ? "소비계획 비교하기" : "소비계획 작성하기"}
           </p>

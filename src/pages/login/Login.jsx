@@ -6,7 +6,7 @@ export default function Login() {
   const navigate = useNavigate();
   const handleSubmit = () => {
     // TODO: axios 추가
-    navigate(process.env.PUBLIC_URL + "/main");
+    navigate(process.env.PUBLIC_URL + "/");
   };
   return (
     <>
@@ -52,7 +52,7 @@ export default function Login() {
               </button>
             </div>
           </div>
-          {/* <AyjImg /> */}
+          <AyjImg />
         </div>
       </div>
     </>

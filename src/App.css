@@ -12,6 +12,10 @@ body {
   font-family: "HANA" !important;
 }
 
+.font-hana {
+  font-family: "HANA" !important;
+}
+
 .font-basic {
   font-family: "BASIC" !important;
 }
@@ -29,13 +33,17 @@ body {
 }
 
 .bg-hana {
-  background-color: #f2f5f1;
+  background-color: #f5f8f4;
 }
 
 .animate-dots::after {
   content: "";
   display: inline-block;
   animation: dots 2s steps(4, end) infinite;
+}
+
+.bg-header {
+  background-color: #fcfffe;
 }
 
 @keyframes dots {
@@ -52,4 +60,8 @@ body {
   80% {
     content: "";
   }
+}
+
+.filter-white {
+  filter: brightness(0) invert(1);
 }

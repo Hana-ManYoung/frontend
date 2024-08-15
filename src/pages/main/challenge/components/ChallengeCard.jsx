@@ -27,7 +27,7 @@ export default function ChallengeCard({ data, bg, imgUrl }) {
   const handleClick = () => {
     if (data.id === 1) {
       console.log("소비계획/가계부 페이지 전환");
-      navigate(process.env.PUBLIC_URL + "/main/challenge/diary");
+      navigate(process.env.PUBLIC_URL + "/challenge/diary");
     } else if (data.id === 0) {
       setModalSize("sm");
       onOpen();

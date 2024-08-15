@@ -6,6 +6,7 @@ import Loading from "../../common/Loading";
 import Section1 from "./sections/Section1";
 import Section2 from "./sections/Section2";
 import Section3 from "./sections/Section3";
+import LoadingSkeleton from "../../common/LoadingSkeleton";
 
 export default function Planner() {
   const [useHistory, setUseHistory] = useState({
@@ -36,10 +37,10 @@ export default function Planner() {
       };
 
       getUseHistory();
-    }, [2000]);
+    }, [1250]);
   }, []);
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingSkeleton />;
 
   return (
     <div className="w-[90%] mx-auto">

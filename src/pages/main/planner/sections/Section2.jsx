@@ -3,9 +3,9 @@ import ConsumeRow from "../components/ConsumeRow";
 
 export default function Section2({ useHistory, consumeData }) {
   return (
-    <div className="w-full mt-10 px-8 py-8 rounded-xl bg-stone-50 shadow-md">
-      <div className="flex justify-between items-end">
-        <h2 className="text-2xl font-bold">
+    <div className="w-full mt-10 px-8 py-8 rounded-xl text-gray-500 bg-gradient-to-r from-blue-100 to-lime-100  shadow-md">
+      <div className="text-black flex justify-between items-end">
+        <h2 className="text-2xl text-gray-600 font-bold">
           이용내역{" "}
           <span className="text-sm text-gray-500">
             오늘의 가계부를 작성해주세요!
@@ -18,7 +18,7 @@ export default function Section2({ useHistory, consumeData }) {
           가계부 / 소비계획 챌린지
         </a>
       </div>
-      <div className="mt-2 flex justify-between items-center">
+      <div className="mt-3 flex justify-between items-center">
         <div className="w-[39%] h-60 overflow-y-auto bg-white">
           <div className="w-[90%] py-2 mx-auto font-basic">
             <div className="pt-1 pb-2 border-b-2 flex justify-between items-center">
@@ -35,7 +35,7 @@ export default function Section2({ useHistory, consumeData }) {
           </div>
         </div>
         <div className="w-[59%] h-60 font-basic flex flex-col gap-5">
-          <div className="bg-white py-5 flex-1 flex">
+          <div className="bg-white py-5 rounded-xl flex-1 flex">
             <div className="w-[50%] px-5">
               <h3>이번달 수입</h3>
               <p className="mt-2 text-2xl font-bold text-hana flex justify-center items-center">
@@ -49,7 +49,7 @@ export default function Section2({ useHistory, consumeData }) {
               </p>
             </div>
           </div>
-          <div className="bg-white py-5 flex-1 flex">
+          <div className="bg-white py-5 rounded-xl flex-1 flex">
             <div className="w-[50%] px-5">
               <h3>이번달 소비</h3>
               <p className="mt-2 text-2xl font-bold text-orange-500 flex justify-center items-center">

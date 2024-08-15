@@ -21,26 +21,26 @@ export default function Section2({ challengeInfo }) {
         <ChallengeCard
           data={challengeInfo[1]}
           bg={"bg-red-50"}
-          imgUrl={"/images/challenge/quiz.png"}
+          imgUrl={"/images/challenge/plan.png"}
         />
       </div>
       <div className="mt-4 flex gap-5">
         <ChallengeCard
           data={challengeInfo[2]}
           bg={"bg-amber-50"}
-          imgUrl={"/images/challenge/quiz.png"}
+          imgUrl={"/images/challenge/account.png"}
         />
         <ChallengeCard
           data={challengeInfo[3]}
           bg={"bg-purple-50"}
-          imgUrl={"/images/challenge/quiz.png"}
+          imgUrl={"/images/challenge/tarot.png"}
         />
       </div>
       <div className="mt-4 flex gap-5">
         <ChallengeCard
           data={challengeInfo[4]}
           bg={"bg-stone-100"}
-          imgUrl={"/images/challenge/quiz.png"}
+          imgUrl={"/images/challenge/parent.png"}
         />
         <div className="w-[50%]"></div>
       </div>

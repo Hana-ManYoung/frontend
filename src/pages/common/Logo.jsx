@@ -18,7 +18,7 @@ export default function Logo() {
 
 export function HeaderLogo() {
   return (
-    <Link to="/main" className="flex items-center">
+    <Link to="/" className="flex items-center">
       <img
         src={process.env.PUBLIC_URL + "/images/hana/logo.png"}
         alt="logo"
