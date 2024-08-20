@@ -64,7 +64,9 @@ export default function Main() {
           </Swiper>
         </div>
       </div>
-      <BottomNav />
+      <div className="mt-12 border-t">
+        <BottomNav />
+      </div>
     </>
   );
 }

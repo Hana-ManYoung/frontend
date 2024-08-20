@@ -7,7 +7,6 @@ import Adult from "./pages/register/adult/Adult";
 import Main from "./pages/main/root/Main";
 import Login from "./pages/login/Login";
 import Planner from "./pages/main/planner/Planner";
-import Header from "./pages/common/Header";
 import Logo from "./pages/common/Logo";
 import Ranking from "./pages/main/ranking/Ranking";
 import Diary from "./pages/main/diary/Diary";
@@ -16,6 +15,9 @@ import Challenge from "./pages/main/challenge/Challenge";
 import Profile from "./pages/main/profile/Profile";
 import Intro from "./pages/login/Intro";
 import Footer from "./pages/common/Footer";
+import Parent from "./pages/parent/Parent";
+import Admin from "./pages/admin/Admin";
+import MainHeader from "./pages/common/MainHeader";
 
 function App() {
   return (
@@ -36,6 +38,9 @@ function App() {
         <Route path="chat" element={"채팅입니다"} />
         <Route path="profile" element={<Profile />} />
       </Route>
+      <Route path="/parent" element={<Parent />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="*" element={<div>404</div>} />
     </Routes>
   );
 }
@@ -43,10 +48,10 @@ function App() {
 function PagesOutlet() {
   return (
     <>
-      <Header />
+      <MainHeader />
       <div className="relative h-full min-h-[calc(100vh-78px)] bg-gradient-to-b from-red-50 to-emerald-50">
-        <div className="w-full max-w-[1024px] min-h-[calc(100vh-78px)] mx-auto pt-6 pb-10 bg-white shadow-xl flex flex-col">
-          <AyjImg />
+        <div className="w-full max-w-[1024px] min-h-[calc(100vh-78px)] mx-auto pt-6 pb-10 bg-hana shadow-xl flex flex-col">
+          {/* <AyjImg /> */}
           <Outlet />
         </div>
       </div>

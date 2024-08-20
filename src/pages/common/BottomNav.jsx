@@ -1,6 +1,6 @@
 export default function BottomNav() {
   return (
-    <div className="w-full mt-10 border-t">
+    <div className="w-full mt-10">
       <h2 className="w-[70%] mt-10 text-lg font-bold mx-auto animate__animated animate__headShake">
         하나금융 패밀리
       </h2>

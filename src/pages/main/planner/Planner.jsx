@@ -37,10 +37,11 @@ export default function Planner() {
       };
 
       getUseHistory();
-    }, [1250]);
+    }, [3000]);
   }, []);
 
-  if (isLoading) return <LoadingSkeleton />;
+  // if (isLoading) return <LoadingSkeleton />;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-[90%] mx-auto">

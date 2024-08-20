@@ -1,5 +1,6 @@
 import { IoMdSquare } from "react-icons/io";
 import ConsumeRow from "../components/ConsumeRow";
+import ConsumeRowBox from "../../../common/ConsumeRowBox";
 
 export default function Section2({ useHistory, consumeData }) {
   return (
@@ -29,16 +30,14 @@ export default function Section2({ useHistory, consumeData }) {
                 className="h-5"
               />
             </div>
-            {consumeData.map((data, index) => (
-              <ConsumeRow key={index} data={data} />
-            ))}
+            <ConsumeRowBox consumeData={consumeData} />
           </div>
         </div>
         <div className="w-[59%] h-60 font-basic flex flex-col gap-5">
           <div className="bg-white py-5 rounded-xl flex-1 flex">
             <div className="w-[50%] px-5">
               <h3>이번달 수입</h3>
-              <p className="mt-2 text-2xl font-bold text-hana flex justify-center items-center">
+              <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
                 {useHistory.income.toLocaleString("ko-KR")}원
               </p>
             </div>
@@ -52,7 +51,7 @@ export default function Section2({ useHistory, consumeData }) {
           <div className="bg-white py-5 rounded-xl flex-1 flex">
             <div className="w-[50%] px-5">
               <h3>이번달 소비</h3>
-              <p className="mt-2 text-2xl font-bold text-orange-500 flex justify-center items-center">
+              <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
                 {useHistory.consume.toLocaleString("ko-KR")}원
               </p>
             </div>

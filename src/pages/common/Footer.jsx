@@ -55,8 +55,8 @@ export default function Footer({ bgColor, color }) {
                 }
               />
               <p className="ml-1 text-xl font-bold">하나에서 만나 Young</p>
-              <div className="ml-5 text-left">
-                ⓒ Hana Bank. All rights reserved.
+              <div className="ml-5 font-basic text-left">
+                ⓒ Hana Man Young. All rights reserved.
               </div>
             </div>
           </div>

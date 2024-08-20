@@ -1,13 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { HeaderLogo } from "./Logo";
+import MenuBtn from "./MenuBtn";
 
-export default function Header() {
+export default function MainHeader() {
   const location = useLocation();
   const currentPath = location.pathname;
 
   return (
-    <div className="w-full py-4 bg-header shadow-lg border-b">
+    <div className="w-full py-5 bg-white shadow-lg border-b">
       <div className="max-w-[1280px] mx-auto flex items-center justify-between">
         <div className="w-[35%]">
           <HeaderLogo />
@@ -35,23 +36,5 @@ export default function Header() {
         </Link>
       </div>
     </div>
-  );
-}
-
-function MenuBtn({ name, target, currentPath }) {
-  const isActive = currentPath === target;
-
-  return (
-    <Link to={target} className="w-full">
-      <div
-        className={`py-2 text-center text-lg text-gray-600 font-bold cursor-pointer transition-colors duration-300 ease-in-out ${
-          isActive
-            ? "border-b-2 border-emerald-600"
-            : "border-b-2 border-transparent hover:border-emerald-600"
-        }`}
-      >
-        {name}
-      </div>
-    </Link>
   );
 }
