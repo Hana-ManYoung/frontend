@@ -9,8 +9,8 @@ export default function Logo() {
         className="w-14"
       />
       <div className="ml-1 text-hana font-bold flex">
-        <p className="mr-3 text-3xl">하나에서 만나 Young</p>
-        <p className="flex items-end text-base">하나만영</p>
+        <p className="mr-3 text-3xl">하나만영</p>
+        <p className="flex items-end text-base">하나에서 만나 Young</p>
       </div>
     </Link>
   );
@@ -25,8 +25,8 @@ export function HeaderLogo({ type, color }) {
         className="w-10"
       />
       <div className="ml-1 text-hana font-bold flex">
-        <p className="mr-3 text-2xl">하나에서 만나 Young</p>
-        <p className="flex items-end text-sm">하나만영</p>
+        <p className="mr-3 text-2xl">하나만영</p>
+        <p className="flex items-end text-sm">하나에서 만나 Young</p>
         <p className={`ml-3 flex items-end text-sm ${color}`}>{type}</p>
       </div>
     </Link>

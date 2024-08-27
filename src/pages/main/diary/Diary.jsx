@@ -136,14 +136,14 @@ export default function Diary() {
           />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
-          <Section2 />
+          <Section2 categorySums={categorySums} />
         </SwiperSlide>
       </Swiper>
       <button
         onClick={() => swiperRef.current && swiperRef.current.slideNext()}
         className="w-full my-5 py-4 text-center text-2xl text-white btn-hana-blue rounded-2xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out"
       >
-        <div className ="relative flex justify-center items-center group">
+        <div className="relative flex justify-center items-center group">
           <p>
             {currentSlide === 0 ? "소비계획 비교하기" : "소비계획 작성하기"}
           </p>

@@ -8,8 +8,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 
 import BottomNav from "../../common/BottomNav";
+import Loading from "../../common/Loading";
 import Section1 from "./sections/Section1";
 import { Slides1, Slides2, Slides3, Slides4, Slides5 } from "./sections/Slides";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Main() {
   const navigate = useNavigate();
@@ -17,6 +20,28 @@ export default function Main() {
     width: "100%",
     height: "350px",
   };
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const getCardInfo = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       // const result = await axios.get("http://localhost:8080/card/all");
+  //       const result = await axios.get("http://localhost:8080/user/all");
+  //       console.log(result.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   getCardInfo();
+  // }, []);
+
+  if (isLoading) return <Loading />;
+
   return (
     <>
       <div className="w-[90%] mx-auto animate__animated animate__fadeIn">

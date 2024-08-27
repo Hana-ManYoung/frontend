@@ -2,11 +2,12 @@ import { Link, useLocation } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { HeaderLogo } from "./Logo";
 import MenuBtn from "./MenuBtn";
+import { useSelector } from "react-redux";
 
 export default function MainHeader() {
   const location = useLocation();
   const currentPath = location.pathname;
-
+  const user = useSelector((state) => state.user);
   return (
     <div className="w-full py-5 bg-white shadow-lg border-b">
       <div className="max-w-[1280px] mx-auto flex items-center justify-between">
@@ -31,8 +32,14 @@ export default function MainHeader() {
           to="/profile"
           className="w-[20%] flex justify-center items-center"
         >
-          <p className="mr-2">규은님 안녕하세요!</p>
-          <IoPersonCircleOutline size={30} />
+          {user.user_name === undefined ? (
+            <p>로그인이 필요합니다</p>
+          ) : (
+            <>
+              <p className="mr-2">{user.user_name}님 안녕하세요!</p>
+              <IoPersonCircleOutline size={30} />
+            </>
+          )}
         </Link>
       </div>
     </div>

@@ -22,6 +22,7 @@ import {
 import SwipeButton from "./components/SwipeButton";
 import InfoModal from "./components/InfoModal";
 import AddressFinder from "../../common/AddressFinder";
+import getAccountNumber from "../../../js/getAccountNumber";
 
 export default function Young() {
   const swiperRef = useRef(0);
@@ -67,6 +68,8 @@ export default function Young() {
   const [btnActive, setBtnActive] = useState(false);
 
   const handleSlideChange = () => {
+    console.log(userInfo);
+    console.log(getAccountNumber());
     if (swiperRef.current) {
       const currentIndex = swiperRef.current.activeIndex;
       setCurrentSlide(currentIndex);
