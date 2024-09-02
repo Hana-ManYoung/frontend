@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useDisclosure } from "@chakra-ui/react";
 import { swiperStyle } from "../../../css/swiperStyle";
 
 import "swiper/css";
@@ -20,13 +19,12 @@ import {
 } from "./sections/Sections";
 
 import SwipeButton from "./components/SwipeButton";
-import InfoModal from "./components/InfoModal";
 import AddressFinder from "../../common/AddressFinder";
-import getAccountNumber from "../../../js/getAccountNumber";
+import axios from "axios";
+import { date, month, year } from "../../../js/getDateInfo";
 
 export default function Young() {
   const swiperRef = useRef(0);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [selectCard, setSelectCard] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -53,23 +51,14 @@ export default function Young() {
   const [isValidPassword, setIsValidPassword] = useState(0);
   const [accountCheck, setAccountCheck] = useState(false);
   const [cardCheck, setCardCheck] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    userType: "m_stu",
-    userName: "",
-    ssn: "",
-    phoneNumber: "",
-    address: "",
-    email: "",
-    school: "",
-    id: "",
-    password: "",
-  });
+  const [userInfo, setUserInfo] = useState({});
+
+  const [accPw, setAccPw] = useState("");
+  const [cardPw, setCardPw] = useState("");
 
   const [btnActive, setBtnActive] = useState(false);
 
   const handleSlideChange = () => {
-    console.log(userInfo);
-    console.log(getAccountNumber());
     if (swiperRef.current) {
       const currentIndex = swiperRef.current.activeIndex;
       setCurrentSlide(currentIndex);
@@ -84,8 +73,13 @@ export default function Young() {
 
   const handleRegist = () => {
     console.log(userInfo);
-    console.log("axios 요청 및 로딩");
-    swiperRef.current.slideNext();
+    try {
+      axios.post("http://localhost:8080/user/register/young", userInfo);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      swiperRef.current.slideNext();
+    }
   };
 
   useEffect(() => {
@@ -110,9 +104,9 @@ export default function Young() {
         case 4:
           return school.length > 0;
         case 5:
-          return accountCheck;
+          return accountCheck && accPw.length === 4;
         case 6:
-          return cardCheck && selectCard !== null;
+          return cardCheck && selectCard !== null && cardPw.length === 4;
         case 7:
           return true;
         default:
@@ -123,15 +117,18 @@ export default function Young() {
     setBtnActive(isSlideValid());
 
     setUserInfo({
-      userType: "m_stu",
-      userName: userName,
-      ssn: ssnFront + "-" + ssnBack,
-      phoneNumber: "010" + phoneNumber1 + phoneNumber2,
-      address: roadAddress + " " + detailAddress,
-      email: email + "@" + emailDomain,
-      school: school,
-      id: id,
-      password: password,
+      user_id: "",
+      user_login_id: id,
+      user_pw: password,
+      user_name: userName,
+      user_rrn: ssnFront + "-" + ssnBack,
+      user_school: school,
+      user_email: email + "@" + emailDomain,
+      user_phone: "010" + phoneNumber1 + phoneNumber2,
+      user_address: roadAddress + " " + detailAddress,
+      user_type: "UT_01",
+      user_st: "UST_02",
+      user_date: year + "-" + month + "-" + date,
     });
   }, [
     currentSlide,
@@ -152,6 +149,8 @@ export default function Young() {
     emailDomain,
     roadAddress,
     detailAddress,
+    cardPw,
+    accPw,
   ]);
 
   useEffect(() => {
@@ -226,16 +225,24 @@ export default function Young() {
           />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
-          <Section5 setSchool={setSchool} />
+          <Section5 school={school} setSchool={setSchool} />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
-          <Section6 onOpen={onOpen} />
+          <Section6
+            accountCheck={accountCheck}
+            setAccountCheck={setAccountCheck}
+            accPw={accPw}
+            setAccPw={setAccPw}
+          />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
           <Section7
             selectCard={selectCard}
             setSelectCard={setSelectCard}
-            onOpen={onOpen}
+            cardCheck={cardCheck}
+            setCardCheck={setCardCheck}
+            cardPw={cardPw}
+            setCardPw={setCardPw}
           />
         </SwiperSlide>
         <SwiperSlide style={swiperStyle}>
@@ -248,15 +255,6 @@ export default function Young() {
         swiperRef={swiperRef}
         btnActive={btnActive}
         handleRegist={handleRegist}
-      />
-      <InfoModal
-        currentSlide={currentSlide}
-        isOpen={isOpen}
-        onClose={onClose}
-        accountCheck={accountCheck}
-        setAccountCheck={setAccountCheck}
-        cardCheck={cardCheck}
-        setCardCheck={setCardCheck}
       />
     </div>
   );

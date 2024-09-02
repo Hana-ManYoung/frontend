@@ -1,28 +1,40 @@
 import { useNavigate } from "react-router-dom";
 import MainCard from "../components/MainCard";
 import { useEffect, useState } from "react";
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { LOGIN_URL } from "../../../../etc/url";
+import { useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { init } from "../../../../redux/user";
+import { getCookie } from "../../../../js/getCookie";
+import LoginModal from "../../../common/LoginModal";
 
 export default function Section1() {
   const [isLogin, setIsLogin] = useState(false);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (user.user_login_id) {
-      setIsLogin(true);
-    }
-  }, [user]);
+    const token = getCookie("JWT");
+    const handleLogin = async () => {
+      if (token) {
+        try {
+          const result = await axios.post(
+            "http://localhost:8080/login/cookie",
+            token
+          );
+          dispatch(init(result.data));
+          setIsLogin(true);
+        } catch (error) {
+          console.error(error);
+        } finally {
+        }
+      }
+      if (user.user_login_id) {
+        setIsLogin(true);
+      }
+    };
+    handleLogin();
+  }, []);
   return (
     <div className="mt-4 text-2xl">
       {isLogin ? <MainTitle /> : <div>하나만영에 오신 것을 환영해요😃</div>}
@@ -46,9 +58,10 @@ function MenuCard() {
 }
 
 function MainTitle() {
+  const user = useSelector((state) => state.user);
   return (
     <h2 className="font-bold flex items-center">
-      규은님이 필요할 것 같아 준비했어요
+      {user.user_name.slice(1, 3)}님이 필요할 것 같아 준비했어요
       <img
         src={process.env.PUBLIC_URL + "/images/icons/smile.png"}
         width="25px"
@@ -106,15 +119,12 @@ function LoginBox({ setIsLogin }) {
   useEffect(() => {
     const handleMessage = async (event) => {
       const { success, userId } = event.data;
-      // if (event.origin !== window.location.origin) return; // 보안 상 출처 확인
-
       if (success) {
         try {
           const result = await axios.get(
             "http://localhost:8080/user/" + userId
           );
           dispatch(init(result.data));
-          // TODO:  로그인 정보 localStorage에 저장
           if (result.data.user_type === "UT_02") {
             navigate("/parent");
           } else if (result.data.user_type === "UT_03") {
@@ -132,7 +142,7 @@ function LoginBox({ setIsLogin }) {
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [onClose]);
+  }, [onClose, dispatch, navigate, setIsLogin]);
 
   return (
     <div className="w-[50%] h-[300px] text-center text-gray-500 bg-gradient-to-t from-indigo-100 to-fuchsia-100 rounded-xl flex flex-col justify-center items-center">
@@ -142,31 +152,11 @@ function LoginBox({ setIsLogin }) {
         className={`mt-5 text-lg border-b border-gray-500 cursor-pointer hover:opacity-85 duration-300 ${
           animate ? "animate__animated animate__tada" : ""
         }`}
-        // onClick={() => navigate(process.env.PUBLIC_URL + "/login")}
         onClick={onOpen}
       >
         로그인하러 가기
       </p>
-      <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>로그인</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <iframe src={LOGIN_URL} width="100%" height="330"></iframe>
-            <div className="pb-5 mt-2">
-              <h2 className="ml-3 text-sm">아직 회원이 아니라면?</h2>
-              <button
-                type="submit"
-                className="w-[97%] mt-2 ml-2 py-3 text-center text-xl text-white btn-hana-blue rounded-xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out"
-                onClick={() => navigate("/register")}
-              >
-                회원가입
-              </button>
-            </div>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <LoginModal isOpen={isOpen} onClose={onClose} />
     </div>
   );
 }

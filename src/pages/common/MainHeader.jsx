@@ -1,15 +1,38 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { HeaderLogo } from "./Logo";
 import MenuBtn from "./MenuBtn";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteJWT } from "../../js/deleteJWT";
+import { init } from "../../redux/user";
+import LoginModal from "./LoginModal";
+import { useDisclosure } from "@chakra-ui/react";
 
 export default function MainHeader() {
   const location = useLocation();
   const currentPath = location.pathname;
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    deleteJWT();
+    dispatch(init({}));
+    window.location.href = "/";
+  };
+
+  const handleMenuBtnClick = (e) => {
+    e.preventDefault(); // 기본 링크 동작 방지
+    if (!user.user_name) {
+      onOpen(); // 로그인 모달 열기
+    } else {
+      navigate(e.currentTarget.getAttribute("href")); // 로그인 상태일 때 페이지 네비게이션
+    }
+  };
+
   return (
-    <div className="w-full py-5 bg-white shadow-lg border-b">
+    <div className="w-full py-5 bg-hana shadow-lg border-b">
       <div className="max-w-[1280px] mx-auto flex items-center justify-between">
         <div className="w-[35%]">
           <HeaderLogo />
@@ -19,29 +42,52 @@ export default function MainHeader() {
             name={"가계부"}
             target={"/planner"}
             currentPath={currentPath}
+            onClick={handleMenuBtnClick}
           />
           <MenuBtn
             name={"챌린지"}
             target={"/challenge"}
             currentPath={currentPath}
+            onClick={handleMenuBtnClick}
           />
-          <MenuBtn name={"랭킹"} target={"/rank"} currentPath={currentPath} />
-          <MenuBtn name={"채팅"} target={"/chat"} currentPath={currentPath} />
+          <MenuBtn
+            name={"랭킹"}
+            target={"/rank"}
+            currentPath={currentPath}
+            onClick={handleMenuBtnClick}
+          />
+          <MenuBtn
+            name={"채팅"}
+            target={"/chat"}
+            currentPath={currentPath}
+            onClick={handleMenuBtnClick}
+          />
+          <MenuBtn
+            name={"뉴스"}
+            target={"/chat"}
+            currentPath={currentPath}
+            onClick={handleMenuBtnClick}
+          />
         </div>
-        <Link
-          to="/profile"
-          className="w-[20%] flex justify-center items-center"
-        >
-          {user.user_name === undefined ? (
-            <p>로그인이 필요합니다</p>
-          ) : (
-            <>
-              <p className="mr-2">{user.user_name}님 안녕하세요!</p>
+
+        {user.user_name === undefined ? (
+          <p>로그인이 필요합니다</p>
+        ) : (
+          <>
+            <Link
+              to="/profile"
+              className="w-[15%] flex justify-center items-center"
+            >
+              <p className="mr-1 font-bold">{user.user_name}님</p>
               <IoPersonCircleOutline size={30} />
-            </>
-          )}
-        </Link>
+            </Link>
+            <button className="font-bold" onClick={handleLogout}>
+              로그아웃
+            </button>
+          </>
+        )}
       </div>
+      <LoginModal isOpen={isOpen} onClose={onClose} />
     </div>
   );
 }

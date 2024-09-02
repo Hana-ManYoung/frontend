@@ -9,16 +9,18 @@ import {
 } from "recharts";
 
 export default function MonthlyLineChart({ data }) {
+  const inComeColor = "#6ebaee";
+  const expenseColor = "#f49a9a";
   return (
     <AreaChart width={700} height={300} data={data}>
       <defs>
         <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#4cb9a3" stopOpacity={2} />
-          <stop offset="95%" stopColor="#4cb9a3" stopOpacity={0.2} />
+          <stop offset="0%" stopColor={inComeColor} stopOpacity={2} />
+          <stop offset="70%" stopColor={inComeColor} stopOpacity={0.2} />
         </linearGradient>
         <linearGradient id="colorExpense" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="20%" stopColor="#ffce83" stopOpacity={2} />
-          <stop offset="95%" stopColor="#ffce83" stopOpacity={0.2} />
+          <stop offset="0%" stopColor={expenseColor} stopOpacity={2} />
+          <stop offset="70%" stopColor={expenseColor} stopOpacity={0.2} />
         </linearGradient>
       </defs>
       <XAxis dataKey="name" />
@@ -29,14 +31,14 @@ export default function MonthlyLineChart({ data }) {
       <Area
         type="monotone"
         dataKey="지출"
-        stroke="#ffce83"
+        stroke={expenseColor}
         fill="url(#colorExpense)" // 그라데이션 ID를 fill에 적용
         strokeWidth={2}
       />
       <Area
         type="monotone"
         dataKey="수입"
-        stroke="#4cb9a3"
+        stroke={inComeColor}
         fill="url(#colorIncome)" // 그라데이션 ID를 fill에 적용
         strokeWidth={2}
       />

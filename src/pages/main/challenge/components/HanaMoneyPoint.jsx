@@ -3,7 +3,6 @@ import { ModalBody, ModalCloseButton, ModalHeader } from "@chakra-ui/react";
 import PointRow from "./PointRow";
 
 export default function HanaMoneyPoint({ pointData }) {
-  console.log(pointData);
   return (
     <>
       <ModalHeader>

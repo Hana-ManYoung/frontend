@@ -2,7 +2,7 @@ import { ModalBody, ModalCloseButton, ModalHeader } from "@chakra-ui/react";
 import ConsumeRowBox from "../../../common/ConsumeRowBox";
 import { date, month } from "../../../../js/getDateInfo";
 
-export default function ConsumeRowBoxModal({ consumeData }) {
+export default function ConsumeRowBoxModal({ accountTransactions }) {
   return (
     <>
       <ModalHeader>
@@ -23,7 +23,7 @@ export default function ConsumeRowBoxModal({ consumeData }) {
           <div className="text-sm font-bold border-b">
             오늘의 이용 내역 {month + "." + date}
           </div>
-          <ConsumeRowBox consumeData={consumeData} />
+          <ConsumeRowBox accountTransactions={accountTransactions} />
         </div>
       </ModalBody>
     </>

@@ -1,25 +1,21 @@
 export const getCategoryKor = (category) => {
-  if (category === "sho") return "쇼핑/뷰티";
-  else if (category === "tra") return "여행/숙박";
-  else if (category === "foo") return "식비";
-  else if (category === "hom") return "주거/통신";
-  else if (category === "mar") return "편의점/마트";
-  else if (category === "car") return "교통/자동차";
-  else if (category === "caf") return "카페/디저트";
-  else if (category === "ent") return "문화/여가";
-  else if (category === "etc") return "기타";
+  if (category === "CT_FOOD") return "식비/간식";
+  else if (category === "CT_BEAUTY") return "미용/패션";
+  else if (category === "CT_TRAFFIC") return "교통비";
+  else if (category === "CT_HOBBY") return "문화/취미";
+  else if (category === "CT_EDU") return "교육/학습";
+  else if (category === "CT_SHOP") return "디지털 콘텐츠/쇼핑";
+  else if (category === "CT_ETC") return "기타/예비";
   else return "카테고리";
 };
 
 export const getCategoryBgColor = (category) => {
-  if (category === "sho") return "#FF5894";
-  else if (category === "tra") return "#FF2525";
-  else if (category === "foo") return "#F57F29";
-  else if (category === "hom") return "#BE308E";
-  else if (category === "mar") return "#63ECFF";
-  else if (category === "car") return "#17B945";
-  else if (category === "caf") return "#93501F";
-  else if (category === "ent") return "#3E5BC1";
-  else if (category === "etc") return "#AAAAAA";
+  if (category === "CT_FOOD") return "#fce0b2";
+  else if (category === "CT_BEAUTY") return "#d1a6f9";
+  else if (category === "CT_TRAFFIC") return "#a2f59a";
+  else if (category === "CT_HOBBY") return "#f5ee9a";
+  else if (category === "CT_EDU") return "#c3ab82";
+  else if (category === "CT_SHOP") return "#fcb2ee";
+  else if (category === "CT_ETC") return "#d8d9d5";
   else return "bg-gray-500";
 };

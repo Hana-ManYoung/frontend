@@ -1,5 +1,29 @@
+import {
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { checkCards } from "../../../../data/checkCards";
-export default function Section7({ selectCard, setSelectCard, onOpen }) {
+import { useState } from "react";
+import CheckCardInfo from "../components/CheckCardInfo";
+import PwModal from "../components/PwModal";
+export default function Section7({
+  selectCard,
+  setSelectCard,
+  cardCheck,
+  setCardCheck,
+  cardPw,
+  setCardPw,
+}) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [currentModal, setCurrentModal] = useState();
+
+  const handleModal = (i) => () => {
+    setCurrentModal(i);
+    onOpen();
+  };
+
   return (
     <div className="w-full">
       <p className="text-xl">디자인을 선택해주세요</p>
@@ -24,11 +48,26 @@ export default function Section7({ selectCard, setSelectCard, onOpen }) {
           </div>
         ))}
       </div>
-      <div className="text-center mt-12" onClick={onOpen}>
+      <div className="text-center mt-12" onClick={handleModal(1)}>
         <span className="text-xl border-b-black border-b px-3 cursor-pointer">
           상품 정보 확인하기
         </span>
       </div>
+      <div className="mt-4 text-center" onClick={handleModal(2)}>
+        <span className="px-3 text-gray-500 text-sm cursor-pointer">
+          비밀번호 설정하기
+        </span>
+      </div>
+      <Modal isOpen={isOpen} onClose={onClose} size="lg" isCentered>
+        <ModalOverlay />
+        <ModalContent maxH="80vh" overflowY="auto">
+          {currentModal === 1 ? (
+            <CheckCardInfo cardCheck={cardCheck} setCardCheck={setCardCheck} />
+          ) : (
+            <PwModal onClose={onClose} pw={cardPw} setPw={setCardPw} />
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { IoIosArrowForward } from "react-icons/io";
 export default function HanaMoneyCard({ hanaMoneyData, handleClick }) {
   return (
     <div
-      class="h-20 mt-4 pl-6 pr-4 py-3 font-basic bg-gradient-to-r from-green-200 to-lime-100 rounded-xl cursor-pointer shadow-md shadow-gray-200 hover:opacity-70 transition-all duration-300 ease-in-out flex justify-between items-center group"
+      className="h-20 mt-4 pl-6 pr-4 py-3 font-basic bg-gradient-to-r from-green-200 to-lime-100 rounded-xl cursor-pointer shadow-md shadow-gray-200 hover:opacity-70 transition-all duration-300 ease-in-out flex justify-between items-center group"
       onClick={() => handleClick(2)}
     >
       <div className="flex items-center">

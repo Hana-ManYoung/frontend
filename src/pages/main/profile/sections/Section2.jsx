@@ -12,17 +12,49 @@ import { useEffect, useState } from "react";
 import SavingCard from "../../../common/SavingCard";
 import HanaMoneyCard from "../../../common/HanaMoneyCard";
 import ConsumeRowBoxModal from "../components/ConsumeRowBoxModal";
-export default function Section2({ savingData, hanaMoneyData, consumeData }) {
+import CheckCardModal from "../components/CheckCardModal";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import LoadingSkeleton from "../../../common/LoadingSkeleton";
+export default function Section2({ savingData, hanaMoneyData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalId, setModalId] = useState(0);
   const [modalSize, setModalSize] = useState("lg");
   const [isSavingGiveUp, setIsSavingGiveUp] = useState(false);
 
+  const [account, setAccount] = useState("");
+  const [card, setCard] = useState("");
+  const [cardTransaction, setCardTransaction] = useState([]);
+  const [accountTransactions, setAccountTransactions] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const user = useSelector((state) => state.user);
+
   useEffect(() => {
-    if (modalId === 2) {
-      setModalSize("sm");
-    } else {
+    const getProfileInfo = async () => {
+      setIsLoading(true);
+      try {
+        const result = await axios.get(`
+          http://localhost:8081/api/profile/${user.user_login_id}`);
+        setAccount(result.data.account);
+        setCard(result.data.card);
+        setCardTransaction(result.data.cardTransactions);
+        setAccountTransactions(result.data.accountTransactions);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getProfileInfo();
+  }, [user.user_login_id]);
+
+  useEffect(() => {
+    if (modalId === 1) {
       setModalSize("lg");
+    } else {
+      setModalSize("sm");
     }
   }, [modalId]);
 
@@ -30,6 +62,9 @@ export default function Section2({ savingData, hanaMoneyData, consumeData }) {
     setModalId(id);
     onOpen();
   };
+
+  if (isLoading) return <LoadingSkeleton />; // Loading Spinner
+
   return (
     <div className="mt-8 py-6 bg-gradient-to-t from-slate-100 to-gray-200 rounded-xl shadow-md">
       <div className="ml-4 flex items-center">
@@ -54,10 +89,10 @@ export default function Section2({ savingData, hanaMoneyData, consumeData }) {
         </div>
         <div className="mt-2 w-full flex justify-between gap-4">
           <div className="w-[50%]">
-            <HanaAccountInfo handleClick={handleClick} />
+            <HanaAccountInfo account={account} handleClick={handleClick} />
           </div>
           <div className="w-[50%]">
-            <CheckCardInfo handleClick={handleClick} />
+            <CheckCardInfo handleClick={handleClick} card={card} />
           </div>
         </div>
       </div>
@@ -72,9 +107,9 @@ export default function Section2({ savingData, hanaMoneyData, consumeData }) {
           ) : modalId === 2 ? (
             <HanaMoneyPoint pointData={hanaMoneyData.pointData} />
           ) : modalId === 3 ? (
-            <ConsumeRowBoxModal consumeData={consumeData} />
+            <ConsumeRowBoxModal accountTransactions={accountTransactions} />
           ) : (
-            <></>
+            <CheckCardModal cardTransaction={cardTransaction} />
           )}
         </ModalContent>
       </Modal>

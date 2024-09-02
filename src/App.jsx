@@ -50,7 +50,7 @@ function PagesOutlet() {
     <>
       <MainHeader />
       <div className="relative h-full min-h-[calc(100vh-78px)] bg-gradient-to-b from-red-50 to-emerald-50">
-        <div className="w-full max-w-[1024px] min-h-[calc(100vh-78px)] mx-auto pt-6 pb-10 bg-hana shadow-xl flex flex-col">
+        <div className="w-full max-w-[1024px] min-h-[calc(100vh-78px)] mx-auto pt-6 pb-10 bg-white shadow-xl flex flex-col">
           {/* <AyjImg /> */}
           <Outlet />
         </div>

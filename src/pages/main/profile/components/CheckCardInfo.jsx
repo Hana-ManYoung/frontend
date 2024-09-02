@@ -1,6 +1,6 @@
 import { IoIosArrowForward } from "react-icons/io";
 
-export default function CheckCardInfo({ handleClick }) {
+export default function CheckCardInfo({ handleClick, card }) {
   return (
     <div
       class="h-20 mt-4 pl-6 pr-4 py-3 text-gray-500 font-basic bg-gradient-to-r from-indigo-200 to-teal-200 rounded-xl cursor-pointer shadow-md shadow-gray-200 hover:opacity-70 transition-all duration-300 ease-in-out flex justify-between items-center group"
@@ -16,7 +16,7 @@ export default function CheckCardInfo({ handleClick }) {
         </div>
         <div>
           <p className="ml-2 text-lg">영하나 플러스 체크카드</p>
-          <p className="ml-2 text-xs">1925-****-****-7319</p>
+          <p className="ml-2 text-xs">{card.card_num}</p>
         </div>
       </div>
       <div className="flex items-center">

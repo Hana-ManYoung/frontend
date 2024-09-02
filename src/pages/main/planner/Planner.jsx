@@ -2,51 +2,46 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { SERVER_URL } from "../../../etc/url";
 
-import Loading from "../../common/Loading";
 import Section1 from "./sections/Section1";
 import Section2 from "./sections/Section2";
 import Section3 from "./sections/Section3";
 import LoadingSkeleton from "../../common/LoadingSkeleton";
+import { useSelector } from "react-redux";
 
 export default function Planner() {
-  const [useHistory, setUseHistory] = useState({
-    income: 0,
-    remain: 0,
-    consume: 0,
-    most: { type: "", amount: 0 },
-  });
+  const [useHistory, setUseHistory] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [consumeData, setConsumeData] = useState([]);
   const [consumeChartData, setConsumeChartData] = useState([]);
   const [monthlyChartData, setMonthlyChartData] = useState([]);
 
+  const user = useSelector((state) => state.user);
+
   useEffect(() => {
-    setTimeout(() => {
-      const getUseHistory = async () => {
-        try {
-          const result = await axios.get(SERVER_URL + "consume.json");
-          setUseHistory(result.data.data);
-          setConsumeData(result.data.data.consumeData);
-          setConsumeChartData(result.data.data.consumeChartData);
-          setMonthlyChartData(result.data.data.monthlyChartData);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
+    setIsLoading(true);
+    const getUseHistory = async () => {
+      try {
+        const result = await axios.get(SERVER_URL + "consume.json");
+        setUseHistory(result.data.data);
+        setConsumeChartData(result.data.data.consumeChartData);
+        setMonthlyChartData(result.data.data.monthlyChartData);
+      } catch (error) {
+        console.error(error);
+      }
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    };
 
-      getUseHistory();
-    }, [3000]);
-  }, []);
+    getUseHistory();
+  }, [user.user_login_id]);
 
-  // if (isLoading) return <LoadingSkeleton />;
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingSkeleton />;
+  // if (isLoading) return <Loading />;
 
   return (
     <div className="w-[90%] mx-auto">
       <Section1 data={consumeChartData} />
-      <Section2 useHistory={useHistory} consumeData={consumeData} />
+      <Section2 useHistory={useHistory} />
       <Section3 data={monthlyChartData} />
     </div>
   );

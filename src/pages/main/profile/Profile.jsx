@@ -5,53 +5,35 @@ import Section3 from "./sections/Section3";
 import LoadingSkeleton from "../../common/LoadingSkeleton";
 import { SERVER_URL } from "../../../etc/url";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
   const [savingData, setSavingData] = useState({});
   const [hanaMoneyData, setHanaMoneyData] = useState({});
-  const [consumeData, setConsumeData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
+    setIsLoading(true);
     const getChallenge = async () => {
-      setIsLoading(true);
       try {
         const result = await axios.get(SERVER_URL + "challenge.json");
         setSavingData(result.data.data.saving);
         setHanaMoneyData(result.data.data.hanaMoney);
       } catch (error) {
         console.error(error);
-      } finally {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
-
-    const getconsumeData = async () => {
-      setIsLoading(true);
-      try {
-        const result = await axios.get(SERVER_URL + "consume.json");
-        setConsumeData(result.data.data.consumeData);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     getChallenge();
-    getconsumeData();
-  }, []);
+  }, [user.user_login_id]);
 
   if (isLoading) return <LoadingSkeleton />;
 
   return (
     <div className="w-[90%] mx-auto flex flex-col animate__animated animate__fadeIn">
       <Section1 />
-      <Section2
-        savingData={savingData}
-        hanaMoneyData={hanaMoneyData}
-        consumeData={consumeData}
-      />
+      <Section2 savingData={savingData} hanaMoneyData={hanaMoneyData} />
       <Section3 />
     </div>
   );
