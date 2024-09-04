@@ -3,17 +3,17 @@ import Saving from "./Saving";
 import PocketMoney from "./PocketMoney";
 import Quiz from "./Quiz";
 
-export default function ChallengeContent({ data }) {
+export default function ChallengeContent({ data, imgUrl }) {
   return [
     <>
       <ModalHeader>
         <div className="flex items-center">
           <img
-            src={process.env.PUBLIC_URL + data.url}
+            src={process.env.PUBLIC_URL + imgUrl}
             alt=""
             className="mr-2 w-5"
           />
-          <h1 className="text-xl">{data.name}</h1>
+          <h1 className="text-xl">{data.code_name}</h1>
         </div>
       </ModalHeader>
       <ModalCloseButton />
@@ -24,11 +24,11 @@ export default function ChallengeContent({ data }) {
       <ModalHeader>
         <div className="flex items-center">
           <img
-            src={process.env.PUBLIC_URL + data.url}
+            src={process.env.PUBLIC_URL + imgUrl}
             alt=""
             className="mr-2 w-5"
           />
-          <h1 className="text-xl">{data.name}</h1>
+          <h1 className="text-xl">{data.code_name}</h1>
         </div>
       </ModalHeader>
       <ModalCloseButton />
@@ -39,15 +39,15 @@ export default function ChallengeContent({ data }) {
       <ModalHeader>
         <div className="flex items-center">
           <img
-            src={process.env.PUBLIC_URL + data.url}
+            src={process.env.PUBLIC_URL + imgUrl}
             alt=""
             className="mr-2 w-5"
           />
-          <h1 className="text-xl">{data.name}</h1>
+          <h1 className="text-xl">{data.code_name}</h1>
         </div>
       </ModalHeader>
       <ModalCloseButton />
       <PocketMoney />
     </>,
-  ][data.id];
+  ][parseInt(data.challenge_id) - 1];
 }

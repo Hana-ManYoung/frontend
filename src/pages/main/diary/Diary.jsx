@@ -18,6 +18,8 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { BANK_CARD_URL, MAN_YOUNG_URL } from "../../../etc/url";
+import PointSuccess from "../../common/PointSuccess";
 
 const swiperStyle = {
   width: "100%",
@@ -59,21 +61,13 @@ export default function Diary() {
   });
 
   useEffect(() => {
-    console.log(plannerItems);
-  }, [plannerItems]);
-
-  useEffect(() => {
-    console.log(categorySums);
-  }, [categorySums]);
-
-  useEffect(() => {
     const getProfileInfo = async () => {
       setIsLoading(true);
       try {
         const result = await axios.get(`
           http://localhost:8081/api/profile/${user.user_login_id}`);
         setAccountTransactions(result.data.accountTransactions);
-        setAccount(result.data.account);
+        setAccount(result.data.accountList[0]);
       } catch (error) {
         console.error(error);
       } finally {
@@ -128,6 +122,30 @@ export default function Diary() {
   };
 
   const handleAddPoint = () => {
+    try {
+      const reponse = axios.post(
+        `${MAN_YOUNG_URL}/diary/registerPlanner/${user.user_login_id}`,
+        {
+          plannerItems, // 소비계획
+          categorySums, // 가계부
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      axios.post(
+        `${BANK_CARD_URL}/api/challenge/reward/${user.user_login_id}`,
+        {
+          acc_t_target: "소비계획/가계부",
+          acc_t_amount: 50,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    // console.log(plannerItems); // 소비계획에 저장
+    // console.log(categorySums); // 가계부에 저장
     onOpen();
   };
 
@@ -222,24 +240,7 @@ export default function Diary() {
           <ModalHeader>하나머니 챌린지 포인트 적립</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <div className="flex flex-col justify-center items-center">
-              <img
-                src={process.env.PUBLIC_URL + "/images/hana/point.gif"}
-                alt=""
-                className="w-[45%]"
-              />
-              <div className="my-2 text-lg font-bold">
-                포인트 적립이 완료되었어요!
-              </div>
-            </div>
-            <div
-              className="text-center my-3 py-2 btn-hana-green text-white text-lg rounded-lg cursor-pointer hover:opacity-80 duration-300"
-              onClick={() => {
-                onClose();
-              }}
-            >
-              메인으로 돌아가기
-            </div>
+            <PointSuccess onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

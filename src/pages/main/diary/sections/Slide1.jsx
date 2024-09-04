@@ -18,7 +18,6 @@ export default function Slide1({
   account,
 }) {
   const [chartData, setChartData] = useState([]);
-
   useEffect(() => {
     const transformedData = Object.keys(categorySums).map((key) => ({
       name: key,

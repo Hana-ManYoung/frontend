@@ -49,10 +49,14 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
       return;
     }
 
-    // 금액을 숫자로 변환하여 상태를 업데이트
+    // amount가 '+'로 시작하면 그대로 사용하고, 그렇지 않으면 부호를 반전
+    const reversedAmount = amount.startsWith("+")
+      ? parseInt(amount)
+      : -parseInt(amount);
+
     setPlannerItems((prevItems) => ({
       ...prevItems,
-      [selectedCategory]: prevItems[selectedCategory] + parseInt(amount),
+      [selectedCategory]: prevItems[selectedCategory] + reversedAmount,
     }));
 
     // 입력 필드 초기화
@@ -78,7 +82,7 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
           </div>
         </div>
       ) : (
-        <div className="my-6 w-[70%] mx-auto">
+        <div className="mt-6 w-[70%] mx-auto">
           <div className="w-full py-2 font-bold border-y-2 flex">
             <div className="w-[50%] text-center">카테고리</div>
             <div className="w-[50%] text-center">금액</div>
@@ -104,17 +108,17 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
         </div>
       )}
       {!isPlannerEmpty && (
-        <div className="mt-4 flex justify-center items-center">
-          <div className="w-[35%]">
+        <div className="w-[70%] mx-auto my-2 flex justify-center items-center">
+          <div className="w-[55%]">
             <ConsumePieChart data={transformedItems} />
           </div>
-          <div className="h-[225px] text-xs font-basic flex flex-wrap flex-col gap-5">
+          <div className="w-[45%] text-xs font-basic flex flex-wrap flex-col">
             {Object.keys(transformedItems).map(
               (key, index) =>
                 transformedItems[key] !== 0 && (
                   <div
                     key={index}
-                    className="w-[235px] flex items-center animate__animated animate__fadeInDown"
+                    className="py-1 flex items-center animate__animated animate__fadeInDown"
                   >
                     <IoMdSquare
                       size="25"
@@ -168,7 +172,7 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
               <p className="mb-2 font-hana font-bold">금액</p>
               <div className="relative">
                 <input
-                  type="number"
+                  type="text"
                   className="w-full px-2 py-2 border rounded-md text-lg border-gray-300"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}

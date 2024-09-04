@@ -15,7 +15,7 @@ export const getKoreanNumber = (price) => {
       num: 1 * 10000,
     },
     {
-      kor: "원",
+      kor: "",
       num: 1,
     },
   ];
@@ -27,5 +27,5 @@ export const getKoreanNumber = (price) => {
     }
   }
 
-  return result;
+  return result + "원";
 };

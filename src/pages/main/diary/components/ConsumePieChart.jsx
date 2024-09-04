@@ -18,7 +18,7 @@ export default function ConsumePieChart({ data }) {
   }, [data]);
 
   return (
-    <PieChart width={300} height={250}>
+    <PieChart width={275} height={275}>
       <Pie
         data={dataWithColors}
         dataKey="value"

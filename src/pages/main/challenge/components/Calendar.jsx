@@ -5,16 +5,26 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "@fullcalendar/core/locales/ko";
 import "../../../../css/calendar.css";
-// bg-gradient-to-b from-red-100 via-yello-100 to-emerald-100
+
 export default function Calendar({ events }) {
   return (
     <div className="relative mt-4 h-[26rem] px-6 pt-4 pb-6 font-basic bg-emerald-50 rounded-xl shadow-md shadow-gray-200">
       <div className="absolute text-xs text-gray-500 bottom-1 right-7 z-10 flex">
         <div className="mr-1 flex items-center">
-          <IoMdSquare className="text-blue-300 mr-1" /> <p>참여 O</p>
+          <IoMdSquare className="text-gray-400 mr-1" /> <p>챌린지 참여 1회</p>
         </div>
         <div className="ml-1 flex items-center">
-          <IoMdSquare className="text-gray-300 mr-1" /> <p>참여 X</p>
+          <IoMdSquare className="text-indigo-300 mr-1" /> <p>챌린지 참여 2회</p>
+        </div>
+        <div className="ml-1 flex items-center">
+          <IoMdSquare className="text-violet-400 mr-1" /> <p>챌린지 참여 3회</p>
+        </div>
+        <div className="ml-1 flex items-center">
+          <IoMdSquare className="text-fuchsia-300 mr-1" />{" "}
+          <p>챌린지 참여 4회</p>
+        </div>
+        <div className="ml-1 flex items-center">
+          <IoMdSquare className="text-rose-400 mr-1" /> <p>챌린지 참여 5회</p>
         </div>
       </div>
       <FullCalendar

@@ -1,5 +1,6 @@
 import { useDisclosure } from "@chakra-ui/react";
 import ConsumeChart from "../components/ConsumeChart";
+import { useEffect } from "react";
 
 export default function Section1({ data }) {
   const { onOpen, isOpen, onClose } = useDisclosure();

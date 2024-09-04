@@ -3,6 +3,7 @@ import { ModalBody, ModalCloseButton, ModalHeader } from "@chakra-ui/react";
 import PointRow from "./PointRow";
 
 export default function HanaMoneyPoint({ pointData }) {
+  console.log(pointData);
   return (
     <>
       <ModalHeader>
@@ -22,9 +23,15 @@ export default function HanaMoneyPoint({ pointData }) {
       <ModalCloseButton />
       <ModalBody>
         <div className="h-96 ml-3 pr-3 overflow-y-auto">
-          {pointData.map((data, index) => (
-            <PointRow key={index} data={data} type={"point"} />
-          ))}
+          {!pointData ? (
+            <div className="h-96 text-lg flex justify-center items-center">
+              포인트 적립 내역이 없어요
+            </div>
+          ) : (
+            pointData.map((data, index) => (
+              <PointRow key={index} data={data} type={"point"} />
+            ))
+          )}
         </div>
       </ModalBody>
     </>

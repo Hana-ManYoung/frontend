@@ -1,5 +1,5 @@
 import { IoIosArrowForward } from "react-icons/io";
-export default function HanaMoneyCard({ hanaMoneyData, handleClick }) {
+export default function HanaMoneyCard({ challengeAccount, handleClick }) {
   return (
     <div
       className="h-20 mt-4 pl-6 pr-4 py-3 font-basic bg-gradient-to-r from-green-200 to-lime-100 rounded-xl cursor-pointer shadow-md shadow-gray-200 hover:opacity-70 transition-all duration-300 ease-in-out flex justify-between items-center group"
@@ -15,7 +15,7 @@ export default function HanaMoneyCard({ hanaMoneyData, handleClick }) {
       </div>
       <div className="flex items-center">
         <div className="mr-5 text-xl font-bold">
-          {hanaMoneyData.total.toLocaleString("ko-KR")}P
+          {challengeAccount.acc_balance.toLocaleString("ko-KR")}P
         </div>
         <IoIosArrowForward
           size="25"

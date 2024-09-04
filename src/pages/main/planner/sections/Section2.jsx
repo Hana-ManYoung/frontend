@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../../../common/LoadingSpinner";
+import { date, koreanDay, month, year } from "../../../../js/getDateInfo";
 
 export default function Section2({ useHistory }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,9 +18,8 @@ export default function Section2({ useHistory }) {
       try {
         const result = await axios.get(`
             http://localhost:8081/api/profile/${user.user_login_id}`);
-        setAccount(result.data.account);
+        setAccount(result.data.accountList[0]);
         setAccountTransactions(result.data.accountTransactions);
-        console.log(result.data);
       } catch (error) {
         console.error(error);
       }
@@ -49,7 +49,9 @@ export default function Section2({ useHistory }) {
         <div className="w-[39%] h-60 overflow-y-auto bg-white">
           <div className="w-[90%] py-2 mx-auto font-basic">
             <div className="pt-1 pb-2 border-b-2 flex justify-between items-center">
-              <p className="text-xs ">2024.08.04 (금)</p>
+              <p className="text-xs ">
+                {year + "." + month + "." + date} ({koreanDay})
+              </p>
               <img
                 src={process.env.PUBLIC_URL + "/images/hana/hana_1q.jpg"}
                 alt=""

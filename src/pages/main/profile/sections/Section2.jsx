@@ -23,9 +23,12 @@ export default function Section2({ savingData, hanaMoneyData }) {
   const [isSavingGiveUp, setIsSavingGiveUp] = useState(false);
 
   const [account, setAccount] = useState("");
+  const [challengeAccount, setChallengeAccount] = useState("");
   const [card, setCard] = useState("");
   const [cardTransaction, setCardTransaction] = useState([]);
   const [accountTransactions, setAccountTransactions] = useState([]);
+  const [accountChallengeTransactions, setAccountChallengeTransactions] =
+    useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.user);
@@ -36,10 +39,14 @@ export default function Section2({ savingData, hanaMoneyData }) {
       try {
         const result = await axios.get(`
           http://localhost:8081/api/profile/${user.user_login_id}`);
-        setAccount(result.data.account);
+        setAccount(result.data.accountList[0]);
+        setChallengeAccount(result.data.accountList[2]);
         setCard(result.data.card);
         setCardTransaction(result.data.cardTransactions);
         setAccountTransactions(result.data.accountTransactions);
+        setAccountChallengeTransactions(
+          result.data.accountChallengeTransactions
+        );
       } catch (error) {
         console.error(error);
       } finally {
@@ -82,7 +89,7 @@ export default function Section2({ savingData, hanaMoneyData }) {
           </div>
           <div className="w-[50%]">
             <HanaMoneyCard
-              hanaMoneyData={hanaMoneyData}
+              challengeAccount={challengeAccount}
               handleClick={handleClick}
             />
           </div>
@@ -105,7 +112,7 @@ export default function Section2({ savingData, hanaMoneyData }) {
               setIsSavingGiveUp={setIsSavingGiveUp}
             />
           ) : modalId === 2 ? (
-            <HanaMoneyPoint pointData={hanaMoneyData.pointData} />
+            <HanaMoneyPoint pointData={accountChallengeTransactions} />
           ) : modalId === 3 ? (
             <ConsumeRowBoxModal accountTransactions={accountTransactions} />
           ) : (

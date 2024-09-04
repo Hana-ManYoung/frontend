@@ -1,4 +1,3 @@
-import { IoIosArrowForward } from "react-icons/io";
 import {
   Modal,
   ModalContent,
@@ -12,7 +11,11 @@ import HanaMoneyPoint from "../components/HanaMoneyPoint";
 import SavingCard from "../../../common/SavingCard";
 import HanaMoneyCard from "../../../common/HanaMoneyCard";
 
-export default function Section1({ savingData, hanaMoneyData }) {
+export default function Section1({
+  savingData,
+  challengeAccount,
+  accountChallengeTransactions,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalId, setModalId] = useState(0);
   const [modalSize, setModalSize] = useState("lg");
@@ -49,7 +52,7 @@ export default function Section1({ savingData, hanaMoneyData }) {
         <div className="w-[50%]">
           <h2 className="text-2xl font-bold">나의 하나머니</h2>
           <HanaMoneyCard
-            hanaMoneyData={hanaMoneyData}
+            challengeAccount={challengeAccount}
             handleClick={handleClick}
           />
         </div>
@@ -63,7 +66,7 @@ export default function Section1({ savingData, hanaMoneyData }) {
               setIsSavingGiveUp={setIsSavingGiveUp}
             />
           ) : (
-            <HanaMoneyPoint pointData={hanaMoneyData.pointData} />
+            <HanaMoneyPoint pointData={accountChallengeTransactions} />
           )}
         </ModalContent>
       </Modal>
