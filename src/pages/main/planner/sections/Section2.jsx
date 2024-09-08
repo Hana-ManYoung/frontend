@@ -5,32 +5,58 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../../../common/LoadingSpinner";
 import { date, koreanDay, month, year } from "../../../../js/getDateInfo";
+import { BANK_CARD_URL, MAN_YOUNG_URL } from "../../../../etc/url";
+import {
+  getCategoryBgColor,
+  getCategoryKor,
+} from "../../../../js/getCategoryKor";
+import { Skeleton } from "@chakra-ui/react";
 
-export default function Section2({ useHistory }) {
+export default function Section2() {
   const [isLoading, setIsLoading] = useState(true);
   const [account, setAccount] = useState("");
   const [accountTransactions, setAccountTransactions] = useState([]);
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+  const [maxExpense, setMaxExpense] = useState(0);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const getProfileInfo = async () => {
       setIsLoading(true);
       try {
-        const result = await axios.get(`
-            http://localhost:8081/api/profile/${user.user_login_id}`);
-        setAccount(result.data.accountList[0]);
-        setAccountTransactions(result.data.accountTransactions);
+        const [bankCardResponse, maxExpenseResponse] = await Promise.all([
+          axios.get(`${BANK_CARD_URL}/api/profile/${user.user_login_id}`),
+          axios.get(
+            `${MAN_YOUNG_URL}/user/getDiaryItemMax/${user.user_login_id}`
+          ),
+        ]);
+        console.log(bankCardResponse.data);
+        console.log(maxExpenseResponse.data);
+
+        // 첫 번째 요청 결과 처리
+        setAccount(bankCardResponse.data.accountList[0]);
+        setAccountTransactions(bankCardResponse.data.accountTransactions);
+        setTotalIncome(bankCardResponse.data.accountTotalIncome.total);
+        setTotalExpense(bankCardResponse.data.accountTotalExpense.total);
+
+        // 두 번째 요청 결과 처리
+        setMaxExpense(maxExpenseResponse.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     getProfileInfo();
-  }, []);
+  }, [user.user_login_id]);
+
+  if (isLoading)
+    return <Skeleton height="375px" width="90%" className="mx-auto my-3" />;
 
   return (
-    <div className="w-full mt-10 px-8 py-8 rounded-xl text-gray-500 bg-gradient-to-r from-blue-100 to-lime-100  shadow-md">
+    <div className="w-full mt-10 px-8 py-8 rounded-xl text-gray-500 bg-gradient-to-r from-blue-100 to-lime-100 shadow-md">
       <div className="text-black flex justify-between items-end">
         <h2 className="text-2xl text-gray-600 font-bold">
           이용내역{" "}
@@ -68,15 +94,15 @@ export default function Section2({ useHistory }) {
           </div>
         </div>
         <div className="w-[59%] h-60 font-basic flex flex-col gap-5">
-          <div className="bg-white py-5 rounded-xl flex-1 flex">
+          <div className="bg-white py-4 rounded-xl flex-1 flex">
             {isLoading ? (
               <LoadingSpinner />
             ) : (
               <>
                 <div className="w-[50%] px-5">
-                  <h3>이번달 수입 (서버 수정 필요)</h3>
+                  <h3>이번달 수입</h3>
                   <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
-                    {useHistory.income.toLocaleString("ko-KR")}원
+                    {totalIncome.toLocaleString("ko-KR")}원
                   </p>
                 </div>
                 <div className="w-[50%] px-5">
@@ -88,19 +114,28 @@ export default function Section2({ useHistory }) {
               </>
             )}
           </div>
-          <div className="bg-white py-5 rounded-xl flex-1 flex">
+          <div className="bg-white py-4 rounded-xl flex-1 flex">
             <div className="w-[50%] px-5">
-              <h3>이번달 소비 (서버 수정 필요)</h3>
+              <h3>이번달 지출</h3>
               <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
-                {useHistory.consume.toLocaleString("ko-KR")}원
+                {(-totalExpense).toLocaleString("ko-KR")}원
               </p>
             </div>
             <div className="w-[50%] px-5">
-              <h3>가장 많은 지출 (서버 수정 필요)</h3>
-              <p className="mt-3 text-xl flex justify-center items-center">
-                <IoMdSquare className="text-orange-500" size="25" />
-                {useHistory.most.type}{" "}
-                {useHistory.most.amount.toLocaleString("ko-KR")}원
+              <div className="flex justify-between items-end">
+                <p>가장 많은 지출은?</p>
+                <div className="flex justify-center">
+                  <IoMdSquare
+                    size="10"
+                    color={getCategoryBgColor(maxExpense.diary_item_category)}
+                  />
+                  <span className="text-xs">
+                    {getCategoryKor(maxExpense.diary_item_category)}
+                  </span>
+                </div>
+              </div>
+              <p className="mt-3 text-2xl text-gray-600 flex justify-center items-center">
+                {maxExpense.max.toLocaleString("ko-KR")}원
               </p>
             </div>
           </div>

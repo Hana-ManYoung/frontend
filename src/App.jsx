@@ -18,8 +18,36 @@ import Footer from "./pages/common/Footer";
 import Parent from "./pages/parent/Parent";
 import Admin from "./pages/admin/Admin";
 import MainHeader from "./pages/common/MainHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getCookie } from "./js/getCookie";
+import axios from "axios";
+import { init } from "./redux/user";
 
 function App() {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = getCookie("JWT");
+    const handleLogin = async () => {
+      if (token) {
+        try {
+          const result = await axios.post(
+            "http://localhost:8080/login/cookie",
+            token
+          );
+          dispatch(init(result.data));
+        } catch (error) {
+          console.error(error);
+        } finally {
+        }
+      }
+      if (user.user_login_id) {
+      }
+    };
+    handleLogin();
+  }, [dispatch]);
   return (
     <Routes>
       <Route path="/intro" element={<Intro />} index />
@@ -36,6 +64,7 @@ function App() {
         <Route path="challenge/diary" element={<Diary />} />
         <Route path="rank" element={<Ranking />} />
         <Route path="chat" element={"채팅입니다"} />
+        <Route path="news" element={"뉴스입니다"} />
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="/parent" element={<Parent />} />

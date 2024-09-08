@@ -64,7 +64,7 @@ export default function MainHeader() {
           />
           <MenuBtn
             name={"뉴스"}
-            target={"/chat"}
+            target={"/news"}
             currentPath={currentPath}
             onClick={handleMenuBtnClick}
           />

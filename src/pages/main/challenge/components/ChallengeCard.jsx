@@ -15,7 +15,14 @@ import axios from "axios";
 import { BANK_CARD_URL, MAN_YOUNG_URL } from "../../../../etc/url";
 import { useSelector } from "react-redux";
 
-export default function ChallengeCard({ data, bg, imgUrl, done }) {
+export default function ChallengeCard({
+  data,
+  bg,
+  imgUrl,
+  done,
+  savingAccount,
+  id,
+}) {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -23,6 +30,9 @@ export default function ChallengeCard({ data, bg, imgUrl, done }) {
   const [modalSize, setModalSize] = useState("lg");
 
   const handleClick = () => {
+    if (id === 2 && done) {
+      return;
+    }
     if (done) {
       onOpen();
       return;
@@ -36,7 +46,7 @@ export default function ChallengeCard({ data, bg, imgUrl, done }) {
     } else if (data.challenge_id === "4") {
       window.open("https://minjae-vincent.github.io/");
       registerChallengeTarotReword();
-      window.location.href = process.env.PUBLIC_URL + "/";
+      window.location.href = process.env.PUBLIC_URL + "/challenge";
     } else {
       setModalSize("lg");
       onOpen();
@@ -80,7 +90,13 @@ export default function ChallengeCard({ data, bg, imgUrl, done }) {
       </div>
       <div className="flex items-center">
         <div className="text-xl font-bold mr-5">
-          {done ? "완료" : <>{data.challenge_reword + "P"}</>}
+          {done && id === 2 ? (
+            "진행중"
+          ) : done ? (
+            "완료"
+          ) : (
+            <>{data.challenge_reword + "P"}</>
+          )}
         </div>
         <IoIosArrowForward
           size="25"
@@ -93,7 +109,11 @@ export default function ChallengeCard({ data, bg, imgUrl, done }) {
           {done ? (
             <ChallengeDone />
           ) : (
-            <ChallengeContent data={data} imgUrl={imgUrl} />
+            <ChallengeContent
+              data={data}
+              imgUrl={imgUrl}
+              savingAccount={savingAccount}
+            />
           )}
         </ModalContent>
       </Modal>

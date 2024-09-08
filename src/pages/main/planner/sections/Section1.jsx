@@ -2,7 +2,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import ConsumeChart from "../components/ConsumeChart";
 import { useEffect } from "react";
 
-export default function Section1({ data }) {
+export default function Section1() {
   const { onOpen, isOpen, onClose } = useDisclosure();
   return (
     <div className="w-full px-8 py-6 text-gray-500 bg-gradient-to-t from-indigo-100 to-fuchsia-100 rounded-xl shadow-md animate__animated animate__fadeIn">
@@ -25,7 +25,7 @@ export default function Section1({ data }) {
           <p className="mt-2 text-lg">간편 소비가 최고!</p>
         </div>
         <div className="w-[70%] px-5 font-basic text-base bg-white flex justify-center items-center rounded-xl">
-          <ConsumeChart data={data} />
+          <ConsumeChart />
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { MAN_YOUNG_URL } from "../../../../etc/url";
 import { useSelector } from "react-redux";
 import { getCategoryKor } from "../../../../js/getCategoryKor";
 
-export default function ConsumeChart({ data }) {
+export default function ConsumeChart() {
   const user = useSelector((state) => state.user);
   const [consumeChartData, setConsumeChartData] = useState([]);
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function ConsumeChart({ data }) {
       "문화/취미": 0,
       "교육/학습": 0,
       "디지털 콘텐츠/쇼핑": 0,
-      "기타/예비": 0,
+      "기타/예비/용돈": 0,
     };
 
     // 데이터 집계
@@ -68,7 +68,6 @@ export default function ConsumeChart({ data }) {
       <Bar dataKey="문화/취미" fill="#f5ee9a" />
       <Bar dataKey="교육/학습" fill="#c3ab82" />
       <Bar dataKey="디지털 콘텐츠/쇼핑" fill="#fcb2ee" />
-      <Bar dataKey="기타/예비" fill="#d8d9d5" />
     </BarChart>
   );
 }

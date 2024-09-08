@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import { formatDate } from "../../../../js/formatDate";
 import { formatPhoneNumber } from "../../../../js/formatPhoneNumber";
+import LoadingSkeleton from "../../../common/LoadingSkeleton";
 
 export default function Section1() {
   const user = useSelector((state) => state.user);
+  if (!user.user_login_id) return <LoadingSkeleton />;
   return (
     <div className="mt-4 py-4 bg-gradient-to-t from-emerald-200 to-green-200 shadow-md rounded-xl">
       <div className="ml-4 flex items-center">

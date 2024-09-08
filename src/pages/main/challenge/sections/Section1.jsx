@@ -2,6 +2,7 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  Skeleton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -10,11 +11,14 @@ import SavingAccount from "../components/SavingAccount";
 import HanaMoneyPoint from "../components/HanaMoneyPoint";
 import SavingCard from "../../../common/SavingCard";
 import HanaMoneyCard from "../../../common/HanaMoneyCard";
+import LoadingSpinner from "../../../common/LoadingSpinner";
 
 export default function Section1({
   savingData,
   challengeAccount,
   accountChallengeTransactions,
+  savingChallenge,
+  savingAccount,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalId, setModalId] = useState(0);
@@ -47,7 +51,12 @@ export default function Section1({
       <div className="mt-4 w-full flex gap-5">
         <div className="w-[50%]">
           <h2 className="text-2xl font-bold">챌린지 적금</h2>
-          <SavingCard savingData={savingData} handleClick={handleClick} />
+          <SavingCard
+            savingData={savingData}
+            handleClick={handleClick}
+            savingChallenge={savingChallenge}
+            savingAccount={savingAccount}
+          />
         </div>
         <div className="w-[50%]">
           <h2 className="text-2xl font-bold">나의 하나머니</h2>
@@ -64,6 +73,8 @@ export default function Section1({
             <SavingAccount
               savingData={savingData}
               setIsSavingGiveUp={setIsSavingGiveUp}
+              savingChallenge={savingChallenge}
+              savingAccount={savingAccount}
             />
           ) : (
             <HanaMoneyPoint pointData={accountChallengeTransactions} />

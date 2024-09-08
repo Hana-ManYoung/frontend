@@ -3,7 +3,7 @@ import Saving from "./Saving";
 import PocketMoney from "./PocketMoney";
 import Quiz from "./Quiz";
 
-export default function ChallengeContent({ data, imgUrl }) {
+export default function ChallengeContent({ data, imgUrl, savingAccount }) {
   return [
     <>
       <ModalHeader>
@@ -32,7 +32,7 @@ export default function ChallengeContent({ data, imgUrl }) {
         </div>
       </ModalHeader>
       <ModalCloseButton />
-      <Saving />
+      <Saving savingAccount={savingAccount} />
     </>,
     <></>,
     <>

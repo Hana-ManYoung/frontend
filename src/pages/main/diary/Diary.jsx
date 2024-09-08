@@ -123,7 +123,7 @@ export default function Diary() {
 
   const handleAddPoint = () => {
     try {
-      const reponse = axios.post(
+      axios.post(
         `${MAN_YOUNG_URL}/diary/registerPlanner/${user.user_login_id}`,
         {
           plannerItems, // 소비계획

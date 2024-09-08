@@ -5,7 +5,7 @@ export default function PointRow({ data }) {
   return (
     <div className="py-3 border-t font-basic flex flex-col">
       <div className="text-xs py-1 text-gray-400 flex-1 flex justify-between">
-        <div className="">{extractTime(data.acc_t_date)}</div>
+        <div className="">{data.acc_t_date}</div>
         <div className="">{data.code_name}</div>
       </div>
       <div className="flex-1 flex justify-between">

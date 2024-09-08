@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 
 export default function Profile() {
   const [savingData, setSavingData] = useState({});
-  const [hanaMoneyData, setHanaMoneyData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.user);
 
@@ -19,7 +18,6 @@ export default function Profile() {
       try {
         const result = await axios.get(SERVER_URL + "challenge.json");
         setSavingData(result.data.data.saving);
-        setHanaMoneyData(result.data.data.hanaMoney);
       } catch (error) {
         console.error(error);
       }

@@ -62,7 +62,7 @@ export default function Slide1({
                   id=""
                   value={data.consume_type || "none"}
                   onChange={(e) => handleSelectChange(index, e.target.value)}
-                  className="w-[15%] text-center cursor-pointer"
+                  className="w-[15%] text-sm text-center cursor-pointer"
                 >
                   <option value="none">카테고리</option>
                   <option value="CT_FOOD">식비/간식</option>
@@ -71,14 +71,14 @@ export default function Slide1({
                   <option value="CT_HOBBY">문화/취미</option>
                   <option value="CT_EDU">교육/학습</option>
                   <option value="CT_SHOP">디지털 콘텐츠/쇼핑</option>
-                  <option value="CT_ETC">기타/예비</option>
+                  <option value="CT_ETC">기타/예비/용돈</option>
                 </select>
               </div>
             ))}
           </div>
           <div className="mt-2 text-2xl flex justify-end">
             <div className="flex mx-2">
-              <h2 className="mr-2">오늘 소비 금액</h2>
+              <h2 className="mr-2">오늘 총 거래 금액</h2>
               <p className="text-orange-500">
                 {(
                   getIncomeAmount(accountTransactions) +
@@ -107,7 +107,7 @@ export default function Slide1({
                   <div className="w-[40%]">
                     <ConsumePieChart data={chartData} />
                   </div>
-                  <div className="h-[250px] text-xl font-basic flex flex-wrap flex-col gap-5">
+                  <div className="h-[250px] text-lg font-basic flex flex-wrap flex-col gap-5">
                     {Object.keys(categorySums).map(
                       (key, index) =>
                         categorySums[key] !== 0 && (
@@ -120,10 +120,8 @@ export default function Slide1({
                               color={getCategoryBgColor(key)}
                               className="mr-1 w-[10%]"
                             />
-                            <p className="mr-2 w-[45%]">
-                              {getCategoryKor(key)}
-                            </p>
-                            <p className="w-[45%] text-right">
+                            <p className="w-[50%]">{getCategoryKor(key)}</p>
+                            <p className="w-[40%] text-right">
                               {categorySums[key] > 0
                                 ? "+" +
                                   categorySums[key].toLocaleString("ko-KR")

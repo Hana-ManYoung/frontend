@@ -27,6 +27,11 @@ export default function CheckCardModal({ cardTransaction }) {
             return <CheckCardRow key={index} data={data} />;
           })}
         </div>
+        {!cardTransaction.length && (
+          <div className="h-96 text-lg flex justify-center items-center">
+            이용 내역이 없어요
+          </div>
+        )}
       </ModalBody>
     </>
   );
@@ -36,7 +41,7 @@ function CheckCardRow({ data, index }) {
   return (
     <div
       key={index}
-      className="h-[84px] py-3 font-basic border-b flex justify-between items-center"
+      className="h-[84px] py-2 font-basic border-b flex justify-between items-center"
     >
       <div>
         <div className="text-[0.7rem] py-1 text-gray-400">
@@ -44,7 +49,7 @@ function CheckCardRow({ data, index }) {
         </div>
         <div className="text-sm font-bold">{data.card_t_target}</div>
       </div>
-      <div className="text-lg text-gray-700">
+      <div className="text-lg bg-gradient-to-l from-green-700 to-emerald-700 font-bold text-transparent bg-clip-text">
         {(-parseInt(data.card_t_amount)).toLocaleString("ko-KR")}원
       </div>
     </div>

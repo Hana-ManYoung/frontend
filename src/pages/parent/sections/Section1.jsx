@@ -1,4 +1,113 @@
-export default function Section1({ children, selected, setSelected }) {
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { BANK_CARD_URL, MAN_YOUNG_URL } from "../../../etc/url";
+import axios from "axios";
+import LoadingSkeleton from "../../common/LoadingSkeleton";
+
+export default function Section1({
+  children,
+  selected,
+  setSelected,
+  user,
+  relationList,
+  relationRequestList,
+}) {
+  const { onClose, onOpen, isOpen } = useDisclosure();
+  const [searchUser, setSearchUser] = useState("");
+  const [searchResult, setSearchResult] = useState("");
+  const [childAccountList, setChildAccountList] = useState([]);
+  const [account, setAccount] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const searchUserInfo = async () => {
+    try {
+      const response = await axios.post(
+        `${MAN_YOUNG_URL}/user/search`,
+        searchUser,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      setSearchResult(response.data);
+      console.log(response.data);
+    } catch (error) {
+      setSearchResult({});
+      console.error(error);
+    }
+  };
+
+  const handleAccept = async (data) => {
+    try {
+      await axios.post(
+        `${MAN_YOUNG_URL}/user/relation/accept/${data.relation_user_target}`,
+        data.relation_user_request,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getRelationAccountInfo = async (relationList) => {
+    try {
+      const response = await axios.post(
+        `${BANK_CARD_URL}/api/parent/getChildInfo`,
+        relationList
+      );
+      const accountList = response.data;
+
+      const mergedList = relationList.map((relation) => {
+        const matchingAccount = accountList.find(
+          (account) => account.user_id === relation.relation_user_target
+        );
+
+        return {
+          ...relation,
+          ...matchingAccount, // account 데이터를 relation에 병합
+        };
+      });
+
+      setChildAccountList(mergedList); // 병합된 리스트를 상태에 저장
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const getAccount = async () => {
+      try {
+        const response = await axios.get(
+          `${BANK_CARD_URL}/bank/accountNum/${user.user_login_id}`
+        );
+        setAccount(response.data[0]);
+      } catch (error) {
+        console.error(error);
+      }
+      setIsLoading(false);
+    };
+    getAccount();
+  }, [user.user_login_id]);
+
+  useEffect(() => {
+    getRelationAccountInfo(relationList);
+  }, [relationList]);
+  if (isLoading) return <LoadingSkeleton />;
+
   return (
     <>
       <div className="text-xl font-bold">정보</div>
@@ -8,24 +117,35 @@ export default function Section1({ children, selected, setSelected }) {
             <div className="h-full flex flex-col justify-between">
               <div className="flex justify-between items-end">
                 <h1 className="text-2xl font-bold">
-                  손웅정님{" "}
+                  {user.user_name}님{" "}
                   <span className="text-lg text-gray-600">환영합니다</span>
                 </h1>
-                <p className="text-black border-b border-black cursor-pointer">
+                <p
+                  className="text-black border-b border-black cursor-pointer"
+                  onClick={() => {
+                    onOpen();
+                  }}
+                >
                   관계 추가하기
                 </p>
               </div>
               <div className="mt-4 text-sm text-gray-600 font-basic font-bold">
                 자녀 정보
               </div>
-              {children.map((child, index) => (
-                <ChildRow
-                  key={index}
-                  name={child.name}
-                  account={child.account}
-                  date={child.date}
-                />
-              ))}
+              {childAccountList.length === 0 ? (
+                <div>등록된 자녀가 없습니다.</div>
+              ) : (
+                childAccountList.map((data, index) => {
+                  return (
+                    <ChildRow
+                      key={index}
+                      name={data.relation_user_name}
+                      account={data.acc_num}
+                      date={data.relation_date}
+                    />
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
@@ -40,7 +160,9 @@ export default function Section1({ children, selected, setSelected }) {
               <div className="flex justify-between items-end">
                 <div className="text-xl flex items-end">
                   <div>하나만영 등록 계좌</div>
-                  <div className="ml-4 text-base font-basic">000-01-156748</div>
+                  <div className="ml-4 text-base font-basic">
+                    {account.acc_num}
+                  </div>
                 </div>
                 <div className="text-sm border-b border-white cursor-pointer">
                   이체 일자 변경
@@ -57,7 +179,7 @@ export default function Section1({ children, selected, setSelected }) {
       <div className="mt-10 text-xl font-bold">용돈 관리</div>
       <div className="mt-2 flex">
         <div className="flex gap-5">
-          {children.map((child, index) => {
+          {childAccountList.map((child, index) => {
             return (
               <div
                 className={`px-4 py-2 rounded-3xl text-xl shadow-md cursor-pointer transition-all duration-300 hover:opacity-85 ${
@@ -67,7 +189,7 @@ export default function Section1({ children, selected, setSelected }) {
                 }`}
                 onClick={() => setSelected(index)}
               >
-                {child.name}
+                {child.relation_user_name}
               </div>
             );
           })}
@@ -76,7 +198,7 @@ export default function Section1({ children, selected, setSelected }) {
       <div className="w-full h-72 mt-4 flex gap-x-4">
         <div className="w-[50%] px-4 py-5 border rounded-lg">
           <div className="text-2xl text-gray-600 font-bold">
-            {children[selected].name}님
+            {childAccountList[selected]?.relation_user_name || "정보 없음"}님
           </div>
           <div className="mt-4 text-xl flex">
             <div className="text-hana font-bold">용돈 조르기 요청 금액</div>
@@ -109,7 +231,7 @@ export default function Section1({ children, selected, setSelected }) {
               <div className="w-[20%]">금액</div>
             </div>
             <div>
-              {children[selected].pocketMoneyRecord.map((record, index) => (
+              {children[selected]?.pocketMoneyRecord.map((record, index) => (
                 <div
                   className="w-full py-1 text-center border-b font-basic flex"
                   key={index}
@@ -124,6 +246,111 @@ export default function Section1({ children, selected, setSelected }) {
           </div>
         </div>
       </div>
+
+      <Modal isOpen={isOpen} onClose={onClose} size="md" isCentered="true">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>관계 목록</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <div className="font-basic">
+              <div>
+                <p className="ml-1 font-bold">받은 관계 요청</p>
+                <div className="w-full h-32 mt-2 overflow-y-auto border rounded-xl">
+                  {relationRequestList.length !== 0 ? (
+                    <div className="w-full py-1 border-b flex text-center">
+                      <p className="w-[25%]">아이디</p>
+                      <p className="w-[25%]">이름</p>
+                      <p className="w-[25%]">일자</p>
+                      <p className="w-[25%]">수락</p>
+                    </div>
+                  ) : (
+                    <p className="w-full h-full flex justify-center items-center">
+                      받은 요청이 없습니다
+                    </p>
+                  )}
+                  {relationRequestList.map((data, index) => {
+                    return (
+                      <div className="w-full my-2 text-center flex items-center">
+                        <p className="w-[25%]">{data.relation_user_request}</p>
+                        <p className="w-[25%]">{data.relation_user_name}</p>
+                        <p className="w-[25%]">{data.relation_date}</p>
+                        <div className="w-[25%] text-white">
+                          <p
+                            className="w-[80%] py-1 mx-auto text-sm bg-blue-500 rounded-md hover:opacity-80 duration-300 cursor-pointer"
+                            onClick={() => {
+                              handleAccept(data);
+                            }}
+                          >
+                            수락
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="mt-3">
+                <p className="ml-1 font-bold">관계 등록</p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="추가하실 아이디를 입력해주세요"
+                    className="w-full h-12 mt-2 px-3 py-1 border rounded-xl"
+                    onChange={(e) => {
+                      setSearchUser(e.target.value);
+                    }}
+                  />
+                </div>
+                {searchResult === "" ? (
+                  <></>
+                ) : Object.keys(searchResult).length !== 0 ? (
+                  <>
+                    <div className="w-full mt-3 mx-auto px-4 py-1 font-basic flex justify-between items-center">
+                      <div className="w-[50%] flex gap-5">
+                        <p className="text-gray-500">아이디</p>
+                        <p className="font-bold">
+                          {searchResult.user_login_id}
+                        </p>
+                      </div>
+                      <div className="w-[50%] flex gap-5">
+                        <p className="text-gray-500">성함</p>
+                        <p className="font-bold">{searchResult.user_name}</p>
+                      </div>
+                    </div>
+                    <div className="w-full mx-auto px-4 py-1 font-basic flex justify-between items-center">
+                      <div className="w-full flex gap-5">
+                        <p className="w-[12%] text-gray-500">학교</p>
+                        <p className="font-bold">{searchResult.user_school}</p>
+                      </div>
+                    </div>
+                    <div className="w-full mx-auto px-4 py-1 font-basic flex justify-between items-center">
+                      <div className="w-full flex gap-5">
+                        <p className="w-[12%] text-gray-500">주소</p>
+                        <p className="font-bold">{searchResult.user_address}</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="mt-3 py-3 text-center text-red-500 text-sm">
+                    해당하는 아이디가 없습니다.
+                  </div>
+                )}
+                <div
+                  className="mt-4 mb-5 py-2 text-white text-xl text-center rounded-xl btn-hana-blue cursor-pointer hover:opacity-80 duration-300"
+                  onClick={() => {
+                    searchUserInfo();
+                  }}
+                >
+                  {Object.keys(searchResult).length !== 0
+                    ? "추가하기"
+                    : "검색하기"}
+                </div>
+              </div>
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

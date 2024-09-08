@@ -89,7 +89,7 @@ export default function Slide2({ categorySums, accountTransactions }) {
         </div>
         <div className="w-[60%]">
           <h2 className="text-lg text-gray-600 my-2 font-basic font-bold">
-            실제 소비한 금액 (가계부)
+            실제 거래한 금액 (가계부)
           </h2>
           <div className="w-full py-2 font-bold border-y-2 flex">
             <div className="w-[40%] text-center">카테고리</div>
@@ -99,7 +99,7 @@ export default function Slide2({ categorySums, accountTransactions }) {
           {Object.keys(sortedCategorySums).map((key, index) => {
             const plannerAmount = plannerItemsSums[key] || 0;
             const categorySum = sortedCategorySums[key];
-            const difference = categorySum - plannerAmount;
+            const difference = categorySum - -plannerAmount;
             return (
               <div
                 key={index}
@@ -114,7 +114,10 @@ export default function Slide2({ categorySums, accountTransactions }) {
                   <p>{getCategoryKor(key)}</p>
                 </div>
                 <p className="w-[35%] px-3 border-r text-right">
-                  {categorySum.toLocaleString("ko-KR")}원
+                  {categorySum === 0
+                    ? 0
+                    : (-categorySum).toLocaleString("ko-KR")}
+                  원
                 </p>
                 <p
                   className={`w-[25%] px-3 text-right ${
@@ -134,14 +137,14 @@ export default function Slide2({ categorySums, accountTransactions }) {
       <div className="w-full h-64 px-12 text-center font-basic flex items-center">
         <div className="w-[35%]">
           <p className="py-1 text-xl">
-            <span className="text-gray-600">소비 예상 금액 </span>
+            <span className="text-gray-600">예상 거래 금액 </span>
             <span className="mx-2 text-pink-400 text-3xl">
               -{planner.planner_amount.toLocaleString("ko-KR")}
             </span>
             원
           </p>
           <p className="py-1 text-xl">
-            <span className="text-gray-600">실제 소비 금액 </span>
+            <span className="text-gray-600">실제 거래 금액 </span>
             <span className="mx-2 text-orange-500 text-3xl">
               {(
                 getIncomeAmount(accountTransactions) +
@@ -166,10 +169,12 @@ export default function Slide2({ categorySums, accountTransactions }) {
 }
 
 function comment(diary, planner) {
+  diary = Math.abs(diary);
+  planner = Math.abs(planner);
   if (diary < planner * 0.8) {
-    return "소비 예상 금액보다 적게 소비했어요!";
+    return "예상 금액보다 적게 소비했어요!";
   } else if (planner * 0.8 <= diary && diary <= planner * 1.2) {
-    return "소비 예상 금액과 비슷하게 소비했어요!";
+    return "예상 금액과 비슷하게 소비했어요!";
   } else {
     return "좀 더 신중한 소비를 해보는건 어떨까요?";
   }

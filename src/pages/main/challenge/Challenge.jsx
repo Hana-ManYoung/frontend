@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BANK_CARD_URL, MAN_YOUNG_URL, SERVER_URL } from "../../../etc/url";
+import { BANK_CARD_URL, MAN_YOUNG_URL } from "../../../etc/url";
 
 import Loading from "../../common/Loading";
 import Section1 from "./sections/Section1";
@@ -19,42 +19,44 @@ export default function Challenge() {
   const [accountChallengeTransactions, setAccountChallengeTransactions] =
     useState([]);
   const [savingAccount, setSavingAccount] = useState({});
+  const [savingChallenge, setSavingChallenge] = useState({});
 
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    const getChallengeData = async () => {
-      try {
-        // 모든 요청을 Promise.all로 묶어서 동시에 실행
-        const [tempResult, challengeResult, profileResult] = await Promise.all([
-          axios.get(SERVER_URL + "challenge.json"),
-          axios.get(
-            `${MAN_YOUNG_URL}/challenge/get/total/${user.user_login_id}`
-          ),
-          axios.get(`http://localhost:8081/api/profile/${user.user_login_id}`),
-        ]);
+    if (user.user_login_id) {
+      const getChallengeData = async () => {
+        try {
+          const [challengeResult, profileResult] = await Promise.all([
+            axios.get(
+              `${MAN_YOUNG_URL}/challenge/get/total/${user.user_login_id}`
+            ),
+            axios.get(`${BANK_CARD_URL}/api/profile/${user.user_login_id}`),
+          ]);
 
-        // 데이터 설정
-        setSavingData(tempResult.data.data.saving);
-        setChallengeInfo(challengeResult.data.challengeInfo);
-        setCalendarData(challengeResult.data.calendarData);
-        setTodayChallenge(challengeResult.data.todayChallenge);
+          setChallengeInfo(challengeResult.data.challengeInfo);
+          setCalendarData(challengeResult.data.calendarData);
+          setTodayChallenge(challengeResult.data.todayChallenge);
+          setSavingAccount(profileResult.data.accountList[1]);
+          setChallengeAccount(profileResult.data.accountList[2]);
+          setAccountChallengeTransactions(
+            profileResult.data.accountChallengeTransactions
+          );
+          setSavingAccount(profileResult.data.accountList[1]);
+          setSavingChallenge(challengeResult.data.challengeSaving);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1500);
+        }
+      };
 
-        setChallengeAccount(profileResult.data.accountList[2]);
-        setAccountChallengeTransactions(
-          profileResult.data.accountChallengeTransactions
-        );
-        setSavingAccount(profileResult.data.accountList[1]);
-        console.log(profileResult.data.accountList[1]);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        // 모든 요청이 완료된 후 로딩 상태 해제
-        setIsLoading(false);
-      }
-    };
-
-    getChallengeData();
+      getChallengeData();
+    } else {
+      setIsLoading(false); // user_login_id가 없으면 로딩을 종료
+    }
   }, [user.user_login_id]);
 
   if (isLoading) return <Loading />;
@@ -65,8 +67,15 @@ export default function Challenge() {
         savingData={savingData}
         challengeAccount={challengeAccount}
         accountChallengeTransactions={accountChallengeTransactions}
+        savingChallenge={savingChallenge}
+        savingAccount={savingAccount}
       />
-      <Section2 challengeInfo={challengeInfo} todayChallenge={todayChallenge} />
+      <Section2
+        savingAccount={savingAccount}
+        challengeInfo={challengeInfo}
+        todayChallenge={todayChallenge}
+        savingChallenge={savingChallenge}
+      />
       <Section3 calendarData={calendarData} />
     </div>
   );

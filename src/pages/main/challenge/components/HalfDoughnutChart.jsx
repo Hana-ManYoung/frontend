@@ -1,9 +1,15 @@
 import { Cell, Legend, Pie, PieChart } from "recharts";
 
-export default function HalfDoughnutChart({ savingData }) {
+export default function HalfDoughnutChart({ savingChallenge, savingAccount }) {
   const data = [
-    { name: "현재 금액", value: savingData.currentMoney, color: "#9a9ef7" },
-    { name: "남은 금액", value: savingData.remainMoney, color: "#acadc6" },
+    { name: "현재 금액", value: savingAccount.acc_balance, color: "#9a9ef7" },
+    {
+      name: "남은 금액",
+      value:
+        savingChallenge.challenge_saving_target_amount -
+        savingAccount.acc_balance,
+      color: "#acadc6",
+    },
   ];
 
   return (

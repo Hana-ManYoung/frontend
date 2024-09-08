@@ -5,7 +5,7 @@ export const getCategoryKor = (category) => {
   else if (category === "CT_HOBBY") return "문화/취미";
   else if (category === "CT_EDU") return "교육/학습";
   else if (category === "CT_SHOP") return "디지털 콘텐츠/쇼핑";
-  else if (category === "CT_ETC") return "기타/예비";
+  else if (category === "CT_ETC") return "기타/예비/용돈";
   else return "카테고리";
 };
 

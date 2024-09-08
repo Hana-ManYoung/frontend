@@ -19,10 +19,9 @@ import { getKoreanNumber } from "../../../../js/getKoreanNumber";
 export default function Slide3({ plannerItems, setPlannerItems }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // 변환된 plannerItems 배열을 상태로 관리
   const [transformedItems, setTransformedItems] = useState([]);
+  const [transformedItemsForChart, setTransformedItemsForChart] = useState([]);
 
-  // plannerItems의 상태에 따라 isPlannerEmpty를 업데이트
   const [isPlannerEmpty, setIsPlannerEmpty] = useState(true);
 
   useEffect(() => {
@@ -30,19 +29,28 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
     const allZero = Object.values(plannerItems).every((value) => value === 0);
     setIsPlannerEmpty(allZero);
 
-    // plannerItems를 변환하여 transformedItems에 저장
+    // plannerItems를 변환하여 transformedItems에 저장 (음수 그대로 유지)
     const transformed = Object.entries(plannerItems).map(([key, value]) => ({
       name: key,
       value: value,
     }));
-    setTransformedItems(transformed);
+
+    // 음수 값을 0으로 변환한 배열 (차트용)
+    const transformedForChart = Object.entries(plannerItems).map(
+      ([key, value]) => ({
+        name: key,
+        value: -value < 0 ? 0 : -value, // 음수 값은 0으로
+      })
+    );
+
+    setTransformedItems(transformed); // 원래 값
+    setTransformedItemsForChart(transformedForChart); // 차트용 값
   }, [plannerItems]);
 
   // 모달 내 입력 필드를 관리하는 상태
   const [selectedCategory, setSelectedCategory] = useState("none");
   const [amount, setAmount] = useState("");
 
-  // "추가하기" 버튼 클릭 시 호출되는 함수
   const handleAddItem = () => {
     if (selectedCategory === "none" || amount === "") {
       alert("카테고리와 금액을 모두 입력해주세요.");
@@ -101,7 +109,10 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
                 <p>{getCategoryKor(item.name)}</p>
               </div>
               <div className="w-[50%] px-10 text-right">
-                {item.value.toLocaleString("ko-KR")}원
+                {item.value >= 0
+                  ? `+${item.value.toLocaleString("ko-KR")}`
+                  : item.value.toLocaleString("ko-KR")}
+                원
               </div>
             </div>
           ))}
@@ -110,7 +121,7 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
       {!isPlannerEmpty && (
         <div className="w-[70%] mx-auto my-2 flex justify-center items-center">
           <div className="w-[55%]">
-            <ConsumePieChart data={transformedItems} />
+            <ConsumePieChart data={transformedItemsForChart} />
           </div>
           <div className="w-[45%] text-xs font-basic flex flex-wrap flex-col">
             {Object.keys(transformedItems).map(
@@ -129,7 +140,11 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
                       {getCategoryKor(transformedItems[key].name)}
                     </p>
                     <p className="w-[40%] text-right">
-                      {transformedItems[key].value.toLocaleString("ko-KR")}원
+                      {transformedItems[key].value >= 0
+                        ? `+${transformedItems[key].value.toLocaleString(
+                            "ko-KR"
+                          )}`
+                        : transformedItems[key].value.toLocaleString("ko-KR")}
                     </p>
                   </div>
                 )
@@ -165,7 +180,7 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
                 <option value="CT_HOBBY">문화/취미</option>
                 <option value="CT_EDU">교육/학습</option>
                 <option value="CT_SHOP">디지털 콘텐츠/쇼핑</option>
-                <option value="CT_ETC">기타/예비</option>
+                <option value="CT_ETC">기타/예비/용돈</option>
               </select>
             </div>
             <div className="mb-4 font-basic">
@@ -183,7 +198,7 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
               </div>
             </div>
             <div
-              className="mb-3 px-4 py-3 text-center text-white rounded-lg btn-hana-green cursor-pointer"
+              className="mb-3 px-4 py-3 text-xl text-center text-white rounded-lg btn-hana-green cursor-pointer hover:opacity-80 duration-300"
               onClick={handleAddItem}
             >
               추가하기
