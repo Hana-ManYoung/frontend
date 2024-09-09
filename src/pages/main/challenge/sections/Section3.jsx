@@ -2,6 +2,7 @@ import LoadingSpinner from "../../../common/LoadingSpinner";
 import Calendar from "../components/Calendar";
 
 export default function Section3({ calendarData }) {
+  console.log(calendarData);
   if (Object.keys(calendarData).length === 0) return <LoadingSpinner />;
   const events = calendarData.map((item) => ({
     start: item.challenge_record_date,

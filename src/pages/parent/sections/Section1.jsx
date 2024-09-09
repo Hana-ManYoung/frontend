@@ -13,7 +13,6 @@ import axios from "axios";
 import LoadingSkeleton from "../../common/LoadingSkeleton";
 
 export default function Section1({
-  children,
   selected,
   setSelected,
   user,
@@ -26,6 +25,9 @@ export default function Section1({
   const [childAccountList, setChildAccountList] = useState([]);
   const [account, setAccount] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [pocketMoneyInfo, setPocketMoneyInfo] = useState([]);
+  const [pocketList, setPocketList] = useState([]);
+  const [pocketMoneyTitle, setPocketMoneyTitle] = useState("");
 
   const searchUserInfo = async () => {
     try {
@@ -39,7 +41,6 @@ export default function Section1({
         }
       );
       setSearchResult(response.data);
-      console.log(response.data);
     } catch (error) {
       setSearchResult({});
       console.error(error);
@@ -89,23 +90,78 @@ export default function Section1({
   };
 
   useEffect(() => {
-    const getAccount = async () => {
+    const getData = async () => {
       try {
-        const response = await axios.get(
-          `${BANK_CARD_URL}/bank/accountNum/${user.user_login_id}`
-        );
-        setAccount(response.data[0]);
+        // 두 개의 비동기 함수를 동시에 실행
+        const [accountResponse, pocketMoneyResponse, pocketMoneyList] =
+          await Promise.all([
+            axios.get(`${BANK_CARD_URL}/bank/accountNum/${user.user_login_id}`),
+            axios.get(
+              `${MAN_YOUNG_URL}/challenge/get/pocketParent/${user.user_login_id}`
+            ),
+            axios.get(
+              `${MAN_YOUNG_URL}/challenge/get/pocketList/${user.user_login_id}`
+            ),
+          ]);
+
+        setAccount(accountResponse.data[0]);
+        setPocketMoneyInfo(pocketMoneyResponse.data);
+        setPocketList(pocketMoneyList.data);
+
+        if (pocketMoneyResponse.data === "") {
+          setPocketMoneyInfo("");
+        }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false); // 로딩 상태를 해제
       }
-      setIsLoading(false);
     };
-    getAccount();
+
+    getData();
   }, [user.user_login_id]);
+
+  const acceptPocketMoney = async () => {
+    try {
+      await axios.post(
+        `${MAN_YOUNG_URL}/challenge/accept/pocketMoney/${user.user_login_id}`,
+        pocketMoneyTitle,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const sendPocketMoney = () => {
+    const sendPocketData = {
+      send_user: user.user_login_id,
+      receive_user: childAccountList[selected].relation_user_target,
+      send_user_name: user.user_name,
+      receive_user_name: childAccountList[selected].relation_user_name,
+      amount: pocketMoneyInfo.pocket_money_amount,
+    };
+
+    try {
+      axios.post(`${BANK_CARD_URL}/api/send/pocketMoney`, sendPocketData);
+      axios.get(
+        `${MAN_YOUNG_URL}/challenge/send/pocketMoney/${pocketMoneyInfo.pocket_money_id}`
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    window.location.reload();
+  };
 
   useEffect(() => {
     getRelationAccountInfo(relationList);
   }, [relationList]);
+
   if (isLoading) return <LoadingSkeleton />;
 
   return (
@@ -161,7 +217,7 @@ export default function Section1({
                 <div className="text-xl flex items-end">
                   <div>하나만영 등록 계좌</div>
                   <div className="ml-4 text-base font-basic">
-                    {account.acc_num}
+                    {account === undefined ? "대기중" : account.acc_num}
                   </div>
                 </div>
                 <div className="text-sm border-b border-white cursor-pointer">
@@ -170,7 +226,9 @@ export default function Section1({
               </div>
               <div>
                 <div className="text-sm">자녀 용돈 이체일</div>
-                <div className="font-basic">매월 1일 500000원</div>
+                <div className="font-basic">
+                  매월 1일 {(500000).toLocaleString("ko-KR")}원
+                </div>
               </div>
             </div>
           </div>
@@ -200,48 +258,98 @@ export default function Section1({
           <div className="text-2xl text-gray-600 font-bold">
             {childAccountList[selected]?.relation_user_name || "정보 없음"}님
           </div>
-          <div className="mt-4 text-xl flex">
-            <div className="text-hana font-bold">용돈 조르기 요청 금액</div>
-            <div className="ml-4 text-gray-600 font-basic">50,000원</div>
-          </div>
-          <div className="mt-2">
-            <div className="text-xl text-hana font-bold">챌린지 부여</div>
-            <input
-              type="text"
-              className="w-full h-14 mt-2 pl-5 text-lg border-2 rounded-2xl border-gray-400"
-              placeholder="챌린지 입력"
-            />
-          </div>
-          <div className="w-full flex gap-3">
-            <div className="w-[50%] mx-auto my-3 px-2 py-3 text-xl text-center rounded-md btn-hana-blue text-white transform hover:opacity-85 duration-300 cursor-pointer">
-              챌린지 부여하기
+          {pocketMoneyInfo ? (
+            <>
+              <div className="mt-4 text-xl flex">
+                <div className="text-hana font-bold">용돈 조르기 요청 금액</div>
+                <div className="ml-4 text-gray-600 font-basic">
+                  {pocketMoneyInfo.pocket_money_amount.toLocaleString("ko-KR")}
+                  원
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="text-xl text-hana font-bold">챌린지 부여</div>
+                <input
+                  type="text"
+                  className="w-full h-14 mt-2 pl-5 text-lg border-2 rounded-2xl border-gray-400"
+                  placeholder="챌린지 입력"
+                  value={
+                    pocketMoneyInfo.pocket_money_title === "" ||
+                    pocketMoneyInfo === null
+                      ? ""
+                      : pocketMoneyInfo.pocket_money_title
+                  }
+                  onChange={(e) => {
+                    setPocketMoneyTitle(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="w-full flex gap-3">
+                <div
+                  className={`w-[50%] mx-auto my-3 px-2 py-3 text-xl text-center rounded-md btn-hana-blue text-white transform ${
+                    pocketMoneyInfo.pocket_money_status === "PS_01"
+                      ? "opacity-60"
+                      : "hover:opacity-85 duration-300 cursor-pointer"
+                  }`}
+                  onClick={() => {
+                    acceptPocketMoney();
+                  }}
+                >
+                  {pocketMoneyInfo.pocket_money_status === "PS_01"
+                    ? pocketMoneyInfo.code_name
+                    : "챌린지 부여하기"}
+                </div>
+                <div
+                  className="w-[50%] mx-auto my-3 px-2 py-3 text-xl text-center rounded-md btn-hana-green text-white transform hover:opacity-85 duration-300 cursor-pointer"
+                  onClick={() => {
+                    sendPocketMoney();
+                  }}
+                >
+                  용돈 보내기
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="h-52 text-xl font-basic flex justify-center items-center">
+              용돈 조르기 요청이 없습니다
             </div>
-            <div className="w-[50%] mx-auto my-3 px-2 py-3 text-xl text-center rounded-md btn-hana-green text-white transform hover:opacity-85 duration-300 cursor-pointer">
-              용돈 보내기
-            </div>
-          </div>
+          )}
         </div>
         <div className="w-[50%] px-4 py-5 border rounded-lg">
           <h2 className="text-xl text-gray-500 font-bold">용돈 조르기 기록</h2>
           <div className="mt-2 px-2 py-2 h-52 border rounded-lg bg-white overflow-auto scroll-auto">
             <div className="w-full pb-2 text-center font-bold text-hana border-b flex">
-              <div className="w-[25%]">챌린지 시작</div>
-              <div className="w-[25%]">챌린지 종료</div>
-              <div className="w-[30%]">챌린지</div>
-              <div className="w-[20%]">금액</div>
+              <div className="w-[25%]">등록 일자</div>
+              <div className="w-[45%]">챌린지</div>
+              <div className="w-[30%]">금액</div>
             </div>
             <div>
-              {children[selected]?.pocketMoneyRecord.map((record, index) => (
-                <div
-                  className="w-full py-1 text-center border-b font-basic flex"
-                  key={index}
-                >
-                  <div className="w-[25%]">{record.startDate}</div>
-                  <div className="w-[25%]">{record.endDate}</div>
-                  <div className="w-[30%]">{record.challenge}</div>
-                  <div className="w-[20%]">{record.amount}원</div>
+              {pocketList.length === 0 ? (
+                <div className="h-36 font-basic font-bold flex justify-center items-center">
+                  용돈 조르기 기록이 없습니다
                 </div>
-              ))}
+              ) : (
+                <>
+                  {pocketList.map((pocket, index) => {
+                    return (
+                      <div
+                        className="w-full py-1 text-center border-b font-basic flex"
+                        key={index}
+                      >
+                        <div className="w-[25%]">
+                          {pocket.pocket_money_date}
+                        </div>
+                        <div className="w-[45%]">
+                          {pocket.pocket_money_title}
+                        </div>
+                        <div className="w-[30%]">
+                          {pocket.pocket_money_amount.toLocaleString("ko-KR")}원
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ export default function Section2({
   challengeInfo,
   todayChallenge,
   savingChallenge,
+  pocketMoneyStatus,
 }) {
   if (Object.keys(savingChallenge).length === 0)
     return <Skeleton height="375px" width="90%" className="mx-auto my-3" />;
@@ -57,15 +58,20 @@ export default function Section2({
           id={3}
         />
       </div>
-      <div className="mt-4 flex gap-5">
-        <ChallengeCard
-          data={challengeInfo[4]}
-          bg={"bg-stone-100"}
-          imgUrl={"/images/challenge/parent.png"}
-          done={alreadyDone(challengeInfo[4])}
-          id={4}
-        />
-        <div className="w-[50%]"></div>
+      <div className="mt-6">
+        <h1 className="text-lg font-bold flex items-center">
+          이런 챌린지는 어때요? 부모님과 함께해요😊
+        </h1>
+        <div className="mt-4">
+          <ChallengeCard
+            data={challengeInfo[4]}
+            bg={"bg-stone-100"}
+            imgUrl={"/images/challenge/parent.png"}
+            done={alreadyDone(challengeInfo[4])}
+            id={4}
+            pocketMoneyStatus={pocketMoneyStatus}
+          />
+        </div>
       </div>
     </div>
   );

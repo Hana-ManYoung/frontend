@@ -93,7 +93,7 @@ export default function Section3() {
       </div>
       <div className="w-[98%] mt-3 mx-auto font-basic flex gap-10">
         <div className="w-[50%] bg-white border px-7 py-5 rounded-xl">
-          <div className="flex justify-between items-end">
+          <div className="mb-2 flex justify-between items-end">
             <p>관계 목록</p>
             <p
               className="text-blue-500 text-xs cursor-pointer"
@@ -154,7 +154,7 @@ export default function Section3() {
               <input
                 type="text"
                 placeholder="추가하실 아이디를 입력해주세요"
-                className="w-full h-12 border rounded-xl px-3 py-1"
+                className="w-full h-12 border rounded-xl px-3 py-1 border-gray-400"
                 onChange={(e) => {
                   setSearchUser(e.target.value);
                 }}

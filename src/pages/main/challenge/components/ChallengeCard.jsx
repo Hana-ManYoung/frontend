@@ -22,6 +22,7 @@ export default function ChallengeCard({
   done,
   savingAccount,
   id,
+  pocketMoneyStatus,
 }) {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -90,7 +91,9 @@ export default function ChallengeCard({
       </div>
       <div className="flex items-center">
         <div className="text-xl font-bold mr-5">
-          {done && id === 2 ? (
+          {id === 4 && pocketMoneyStatus.length !== 0 ? (
+            pocketMoneyStatus[0].code_name
+          ) : done && id === 2 ? (
             "진행중"
           ) : done ? (
             "완료"

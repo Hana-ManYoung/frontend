@@ -65,8 +65,8 @@ export default function Section2() {
           </span>
         </h2>
         <a
-          href="/main/challenge"
-          className="mr-4 text-xs border-b border-black cursor-pointer"
+          href="/challenge"
+          className="mr-4 text-xs text-gray-600 border-b border-gray-600 cursor-pointer hover:opacity-80 duration-300"
         >
           가계부 / 소비계획 챌린지
         </a>

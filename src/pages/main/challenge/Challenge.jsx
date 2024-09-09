@@ -20,6 +20,7 @@ export default function Challenge() {
     useState([]);
   const [savingAccount, setSavingAccount] = useState({});
   const [savingChallenge, setSavingChallenge] = useState({});
+  const [pocketMoneyStatus, setPocketMoneyStatus] = useState([]);
 
   const user = useSelector((state) => state.user);
 
@@ -44,6 +45,7 @@ export default function Challenge() {
           );
           setSavingAccount(profileResult.data.accountList[1]);
           setSavingChallenge(challengeResult.data.challengeSaving);
+          setPocketMoneyStatus(challengeResult.data.pocketMoneyList);
         } catch (error) {
           console.error(error);
         } finally {
@@ -55,7 +57,7 @@ export default function Challenge() {
 
       getChallengeData();
     } else {
-      setIsLoading(false); // user_login_id가 없으면 로딩을 종료
+      setIsLoading(false);
     }
   }, [user.user_login_id]);
 
@@ -75,6 +77,7 @@ export default function Challenge() {
         challengeInfo={challengeInfo}
         todayChallenge={todayChallenge}
         savingChallenge={savingChallenge}
+        pocketMoneyStatus={pocketMoneyStatus}
       />
       <Section3 calendarData={calendarData} />
     </div>
