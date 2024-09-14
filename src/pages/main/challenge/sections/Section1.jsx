@@ -14,7 +14,6 @@ import HanaMoneyCard from "../../../common/HanaMoneyCard";
 import LoadingSpinner from "../../../common/LoadingSpinner";
 
 export default function Section1({
-  savingData,
   challengeAccount,
   accountChallengeTransactions,
   savingChallenge,
@@ -52,7 +51,6 @@ export default function Section1({
         <div className="w-[50%]">
           <h2 className="text-2xl font-bold">챌린지 적금</h2>
           <SavingCard
-            savingData={savingData}
             handleClick={handleClick}
             savingChallenge={savingChallenge}
             savingAccount={savingAccount}
@@ -71,7 +69,6 @@ export default function Section1({
         <ModalContent>
           {modalId === 1 ? (
             <SavingAccount
-              savingData={savingData}
               setIsSavingGiveUp={setIsSavingGiveUp}
               savingChallenge={savingChallenge}
               savingAccount={savingAccount}

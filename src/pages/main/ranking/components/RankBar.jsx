@@ -1,12 +1,13 @@
 import { FaTrophy } from "react-icons/fa";
+import { NumberCounter } from "../../../common/NumberCounter";
 
-export default function RankBar({ data, rankBarColor }) {
+export default function RankBar({ rank, rankBarColor, rankData }) {
   let barHeight;
   let trophyColor;
-  if (data.rank === 1) {
+  if (rank === 1) {
     barHeight = "h-96 ";
     trophyColor = "text-yellow-500";
-  } else if (data.rank === 2) {
+  } else if (rank === 2) {
     barHeight = "h-80 ";
     trophyColor = "text-gray-400";
   } else {
@@ -16,12 +17,15 @@ export default function RankBar({ data, rankBarColor }) {
   return (
     <div className="w-[15%]">
       <div className="flex flex-col justify-center items-center">
-        <div className="text-sm font-bold">{data.score}</div>
+        <div className="text-sm font-bold">
+          <NumberCounter max={rankData.count} delay={50} />
+        </div>
+
         <FaTrophy size="35" className={trophyColor} />
       </div>
-      <div className={"rounded-lg " + barHeight + rankBarColor}></div>
-      <div className="text-lg font-bold">{data.rank}위</div>
-      <div className="text-lg">{data.name}</div>
+      <div className={`rounded-lg  ${barHeight} ${rankBarColor}`}></div>
+      <div className="text-lg font-bold">{rank}위</div>
+      <div className="text-lg">{rankData.name}</div>
     </div>
   );
 }

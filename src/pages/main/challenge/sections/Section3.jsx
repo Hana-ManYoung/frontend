@@ -1,9 +1,7 @@
-import LoadingSpinner from "../../../common/LoadingSpinner";
+import { Skeleton } from "@chakra-ui/react";
 import Calendar from "../components/Calendar";
 
 export default function Section3({ calendarData }) {
-  console.log(calendarData);
-  if (Object.keys(calendarData).length === 0) return <LoadingSpinner />;
   const events = calendarData.map((item) => ({
     start: item.challenge_record_date,
     color: "rgb(107 114 128)",
@@ -35,6 +33,9 @@ export default function Section3({ calendarData }) {
     }
     delete event.count; // count 속성 삭제
   });
+
+  if (Object.keys(calendarData).length === 0)
+    return <Skeleton height="375px" width="90%" className="mx-auto my-3" />;
 
   return (
     <div className="mt-8 w-full flex">

@@ -31,14 +31,24 @@ export default function Section2() {
             `${MAN_YOUNG_URL}/user/getDiaryItemMax/${user.user_login_id}`
           ),
         ]);
-        console.log(bankCardResponse.data);
-        console.log(maxExpenseResponse.data);
+        // console.log(bankCardResponse.data);
+        // console.log(maxExpenseResponse.data);
+        // console.log(bankCardResponse.data.accountTotalIncome);
+        // console.log(bankCardResponse.data.accountTotalExpense);
 
         // 첫 번째 요청 결과 처리
         setAccount(bankCardResponse.data.accountList[0]);
         setAccountTransactions(bankCardResponse.data.accountTransactions);
-        setTotalIncome(bankCardResponse.data.accountTotalIncome.total);
-        setTotalExpense(bankCardResponse.data.accountTotalExpense.total);
+        if (bankCardResponse.data.accountTotalIncome === null) {
+          setTotalIncome(0);
+        } else {
+          setTotalIncome(bankCardResponse.data.accountTotalIncome.total);
+        }
+        if (bankCardResponse.data.accountTotalExpense === null) {
+          setTotalExpense(0);
+        } else {
+          setTotalExpense(bankCardResponse.data.accountTotalExpense.total);
+        }
 
         // 두 번째 요청 결과 처리
         setMaxExpense(maxExpenseResponse.data);
@@ -102,7 +112,7 @@ export default function Section2() {
                 <div className="w-[50%] px-5">
                   <h3>이번달 수입</h3>
                   <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
-                    {totalIncome.toLocaleString("ko-KR")}원
+                    {totalIncome.toLocaleString("ko-KR") + "원"}
                   </p>
                 </div>
                 <div className="w-[50%] px-5">
@@ -118,7 +128,10 @@ export default function Section2() {
             <div className="w-[50%] px-5">
               <h3>이번달 지출</h3>
               <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
-                {(-totalExpense).toLocaleString("ko-KR")}원
+                {totalExpense === 0
+                  ? totalExpense
+                  : (-totalExpense).toLocaleString("ko-KR")}
+                원
               </p>
             </div>
             <div className="w-[50%] px-5">

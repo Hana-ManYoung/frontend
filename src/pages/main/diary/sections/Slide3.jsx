@@ -109,7 +109,9 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
                 <p>{getCategoryKor(item.name)}</p>
               </div>
               <div className="w-[50%] px-10 text-right">
-                {item.value >= 0
+                {item.value === 0
+                  ? 0
+                  : item.value > 0
                   ? `+${item.value.toLocaleString("ko-KR")}`
                   : item.value.toLocaleString("ko-KR")}
                 원
@@ -140,7 +142,9 @@ export default function Slide3({ plannerItems, setPlannerItems }) {
                       {getCategoryKor(transformedItems[key].name)}
                     </p>
                     <p className="w-[40%] text-right">
-                      {transformedItems[key].value >= 0
+                      {transformedItems[key].value === 0
+                        ? 0
+                        : transformedItems[key].value > 0
                         ? `+${transformedItems[key].value.toLocaleString(
                             "ko-KR"
                           )}`

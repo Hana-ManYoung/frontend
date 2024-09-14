@@ -1,8 +1,15 @@
 import { FaSchoolFlag } from "react-icons/fa6";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import { NumberCounter } from "../../../common/NumberCounter";
 
-export default function MyRankTab({ selectedRank, myRankData }) {
+export default function MyRankTab({
+  selectedRank,
+  rankMySchool,
+  rankMyRegion,
+  rankMyAge,
+}) {
+  const title = ["우리 학교는?", "우리 지역은?", "내 나이대는?"];
   return (
     <div className="w-[full] mt-6 text-2xl font-bold">
       {
@@ -10,37 +17,36 @@ export default function MyRankTab({ selectedRank, myRankData }) {
           <div className="w-[50%] mx-auto flex justify-evenly items-end">
             <h3 className="flex">
               <FaSchoolFlag className="mr-4 text-cyan-500" size="30" />
-              {myRankData[0].title}
+              {title[selectedRank]}
             </h3>
             <p className="mr-3 text-3xl">
-              {myRankData[0].rank}위
+              <NumberCounter max={rankMySchool.count} delay={50} />점
               <span className="ml-3 text-sm text-gray-400">
-                {" "}
-                {myRankData[0].content}
+                {rankMySchool.name}
               </span>
             </p>
           </div>,
           <div className="w-[50%] mx-auto flex justify-evenly items-end">
             <h3 className="flex">
               <FaMapMarkedAlt className="mr-4 text-green-400" size="30" />
-              {myRankData[1].title}
+              {title[selectedRank]}
             </h3>
             <p className="mr-3 text-3xl">
-              {myRankData[1].rank}위
+              <NumberCounter max={rankMyRegion.count} delay={50} />점
               <span className="ml-3 text-sm text-gray-400">
-                {myRankData[1].content}
+                {rankMyRegion.name}
               </span>
             </p>
           </div>,
           <div className="w-[50%] mx-auto flex justify-evenly items-end">
             <h3 className="flex">
               <FaShoppingCart className="mr-4 text-indigo-300" size="30" />
-              {myRankData[2].title}
+              {title[selectedRank]}
             </h3>
             <p className="mr-3 text-3xl">
-              {myRankData[2].rank}위
+              <NumberCounter max={rankMyAge.count} delay={50} />점
               <span className="ml-3 text-sm text-gray-400">
-                {myRankData[2].content}
+                {rankMyAge.name}
               </span>
             </p>
           </div>,

@@ -31,6 +31,7 @@ export default function Section3() {
         );
         setRelationList(response.data.relationList);
         setRelationRequestList(response.data.relationRequestList);
+        console.log(response.data.relationRequestList);
       } catch (error) {
         console.error(error);
       }
@@ -71,6 +72,23 @@ export default function Section3() {
       window.location.reload();
     } else {
       searchUserInfo();
+    }
+  };
+
+  const handleAccept = async (index) => {
+    try {
+      await axios.post(
+        `${MAN_YOUNG_URL}/user/relation/accept/${relationRequestList[index].relation_user_target}`,
+        relationRequestList[index].relation_user_request,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -118,7 +136,7 @@ export default function Section3() {
           )}
           {relationList.map((data, index) => {
             return (
-              <div className="py-1 text-center flex">
+              <div className="py-1 text-center flex" key={index}>
                 <p className="w-[25%]">{data.relation_user_target}</p>
                 <p className="w-[25%]">{data.relation_user_name}</p>
                 <p className="w-[25%]">{data.relation_user_type_name}</p>
@@ -129,9 +147,39 @@ export default function Section3() {
         </div>
         <div className="w-[50%] bg-white border px-5 py-5 rounded-xl">
           <div>요청</div>
-          <div className="h-36 flex justify-center items-center">
-            요청이 없어요
-          </div>
+          {relationRequestList.length === 0 ? (
+            <div className="h-36 flex justify-center items-center">
+              요청이 없어요
+            </div>
+          ) : (
+            <div className="w-full h-36 overflow-y-auto">
+              <div className="w-full mt-1 py-1 text-center border-b flex">
+                <p className="w-[25%]">아이디</p>
+                <p className="w-[25%]">관계</p>
+                <p className="w-[25%]">요청일</p>
+                <p className="w-[25%]">수락</p>
+              </div>
+              {relationRequestList.map((data, index) => {
+                return (
+                  <div className="mt-1 text-center flex" key={index}>
+                    <p className="w-[25%]">{data.relation_user_target}</p>
+                    <p className="w-[25%]">{data.relation_user_type_name}</p>
+                    <p className="w-[25%]">{data.relation_date}</p>
+                    <p className="w-[25%] text-white">
+                      <span
+                        className="px-3 py-1 text-sm rounded-lg btn-hana-blue cursor-pointer hover:opacity-80 duration-300"
+                        onClick={() => {
+                          handleAccept(index);
+                        }}
+                      >
+                        추가
+                      </span>
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>

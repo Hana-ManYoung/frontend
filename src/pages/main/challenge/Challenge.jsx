@@ -7,9 +7,9 @@ import Section1 from "./sections/Section1";
 import Section2 from "./sections/Section2";
 import Section3 from "./sections/Section3";
 import { useSelector } from "react-redux";
+import { Skeleton } from "@chakra-ui/react";
 
 export default function Challenge() {
-  const [savingData, setSavingData] = useState({});
   const [challengeInfo, setChallengeInfo] = useState([]);
   const [calendarData, setCalendarData] = useState({});
   const [todayChallenge, setTodayChallenge] = useState({});
@@ -66,7 +66,6 @@ export default function Challenge() {
   return (
     <div className="w-[90%] mx-auto flex flex-col animate__animated animate__fadeIn">
       <Section1
-        savingData={savingData}
         challengeAccount={challengeAccount}
         accountChallengeTransactions={accountChallengeTransactions}
         savingChallenge={savingChallenge}

@@ -23,6 +23,8 @@ import { useEffect } from "react";
 import { getCookie } from "./js/getCookie";
 import axios from "axios";
 import { init } from "./redux/user";
+import News from "./pages/main/news/News";
+import Chat from "./pages/main/chat/Chat";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -63,8 +65,8 @@ function App() {
         <Route path="challenge" element={<Challenge />} />
         <Route path="challenge/diary" element={<Diary />} />
         <Route path="rank" element={<Ranking />} />
-        <Route path="chat" element={"채팅입니다"} />
-        <Route path="news" element={"뉴스입니다"} />
+        <Route path="chat" element={<Chat />} />
+        <Route path="news" element={<News />} />
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="/parent" element={<Parent />} />

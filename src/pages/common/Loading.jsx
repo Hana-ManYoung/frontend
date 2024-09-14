@@ -1,12 +1,28 @@
+import { useState, useEffect } from "react";
+import LoadingSpinner from "./LoadingSpinner";
+
 export default function Loading() {
-  let random = Math.floor(Math.random() * 2) + 1;
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+
+  useEffect(() => {
+    const random = Math.floor(Math.random() * 2) + 1;
+    setImageSrc(`/images/hana/loading${random}.gif`);
+  }, []);
+
   return (
     <div className="text-xl h-[calc(100vh-48px-78px)] mx-auto flex flex-col justify-center items-center animate__animated animate__pulse">
       <div>잠시만 기다려주세요</div>
+      {!isLoaded && (
+        <div className="h-44 flex items-center">
+          <LoadingSpinner />
+        </div>
+      )}
       <img
-        src={`/images/hana/loading${random}.gif`}
+        src={imageSrc}
         className="my-4 w-64"
-        alt=""
+        alt="로딩 중"
+        onLoad={() => setIsLoaded(true)}
       />
       <div className="flex">
         <div>로딩중</div>

@@ -22,7 +22,7 @@ export default function HanaMoneyPoint({ pointData }) {
       <ModalCloseButton />
       <ModalBody>
         <div className="h-96 ml-3 pr-3 overflow-y-auto">
-          {!pointData ? (
+          {pointData.length === 0 ? (
             <div className="h-96 text-lg flex justify-center items-center">
               포인트 적립 내역이 없어요
             </div>

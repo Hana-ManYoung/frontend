@@ -4,11 +4,17 @@ import RankCard from "./RankCard";
 
 export default function TopRankTab({
   selectedRank,
-  rankSchoolInfo,
-  rankRegionInfo,
-  rankCategoryInfo,
-  myRankData,
+  rankSchools,
+  rankRegions,
+  rankAges,
+  rankMySchool,
+  rankMyRegion,
 }) {
+  const getYearByAge = (age) => {
+    age = parseInt(age);
+    const currentYear = new Date().getFullYear();
+    return currentYear - age + 1 + "년생";
+  };
   return (
     <div className="mt-10">
       <h2 className="text-2xl font-bold flex items-center">
@@ -21,61 +27,64 @@ export default function TopRankTab({
               <>
                 <RankCard
                   bgColor={"bg-blue-100"}
-                  rank={rankSchoolInfo[0].rank}
-                  name={rankSchoolInfo[0].name}
-                  score={rankSchoolInfo[0].score}
+                  rank={"1위"}
+                  name={rankSchools[0].name}
+                  score={rankSchools[0].count}
                 />
                 <RankCard
                   bgColor={"bg-red-100"}
-                  rank={rankSchoolInfo[1].rank}
-                  name={rankSchoolInfo[1].name}
-                  score={rankSchoolInfo[1].score}
+                  rank={"2위"}
+                  name={rankSchools[1].name}
+                  score={rankSchools[1].count}
                 />
                 <RankCard
                   bgColor={"bg-green-100"}
-                  rank={rankSchoolInfo[2].rank}
-                  name={rankSchoolInfo[2].name}
-                  score={rankSchoolInfo[1].score}
+                  rank={"3위"}
+                  name={rankSchools[2].name}
+                  score={rankSchools[1].count}
                 />
               </>,
               <>
                 <RankCard
                   bgColor={"bg-blue-100"}
-                  rank={rankRegionInfo[0].rank}
-                  name={rankRegionInfo[0].name}
-                  score={rankRegionInfo[0].score}
+                  rank={"1위"}
+                  name={rankRegions[0].name}
+                  score={rankRegions[0].count}
                 />
                 <RankCard
                   bgColor={"bg-red-100"}
-                  rank={rankRegionInfo[1].rank}
-                  name={rankRegionInfo[1].name}
-                  score={rankRegionInfo[1].score}
+                  rank={"2위"}
+                  name={rankRegions[1].name}
+                  score={rankRegions[1].count}
                 />
                 <RankCard
                   bgColor={"bg-green-100"}
-                  rank={rankRegionInfo[2].rank}
-                  name={rankRegionInfo[2].name}
-                  score={rankRegionInfo[2].score}
+                  rank={"3위"}
+                  name={rankRegions[2].name}
+                  score={rankRegions[2].count}
                 />
               </>,
               <>
                 <RankCard
                   bgColor={"bg-blue-100"}
-                  rank={rankCategoryInfo[0].rank}
-                  name={rankCategoryInfo[0].name}
-                  score={rankCategoryInfo[0].score}
+                  rank={"1위"}
+                  name={rankAges[0].name}
+                  score={rankAges[0].count}
+                  age={getYearByAge(rankAges[0].name.replace("살", ""))}
                 />
                 <RankCard
                   bgColor={"bg-red-100"}
-                  rank={rankCategoryInfo[1].rank}
-                  name={rankCategoryInfo[1].name}
-                  score={rankCategoryInfo[1].score}
+                  rank={"2위"}
+                  name={rankAges[1].name}
+                  score={rankAges[1].count}
+                  age={getYearByAge(rankAges[1].name.replace("살", ""))}
                 />
                 <RankCard
                   bgColor={"bg-green-100"}
-                  rank={rankCategoryInfo[2].rank}
-                  name={rankCategoryInfo[2].name}
-                  score={rankCategoryInfo[2].score}
+                  rank={"3위"}
+                  name={rankAges[2].name}
+                  score={rankAges[2].count}
+                  age={getYearByAge(rankAges[2].name.replace("살", ""))}
                 />
               </>,
             ][selectedRank]
@@ -87,61 +96,64 @@ export default function TopRankTab({
               <>
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={rankSchoolInfo[3].rank}
-                  name={rankSchoolInfo[3].name}
-                  score={rankSchoolInfo[3].score}
+                  rank={"4위"}
+                  name={rankSchools[3].name}
+                  score={rankSchools[3].count}
                 />
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={rankSchoolInfo[4].rank}
-                  name={rankSchoolInfo[4].name}
-                  score={rankSchoolInfo[4].score}
+                  rank={"5위"}
+                  name={rankSchools[4].name}
+                  score={rankSchools[4].count}
                 />
                 <RankCard
                   bgColor={"bg-yellow-100"}
-                  rank={myRankData[0].rank}
-                  name={"우리 학교 (" + myRankData[0].content + ")"}
-                  score={myRankData[0].score}
+                  rank={"🏫"}
+                  name={"우리 학교 ( " + rankMySchool.name + " )"}
+                  score={rankMySchool.count}
                 />
               </>,
               <>
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={rankRegionInfo[3].rank}
-                  name={rankRegionInfo[3].name}
-                  score={rankRegionInfo[3].score}
+                  rank={"4위"}
+                  name={rankRegions[3].name}
+                  score={rankRegions[3].count}
                 />
                 <RankCard
                   bgColor={"bg-slate-200"}
-                  rank={rankRegionInfo[4].rank}
-                  name={rankRegionInfo[4].name}
-                  score={rankRegionInfo[4].score}
+                  rank={"5위"}
+                  name={rankRegions[4].name}
+                  score={rankRegions[4].count}
                 />
                 <RankCard
                   bgColor={"bg-yellow-100"}
-                  rank={myRankData[1].rank}
-                  name={"우리 지역 (" + myRankData[1].content + ")"}
-                  score={myRankData[1].score}
+                  rank={"🏠"}
+                  name={"우리 지역 ( " + rankMyRegion.name + " )"}
+                  score={rankMyRegion.count}
                 />
               </>,
               <>
                 <RankCard
-                  bgColor={"bg-slate-200"}
-                  rank={rankCategoryInfo[3].rank}
-                  name={rankCategoryInfo[3].name}
-                  score={rankCategoryInfo[3].score}
+                  bgColor={"bg-orange-200"}
+                  rank={"4위"}
+                  name={rankAges[3].name}
+                  score={rankAges[3].count}
+                  age={getYearByAge(rankAges[3].name.replace("살", ""))}
                 />
                 <RankCard
-                  bgColor={"bg-slate-200"}
-                  rank={rankCategoryInfo[4].rank}
-                  name={rankCategoryInfo[4].name}
-                  score={rankCategoryInfo[4].score}
+                  bgColor={"bg-purple-100"}
+                  rank={"5위"}
+                  name={rankAges[4].name}
+                  score={rankAges[4].count}
+                  age={getYearByAge(rankAges[4].name.replace("살", ""))}
                 />
                 <RankCard
                   bgColor={"bg-yellow-100"}
-                  rank={myRankData[2].rank}
-                  name={"나의 소비 (" + myRankData[2].content + ")"}
-                  score={myRankData[2].score}
+                  rank={"6위"}
+                  name={rankAges[5].name}
+                  score={rankAges[5].count}
+                  age={getYearByAge(rankAges[5].name.replace("살", ""))}
                 />
               </>,
             ][selectedRank]

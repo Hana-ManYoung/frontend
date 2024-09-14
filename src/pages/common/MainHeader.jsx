@@ -39,7 +39,7 @@ export default function MainHeader() {
         </div>
         <div className="w-[45%] text-xl flex gap-5">
           <MenuBtn
-            name={"가계부"}
+            name={"레포트"}
             target={"/planner"}
             currentPath={currentPath}
             onClick={handleMenuBtnClick}

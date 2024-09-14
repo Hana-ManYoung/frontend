@@ -26,7 +26,7 @@ export default function SelectTabBtn({ selectedRank, setSelectedRank }) {
         }
         onClick={() => setSelectedRank(2)}
       >
-        소비
+        나이
       </div>
     </div>
   );

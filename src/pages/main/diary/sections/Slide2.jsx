@@ -68,24 +68,31 @@ export default function Slide2({ categorySums, accountTransactions }) {
             <div className="w-[60%] text-center">카테고리</div>
             <div className="w-[40%] text-center">금액</div>
           </div>
-          {sortedPlannerItems.map((item, index) => (
-            <div
-              key={index}
-              className="w-full py-2 font-basic border-b flex animate__animated animate__fadeInDown"
-            >
-              <div className="w-[60%] px-3 border-r flex">
-                <IoMdSquare
-                  size="25"
-                  color={getCategoryBgColor(item.code_id)}
-                  className="mr-2"
-                />
-                <p>{item.code_name}</p>
+          {sortedPlannerItems.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className="w-full py-2 font-basic border-b flex animate__animated animate__fadeInDown"
+              >
+                <div className="w-[60%] px-3 border-r flex">
+                  <IoMdSquare
+                    size="25"
+                    color={getCategoryBgColor(item.code_id)}
+                    className="mr-2"
+                  />
+                  <p>{item.code_name}</p>
+                </div>
+                <div className="w-[40%] px-3 text-right">
+                  {item.planner_item_amount === 0
+                    ? 0
+                    : item.planner_item_amount > 0
+                    ? "+" + item.planner_item_amount.toLocaleString("ko-KR")
+                    : (-item.planner_item_amount).toLocaleString("ko-KR")}
+                  원
+                </div>
               </div>
-              <div className="w-[40%] px-3 text-right">
-                {item.planner_item_amount.toLocaleString("ko-KR")}원
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="w-[60%]">
           <h2 className="text-lg text-gray-600 my-2 font-basic font-bold">
@@ -99,7 +106,7 @@ export default function Slide2({ categorySums, accountTransactions }) {
           {Object.keys(sortedCategorySums).map((key, index) => {
             const plannerAmount = plannerItemsSums[key] || 0;
             const categorySum = sortedCategorySums[key];
-            const difference = categorySum - -plannerAmount;
+            const difference = categorySum - plannerAmount;
             return (
               <div
                 key={index}
@@ -121,10 +128,16 @@ export default function Slide2({ categorySums, accountTransactions }) {
                 </p>
                 <p
                   className={`w-[25%] px-3 text-right ${
-                    difference > 0 ? "text-hana" : "text-orange-500"
+                    difference === 0
+                      ? "text-black"
+                      : difference > 0
+                      ? "text-hana"
+                      : "text-orange-500"
                   }`}
                 >
-                  {difference > 0
+                  {difference === 0
+                    ? 0
+                    : difference > 0
                     ? "+ " + difference.toLocaleString("ko-KR")
                     : difference.toLocaleString("ko-KR")}
                   원
@@ -139,7 +152,7 @@ export default function Slide2({ categorySums, accountTransactions }) {
           <p className="py-1 text-xl">
             <span className="text-gray-600">예상 거래 금액 </span>
             <span className="mx-2 text-pink-400 text-3xl">
-              -{planner.planner_amount.toLocaleString("ko-KR")}
+              {planner.planner_amount.toLocaleString("ko-KR")}
             </span>
             원
           </p>
@@ -147,7 +160,7 @@ export default function Slide2({ categorySums, accountTransactions }) {
             <span className="text-gray-600">실제 거래 금액 </span>
             <span className="mx-2 text-orange-500 text-3xl">
               {(
-                getIncomeAmount(accountTransactions) +
+                -getIncomeAmount(accountTransactions) -
                 getExpenseAmount(accountTransactions)
               ).toLocaleString("ko-KR")}
             </span>
