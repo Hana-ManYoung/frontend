@@ -2,6 +2,7 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  Skeleton,
   useDisclosure,
 } from "@chakra-ui/react";
 import CheckCardInfo from "../components/CheckCardInfo";
@@ -86,7 +87,8 @@ export default function Section2({ savingData }) {
     onOpen();
   };
 
-  if (isLoading || !user || !user.user_login_id) return <LoadingSpinner />;
+  if (isLoading || !user || !user.user_login_id)
+    return <Skeleton height="375px" width="100%" className="mx-auto my-3" />;
 
   return (
     <div className="mt-8 py-6 bg-gradient-to-t from-slate-100 to-gray-200 rounded-xl shadow-md">

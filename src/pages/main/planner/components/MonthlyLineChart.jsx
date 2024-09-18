@@ -12,7 +12,7 @@ export default function MonthlyLineChart({ data }) {
   const inComeColor = "#6ebaee";
   const expenseColor = "#f49a9a";
   return (
-    <AreaChart width={700} height={300} data={data}>
+    <AreaChart width={450} height={230} data={data}>
       <defs>
         <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={inComeColor} stopOpacity={2} />
@@ -25,7 +25,10 @@ export default function MonthlyLineChart({ data }) {
       </defs>
       <XAxis dataKey="name" />
       <YAxis />
-      <Legend />
+      <Legend
+        width={500}
+        wrapperStyle={{ fontSize: "1rem", left: "-10px", bottom: "00px" }}
+      />
       <Tooltip />
       <CartesianGrid strokeDasharray="3 3" />
       <Area

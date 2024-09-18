@@ -66,8 +66,8 @@ export default function NewsCard({ news }) {
                 />
               </div>
               <p className="mt-2 text-lg leading-8">{news.news_summary}</p>
-              <div className="mt-5 text-xs">
-                <h2 className="text-sm font-bold">어려운 금융 단어</h2>
+              <div className="mt-5 text-sm">
+                <h2 className="text-base font-bold">어려운 금융 단어</h2>
                 <div className="mt-1">
                   <p className="py-1">
                     <span className="font-bold">{parsedWords1.word}: </span>

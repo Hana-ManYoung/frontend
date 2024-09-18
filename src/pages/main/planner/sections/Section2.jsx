@@ -31,10 +31,6 @@ export default function Section2() {
             `${MAN_YOUNG_URL}/user/getDiaryItemMax/${user.user_login_id}`
           ),
         ]);
-        // console.log(bankCardResponse.data);
-        // console.log(maxExpenseResponse.data);
-        // console.log(bankCardResponse.data.accountTotalIncome);
-        // console.log(bankCardResponse.data.accountTotalExpense);
 
         // 첫 번째 요청 결과 처리
         setAccount(bankCardResponse.data.accountList[0]);
@@ -63,7 +59,7 @@ export default function Section2() {
   }, [user.user_login_id]);
 
   if (isLoading)
-    return <Skeleton height="375px" width="90%" className="mx-auto my-3" />;
+    return <Skeleton height="375px" width="100%" className="mx-auto my-3" />;
 
   return (
     <div className="w-full mt-10 px-8 py-8 rounded-xl text-gray-500 bg-gradient-to-r from-blue-100 to-lime-100 shadow-md">

@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BANK_CARD_URL, MAN_YOUNG_URL } from "../../../etc/url";
-import { FiSend } from "react-icons/fi";
 import axios from "axios";
 import FriendCard from "./components/FriendCard";
-import ReceiveMessage from "./components/ReceiveMessage";
-import SendMessage from "./components/SendMessage";
 import Loading from "../../common/Loading";
 import AccountInfo from "./components/AccountInfo";
 import { RiMessage2Line } from "react-icons/ri";
@@ -19,6 +16,9 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { getKoreanNumber } from "../../../js/getKoreanNumber";
+import ChatRoom from "./components/ChatRoom";
+import useChat from "./components/useChat";
 
 export default function Chat() {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,8 +29,35 @@ export default function Chat() {
   const [challengeInfo, setChallengeInfo] = useState([]);
   const [selectFriend, setSelectFriend] = useState({});
   const [selectModal, setSelectModal] = useState(0);
+  const [chatRoomId, setChatRoomId] = useState("");
+
+  const [amount, setAmount] = useState(0);
 
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const [newMessage, setNewMessage] = useState("");
+  const [localChatRoomId, setLocalChatRoomId] = useState(null); // 로컬 상태로 chatRoomId 저장
+  const { messages, sendMessage } = useChat(localChatRoomId, setAccount);
+
+  const [challengeTodayString, setChallengeTodayString] = useState("");
+
+  useEffect(() => {
+    const getChatRoomID = async () => {
+      try {
+        const response = await axios.post(`${MAN_YOUNG_URL}/chat/getRoomId`, {
+          user_login_id: user.user_login_id,
+          friend_login_id: selectFriend.relation_user_target,
+        });
+        setChatRoomId(response.data[0].chat_room_id); // 부모 컴포넌트로 전달
+        setLocalChatRoomId(response.data[0].chat_room_id); // 로컬 상태에도 저장
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (selectFriend.relation_user_target && user.user_login_id) {
+      getChatRoomID();
+    }
+  }, [selectFriend.relation_user_target, user.user_login_id, setChatRoomId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,16 +72,21 @@ export default function Chat() {
             ),
             axios.get(`${BANK_CARD_URL}/api/profile/${user.user_login_id}`),
           ]);
-
         setRelationList(
           relationResponse.data.relationList.filter(
             (item) => item.relation_user_type === "RT_02"
           )
         );
         setAccount(bankResponse.data.accountList[0]);
-
         setChallengeToday(challengeResponse.data.todayChallenge);
         setChallengeInfo(challengeResponse.data.challengeInfo);
+
+        const temp = challengeResponse.data.todayChallenge
+          .map((challenge) => challenge.code_name) // code_name만 추출
+          .join(", "); // ,로 구분된 문자열로 변환
+        setChallengeTodayString(
+          challengeResponse.data.todayChallenge.length + ", " + temp
+        );
       } catch (error) {
         console.error(error);
       } finally {
@@ -64,6 +96,74 @@ export default function Chat() {
 
     fetchData();
   }, [user.user_login_id]);
+
+  // const fetchAccountInfo = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${BANK_CARD_URL}/api/profile/${user.user_login_id}`
+  //     );
+  //     setAccount(response.data.accountList[0]);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // 메시지 전송 함수
+  const handleSendMessage = () => {
+    if (newMessage.trim()) {
+      sendMessage({
+        chat_room_id: chatRoomId,
+        user_id: user.user_login_id,
+        chat_message_content: newMessage,
+        chat_message_type: "CMT_01",
+      });
+      setNewMessage(""); // 메시지 전송 후 입력 필드 비우기
+    }
+  };
+
+  const handleSendMoney = async () => {
+    if (amount > 0) {
+      sendMessage({
+        chat_room_id: chatRoomId,
+        user_id: user.user_login_id,
+        chat_message_content: amount,
+        chat_message_type: "CMT_02",
+      });
+      setAmount(""); // 메시지 전송 후 입력 필드 비우기
+    }
+    try {
+      await axios.post(`${BANK_CARD_URL}/bank/sendMoney`, {
+        amount: amount,
+        sendId: user.user_login_id,
+        sendName: user.user_name,
+        targetId: selectFriend.relation_user_target,
+        targetName: selectFriend.relation_user_name,
+      });
+      // await fetchAccountInfo(); // 송금 후 계좌 정보 최신화
+    } catch (error) {
+      console.error(error);
+    }
+    onClose();
+  };
+
+  const handleShareChallenge = () => {
+    if (challengeTodayString !== "") {
+      sendMessage({
+        chat_room_id: chatRoomId,
+        user_id: user.user_login_id,
+        chat_message_content: challengeTodayString,
+        chat_message_type: "CMT_03",
+      });
+    }
+    onClose();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // 엔터 입력 시 기본 submit 방지
+      handleSendMessage();
+    }
+  };
 
   if (isLoading) return <Loading />;
 
@@ -102,37 +202,21 @@ export default function Chat() {
           />
         </div>
         <div className="w-[65%]">
-          <div className="relative bg-blue-100 h-[600px] rounded-xl overflow-y-auto">
-            <div className="absolute w-full top-0 px-5 py-2 font-bold bg-slate-700 text-white text-xl rounded-xl">
+          <div className="relative bg-blue-100 h-[600px] rounded-xl">
+            <div className="absolute w-full top-0 px-5 py-2 font-bold bg-slate-700 text-white text-xl">
               {Object.keys(selectFriend).length === 0
                 ? "대화 상대를 선택해주세요"
                 : selectFriend.relation_user_name + "님"}
             </div>
-            <div className="absolute w-[97.5%] h-[465px] mx-auto left-0 right-0 top-[60px] font-basic text-base">
-              {Object.keys(selectFriend).length === 0 ? (
-                <div className="h-[465px] flex items-center justify-center">
-                  메시지가 없어요
-                </div>
-              ) : (
-                <div className="animate__animated animate__fadeIn">
-                  <ReceiveMessage />
-                  <SendMessage />
-                </div>
-              )}
-            </div>
-            <div className="absolute w-full bottom-0 font-basic">
-              <div className="relative w-[95%] mx-auto mb-2">
-                <input
-                  type="text"
-                  className="w-full h-12 border rounded-3xl text-xl px-5"
-                />
-                <div className="absolute h-12 top-0 right-1 flex items-center">
-                  <div className="p-3 rounded-full bg-blue-50 h-10">
-                    <FiSend size="20" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ChatRoom
+              selectFriend={selectFriend}
+              messages={messages}
+              user={user}
+              newMessage={newMessage}
+              setNewMessage={setNewMessage}
+              handleSendMessage={handleSendMessage}
+              handleKeyDown={handleKeyDown}
+            />
           </div>
         </div>
       </div>
@@ -149,6 +233,10 @@ export default function Chat() {
               selectModal={selectModal}
               challengeToday={challengeToday}
               challengeInfo={challengeInfo}
+              setAmount={setAmount}
+              amount={amount}
+              handleSendMoney={handleSendMoney}
+              handleShareChallenge={handleShareChallenge}
             />
           </ModalBody>
         </ModalContent>
@@ -162,6 +250,10 @@ function ModalArray({
   selectModal,
   challengeToday,
   challengeInfo,
+  setAmount,
+  amount,
+  handleSendMoney,
+  handleShareChallenge,
 }) {
   if (Object.keys(selectFriend).length === 0)
     return <div>친구를 선택해주세요</div>;
@@ -175,17 +267,23 @@ function ModalArray({
         </p>
       </div>
       <div className="mt-1 font-basic text-sm text-gray-500 flex justify-center gap-1">
-        (
+        {challengeToday.length === 0 ? "" : "("}
+
         {challengeToday.map((challenge, index) => {
           return <p key={index}>{challenge.code_name}</p>;
         })}
-        )
+        {challengeToday.length === 0 ? "" : ")"}
       </div>
       <p className="mt-4 text-center">
         <strong className="mx-1">{selectFriend.relation_user_name}</strong>님께
         오늘의 챌린지 현황을 공유할까요?
       </p>
-      <div className="my-3 py-2 btn-hana-blue text-white rounded-lg text-center hover:opacity-80 duration-300 cursor-pointer">
+      <div
+        className="my-3 py-2 btn-hana-blue text-white rounded-lg text-center hover:opacity-80 duration-300 cursor-pointer"
+        onClick={() => {
+          handleShareChallenge();
+        }}
+      >
         공유하기
       </div>
     </div>,
@@ -194,12 +292,23 @@ function ModalArray({
         <strong>{selectFriend.relation_user_name}</strong>님께 송금할 금액을
         입력해주세요
       </p>
-      <input
-        type="number"
-        className="w-full px-3 h-12 border rounded-xl text-base"
-        placeholder="금액 입력"
-      />
-      <div className="mt-4 mb-4 py-2 text-center rounded-lg btn-hana-green text-white hover:opacity-80 duration-300 cursor-pointer">
+      <div className="relative font-basic">
+        <input
+          type="number"
+          className="w-full px-3 h-12 border rounded-xl text-base"
+          placeholder="금액 입력"
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <div className="absolute top-3 right-2 text-right text-gray-400">
+          {getKoreanNumber(amount)}
+        </div>
+      </div>
+      <div
+        className="mt-4 mb-4 py-2 text-center rounded-lg btn-hana-green text-white hover:opacity-80 duration-300 cursor-pointer"
+        onClick={() => {
+          handleSendMoney();
+        }}
+      >
         송금하기
       </div>
     </div>,
