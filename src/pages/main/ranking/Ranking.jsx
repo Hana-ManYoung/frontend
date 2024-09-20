@@ -39,8 +39,11 @@ export default function Ranking() {
         setRankMyAge(result.data.rankAge[0]);
       } catch (error) {
         console.error(error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
-      setIsLoading(false);
     };
     getRank();
   }, []);

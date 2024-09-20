@@ -143,7 +143,7 @@ export default function Section1() {
 
 function MenuCard() {
   return (
-    <div className="w-[50%] h-[300px] text-center flex flex-wrap justify-center items-center gap-2">
+    <div className="w-[55%] h-[300px] text-center flex flex-wrap justify-center items-center gap-2">
       <MainCard name={"가계부"} id={1} target={"/planner"} />
       <MainCard name={"챌린지"} id={2} target={"/challenge"} />
       <MainCard name={"랭킹"} id={2} target={"/rank"} />

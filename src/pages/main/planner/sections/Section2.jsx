@@ -11,6 +11,7 @@ import {
   getCategoryKor,
 } from "../../../../js/getCategoryKor";
 import { Skeleton } from "@chakra-ui/react";
+import NumberToLocale from "../../../common/NumberToLocale";
 
 export default function Section2() {
   const [isLoading, setIsLoading] = useState(true);
@@ -108,13 +109,13 @@ export default function Section2() {
                 <div className="w-[50%] px-5">
                   <h3>이번달 수입</h3>
                   <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
-                    {totalIncome.toLocaleString("ko-KR") + "원"}
+                    <NumberToLocale max={totalIncome} delay={50} />원
                   </p>
                 </div>
                 <div className="w-[50%] px-5">
                   <h3>잔고</h3>
                   <p className="mt-2 text-2xl font-bold bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-transparent bg-clip-text flex justify-center items-center">
-                    <span>{account.acc_balance.toLocaleString("ko-KR")}원</span>
+                    <NumberToLocale max={account.acc_balance} delay={50} />원
                   </p>
                 </div>
               </>
@@ -124,9 +125,10 @@ export default function Section2() {
             <div className="w-[50%] px-5">
               <h3>이번달 지출</h3>
               <p className="mt-2 text-2xl text-gray-600 font-bold flex justify-center items-center">
-                {totalExpense === 0
-                  ? totalExpense
-                  : (-totalExpense).toLocaleString("ko-KR")}
+                <NumberToLocale
+                  max={totalExpense === 0 ? totalExpense : -totalExpense}
+                  delay={50}
+                />
                 원
               </p>
             </div>
@@ -143,8 +145,8 @@ export default function Section2() {
                   </span>
                 </div>
               </div>
-              <p className="mt-3 text-2xl text-gray-600 flex justify-center items-center">
-                {maxExpense.max.toLocaleString("ko-KR")}원
+              <p className="mt-3 text-2xl text-gray-600 flex justify-center items-center font-bold">
+                <NumberToLocale max={maxExpense.max} delay={50} />원
               </p>
             </div>
           </div>

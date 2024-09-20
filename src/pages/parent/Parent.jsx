@@ -17,6 +17,11 @@ export default function Parent() {
   const [relationList, setRelationList] = useState([]);
   const [relationRequestList, setRelationRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    console.log(selected);
+  }, [selected]);
+
   useEffect(() => {
     const getRelationInfo = async () => {
       try {

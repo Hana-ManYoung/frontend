@@ -89,6 +89,11 @@ export default function Section1({
     }
   };
 
+  const handleOpen = (num) => {
+    onOpen();
+    setSelected(num);
+  };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -179,7 +184,7 @@ export default function Section1({
                 <p
                   className="text-black border-b border-black cursor-pointer"
                   onClick={() => {
-                    onOpen();
+                    handleOpen(0);
                   }}
                 >
                   관계 추가하기
@@ -220,7 +225,12 @@ export default function Section1({
                     {account === undefined ? "대기중" : account.acc_num}
                   </div>
                 </div>
-                <div className="text-sm border-b border-white cursor-pointer">
+                <div
+                  className="text-sm border-b border-white cursor-pointer"
+                  onClick={() => {
+                    handleOpen(1);
+                  }}
+                >
                   이체 일자 변경
                 </div>
               </div>

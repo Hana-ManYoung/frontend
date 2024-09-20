@@ -22,10 +22,11 @@ export default function Planner() {
         setMonthlyChartData(result.data.data.monthlyChartData);
       } catch (error) {
         console.error(error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
     };
 
     getUseHistory();

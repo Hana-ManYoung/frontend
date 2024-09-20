@@ -9,18 +9,22 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import ConsumeChart from "../components/ConsumeChart";
+import { FaRegChartBar } from "react-icons/fa";
+import { LiaDrawPolygonSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { MAN_YOUNG_URL } from "../../../../etc/url";
 import axios from "axios";
 import { getCategoryKor } from "../../../../js/getCategoryKor";
 import { getCategoryIndex } from "../../../../js/getCategoryIndex";
+import ConsumeRadarChart from "../components/ConsumeRadarChart";
 
 export default function Section1() {
   const { onOpen, isOpen, onClose } = useDisclosure();
   const user = useSelector((state) => state.user);
   const [consumeChartData, setConsumeChartData] = useState([]);
   const [maxValue, setMaxValue] = useState(0);
+  const [option, setOption] = useState(0);
   useEffect(() => {
     const getConsumeChartData = async () => {
       try {
@@ -154,8 +158,31 @@ export default function Section1() {
               </span>
             </Tooltip>
           </div>
-          <div className="px-5 font-basic text-base bg-white flex justify-center items-center rounded-xl">
-            <ConsumeChart consumeChartData={consumeChartData} />
+          <div className="relative px-5 font-basic text-base bg-white flex justify-center items-center rounded-xl">
+            <div className="absolute top-3 right-4 z-30 flex gap-3">
+              <FaRegChartBar
+                size="25"
+                className={`hover:text-black duration-200 cursor-pointer ${
+                  option === 0 ? "text-black" : "text-gray-300"
+                }`}
+                onClick={() => setOption(0)}
+              />
+              <LiaDrawPolygonSolid
+                size="25"
+                className={`hover:text-black duration-200 cursor-pointer ${
+                  option === 1 ? "text-black" : "text-gray-300"
+                }`}
+                onClick={() => setOption(1)}
+              />
+            </div>
+            {option === 0 ? (
+              <ConsumeChart consumeChartData={consumeChartData} />
+            ) : (
+              <ConsumeRadarChart
+                consumeChartData={consumeChartData}
+                maxValue={maxValue}
+              />
+            )}
           </div>
         </div>
       </div>

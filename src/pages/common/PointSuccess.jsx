@@ -1,7 +1,7 @@
 export default function PointSuccess({ onClose }) {
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
+      <div className="h-44 flex flex-col justify-center items-center animate__animated animate__bounce">
         <img
           src={process.env.PUBLIC_URL + "/images/hana/point.gif"}
           alt=""

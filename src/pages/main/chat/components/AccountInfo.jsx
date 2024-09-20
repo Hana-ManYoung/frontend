@@ -1,4 +1,5 @@
 export default function AccountInfo({ data, setSelectModal, onOpen }) {
+  if (Object.keys(data).length === 0) data.acc_balance = 0;
   return (
     <div
       className="h-[25%] bg-gradient-to-r text-white  from-teal-600 to-emerald-600 rounded-xl px-5 py-3 font-basic"

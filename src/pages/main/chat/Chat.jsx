@@ -90,23 +90,14 @@ export default function Chat() {
       } catch (error) {
         console.error(error);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
     };
 
     fetchData();
   }, [user.user_login_id]);
-
-  // const fetchAccountInfo = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${BANK_CARD_URL}/api/profile/${user.user_login_id}`
-  //     );
-  //     setAccount(response.data.accountList[0]);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   // 메시지 전송 함수
   const handleSendMessage = () => {

@@ -144,8 +144,6 @@ export default function Diary() {
     } catch (error) {
       console.error(error);
     }
-    // console.log(plannerItems); // 소비계획에 저장
-    // console.log(categorySums); // 가계부에 저장
     onOpen();
   };
 

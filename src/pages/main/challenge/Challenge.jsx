@@ -11,7 +11,7 @@ import { Skeleton } from "@chakra-ui/react";
 
 export default function Challenge() {
   const [challengeInfo, setChallengeInfo] = useState([]);
-  const [calendarData, setCalendarData] = useState({});
+  const [calendarData, setCalendarData] = useState([]);
   const [todayChallenge, setTodayChallenge] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 

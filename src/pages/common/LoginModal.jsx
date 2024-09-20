@@ -18,9 +18,9 @@ export default function LoginModal({ isOpen, onClose }) {
         <ModalHeader>로그인</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <iframe src={LOGIN_URL} width="100%" height="330"></iframe>
+          <iframe src={LOGIN_URL} width="100%" height="330" />
           <div className="pb-5 mt-2">
-            <h2 className="ml-3 text-sm">아직 회원이 아니라면?</h2>
+            <h2 className="ml-3 text-sm font-basic">아직 회원이 아니라면?</h2>
             <button
               type="submit"
               className="w-[97%] mt-2 ml-2 py-3 text-center text-xl text-white btn-hana-blue rounded-xl cursor-pointer hover:opacity-85 transition-all duration-300 ease-in-out"

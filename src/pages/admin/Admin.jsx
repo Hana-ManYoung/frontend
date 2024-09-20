@@ -5,7 +5,7 @@ import SubHeader from "../common/SubHeader";
 import InputComponent from "./components/InputComponent";
 
 export default function Admin() {
-  const [selectedMenu, setSelectedMenu] = useState();
+  const [selectedMenu, setSelectedMenu] = useState(0);
 
   return (
     <>

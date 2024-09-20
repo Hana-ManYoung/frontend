@@ -20,8 +20,11 @@ export default function Profile() {
         setSavingData(result.data.data.saving);
       } catch (error) {
         console.error(error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
-      setIsLoading(false);
     };
     getChallenge();
   }, [user.user_login_id]);

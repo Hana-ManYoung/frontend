@@ -20,7 +20,6 @@ export default function Quiz() {
     setTimeout(() => {
       const getQuiz = async () => {
         try {
-          // const result = await axios.get(SERVER_URL + "quiz.json");
           const result = await axios.get(`${MAN_YOUNG_URL}/challenge/get/quiz`);
           setQuizData(result.data);
         } catch (error) {
@@ -31,7 +30,7 @@ export default function Quiz() {
       };
 
       getQuiz();
-    }, 3000);
+    }, 1500);
   }, []);
 
   const handleSubmit = () => {
@@ -164,15 +163,17 @@ function QuizData({ quizData, setSelected, selected, handleSubmit }) {
 function Correct({ handleAddPoint }) {
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div className="mt-4 mb-2 text-xl">정답입니다!</div>
-      <img
-        src={process.env.PUBLIC_URL + "/images/hana/correct.gif"}
-        alt=""
-        className="w-[40%]"
-      />
-      <p className="my-2 text-sm text-gray-600">내일도 도전해요!</p>
+      <div className="w-full h-56 flex flex-col justify-center items-center animate__animated animate__jackInTheBox">
+        <div className="mt-4 mb-2 text-xl">정답입니다!</div>
+        <img
+          src={process.env.PUBLIC_URL + "/images/hana/webp/correct.webp"}
+          alt=""
+          className="w-[40%]"
+        />
+        <p className="my-2 text-sm text-gray-600">내일도 도전해요!</p>
+      </div>
       <div
-        className="w-full my-4 px-2 py-3 text-lg text-center rounded-2xl bg-gradient-to-r from-indigo-200 to-fuchsia-200 transform hover:opacity-85 duration-300 cursor-pointer flex justify-center"
+        className="w-full my-4 px-2 py-3 text-lg text-center rounded-xl bg-gradient-to-r from-indigo-200 to-fuchsia-200 transform hover:opacity-85 duration-300 cursor-pointer flex justify-center"
         onClick={() => {
           handleAddPoint();
         }}
@@ -193,20 +194,22 @@ function Correct({ handleAddPoint }) {
 function Wrong({ handleRetry }) {
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div className="mt-4 mb-2 text-xl">오답입니다</div>
-      <img
-        src={process.env.PUBLIC_URL + "/images/hana/wrong.gif"}
-        alt=""
-        className="w-[35%]"
-      />
-      <p className="my-2 text-sm text-gray-600">한번 더...?</p>
+      <div className="w-full h-56 flex flex-col justify-center items-center animate__animated animate__jackInTheBox">
+        <div className="mt-4 mb-2 text-xl">오답입니다</div>
+        <img
+          src={process.env.PUBLIC_URL + "/images/hana/webp/wrong.webp"}
+          alt=""
+          className="w-[35%]"
+        />
+        <p className="my-2 text-sm text-gray-600">한번 더...?</p>
+      </div>
       <div
-        className="w-full my-4 px-2 py-3 text-lg text-center text-white rounded-2xl btn-hana-blue  transform hover:opacity-85 duration-300 cursor-pointer flex justify-center"
+        className="w-full my-4 px-2 py-3 text-lg text-center text-white rounded-xl btn-hana-blue  transform hover:opacity-85 duration-300 cursor-pointer flex justify-center"
         onClick={() => {
           handleRetry();
         }}
       >
-        <div className="flex items-center">
+        <div className="flex items-center font-bold">
           <p>다시 도전하기</p>
         </div>
       </div>

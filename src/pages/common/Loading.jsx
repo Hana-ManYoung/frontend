@@ -7,7 +7,7 @@ export default function Loading() {
 
   useEffect(() => {
     const random = Math.floor(Math.random() * 2) + 1;
-    setImageSrc(`/images/hana/loading${random}.gif`);
+    setImageSrc(`/images/hana/webp/loading${random}.webp`);
   }, []);
 
   return (

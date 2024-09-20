@@ -2,19 +2,18 @@ import { Bar, BarChart, Legend, Tooltip, XAxis, YAxis } from "recharts";
 
 export default function ConsumeChart({ consumeChartData }) {
   return (
-    <BarChart width={700} height={350} data={consumeChartData}>
+    <BarChart width={525} height={325} data={consumeChartData}>
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip
-        position={{ x: 525, y: -25 }}
+        position={{ x: 515, y: 50 }}
         wrapperStyle={{ fontSize: "0.9rem" }}
       />
       <Legend
         width={500}
-        wrapperStyle={{ fontSize: "0.8rem", left: "50px", bottom: "30px" }}
+        wrapperStyle={{ fontSize: "0.8rem", left: "47.5px", bottom: "10px" }}
         iconType="square"
       />
-      {/* <Bar dataKey="식비/간식" fill="#fce0b2" /> */}
       <Bar dataKey="미용/패션" fill="#d1a6f9" />
       <Bar dataKey="교통비" fill="#a2f59a" />
       <Bar dataKey="문화/취미" fill="#ede49a" />

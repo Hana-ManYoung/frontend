@@ -15,6 +15,7 @@ export default function PocketMoney() {
   const [modalIndex, setModalIndex] = useState(0);
   const [currentPocket, setCurrentPocket] = useState([]);
   const [pocketSuccess, setPocketSuccess] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true); // 로딩 시작
@@ -35,6 +36,8 @@ export default function PocketMoney() {
         setRelation(relationResponse.data);
         setCurrentPocket(pocketMoneyResponse.data);
         setPocketSuccess(pocketSuccessResponse.data);
+        console.log(pocketMoneyResponse.data);
+        console.log(pocketSuccessResponse.data);
         if (pocketMoneyResponse.data === "") {
           setCurrentPocket([]);
         }
@@ -163,41 +166,35 @@ export default function PocketMoney() {
           <div className="px-2">
             <h2 className="text-lg font-bold">받은 미션</h2>
             <div className="my-12 font-basic text-center">
-              {currentPocket.length === 0 && pocketSuccess.length === 0 ? (
-                <>
-                  용돈 조르기를 추가해보세요
-                  <br /> 아직 받은 미션이 없어요
-                </>
+              {pocketSuccess.length !== 0 ? (
+                <p className="text-gray-400 text-xs">
+                  {pocketSuccess[0].pocket_money_title}{" "}
+                  {pocketSuccess[0].code_name}
+                  <br />
+                  <span className="">
+                    용돈을 받았다면 포인트를 적립해주세요
+                  </span>
+                </p>
               ) : (
                 ""
               )}
               {currentPocket.length === 0 ? (
-                ""
-              ) : (
+                <>용돈 조르기를 추가해보세요!</>
+              ) : currentPocket.pocket_money_status === "PS_03" ? (
+                "아직 받은 미션이 없어요!"
+              ) : currentPocket.pocket_money_status === "PS_01" ? (
                 <>
                   <img
                     src={process.env.PUBLIC_URL + "/images/hana/monthly.gif"}
-                    className="mx-auto my-1 flex justify-center items-center"
                     alt=""
+                    className="mx-auto"
                   />
-                  <span className="text-xl text-gray-700 font-bold">
-                    {currentPocket.pocket_money_title}
-                  </span>
+                  <p className="mt-2 font-bold text-center">
+                    챌린지: {currentPocket.pocket_money_title}
+                  </p>
                 </>
-              )}
-              {pocketSuccess.length === 0 ? (
-                ""
               ) : (
-                <>
-                  <img
-                    src={process.env.PUBLIC_URL + "/images/hana/monthly.gif"}
-                    className="mx-auto my-1 flex justify-center items-center"
-                    alt=""
-                  />
-                  <span className="text-xl text-gray-700 font-bold">
-                    {pocketSuccess[0].pocket_money_title}
-                  </span>
-                </>
+                ""
               )}
             </div>
           </div>
@@ -225,7 +222,15 @@ export default function PocketMoney() {
                 alt=""
                 className="w-6 mr-2"
               />
-              <p>하나머니 챌린지 포인트 적립</p>
+              <p>
+                {currentPocket.length === 0
+                  ? "하나머니 챌린지 포인트 적립"
+                  : currentPocket.pocket_money_status === "PS_03"
+                  ? "아직 받은 미션이 없어요!"
+                  : currentPocket.pocket_money_status === "PS_01"
+                  ? "챌린지를 완료해보세요!"
+                  : ""}
+              </p>
             </div>
           </div>
         </div>
@@ -239,7 +244,7 @@ export default function PocketMoney() {
 function Success() {
   return (
     <>
-      <p className="my-3 text-center text-lg">
+      <p className="my-3 text-center text-lg font-basic">
         용돈 조르기 요청이 완료되었어요!
       </p>
       <div className="w-full flex justify-center">
