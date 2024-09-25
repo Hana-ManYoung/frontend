@@ -37,6 +37,7 @@ export default function Ranking() {
         setRankMyRegion(result.data.rankRegion[0]);
         setRankMySchool(result.data.rankSchool[0]);
         setRankMyAge(result.data.rankAge[0]);
+        console.log(result.data);
       } catch (error) {
         console.error(error);
       } finally {

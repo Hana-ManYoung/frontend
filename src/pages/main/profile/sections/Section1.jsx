@@ -2,10 +2,37 @@ import { useSelector } from "react-redux";
 import { formatDate } from "../../../../js/formatDate";
 import { formatPhoneNumber } from "../../../../js/formatPhoneNumber";
 import LoadingSkeleton from "../../../common/LoadingSkeleton";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { MAN_YOUNG_URL } from "../../../../etc/url";
+import LoadingSpinner from "../../../common/LoadingSpinner";
 
 export default function Section1() {
   const user = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalChallenge, setTotalChallenge] = useState(0);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const getTotalChallenge = async () => {
+      try {
+        const response = await axios.get(
+          `${MAN_YOUNG_URL}/challenge/get/totalChallenge/${user.user_login_id}`
+        );
+        setTotalChallenge(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getTotalChallenge();
+  }, [user.user_login_id]);
+
   if (!user.user_login_id) return <LoadingSkeleton />;
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className="mt-4 py-4 bg-gradient-to-t from-emerald-200 to-green-200 shadow-md rounded-xl">
       <div className="ml-4 flex items-center">
@@ -54,6 +81,12 @@ export default function Section1() {
           <div className="w-full flex items-center">
             <p className="w-[10%] text-sm text-gray-400">학교</p>
             <p>{user.user_school}</p>
+          </div>
+        </div>
+        <div className="py-3 border-y">
+          <div className="w-full flex items-center">
+            <p className="w-[10%] text-sm text-gray-400">챌린지 성공</p>
+            <p>{totalChallenge}회</p>
           </div>
         </div>
       </div>

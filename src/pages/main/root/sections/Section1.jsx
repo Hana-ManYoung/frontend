@@ -25,7 +25,7 @@ export default function Section1() {
       if (token) {
         try {
           const result = await axios.post(
-            "http://localhost:8080/login/cookie",
+            `${MAN_YOUNG_URL}/login/cookie`,
             token
           );
           dispatch(init(result.data));
@@ -244,9 +244,7 @@ function LoginBox({ setIsLogin }) {
       const { success, userId } = event.data;
       if (success) {
         try {
-          const result = await axios.get(
-            "http://localhost:8080/user/" + userId
-          );
+          const result = await axios.get(`${MAN_YOUNG_URL}/user/${userId}`);
           dispatch(init(result.data));
           if (result.data.user_type === "UT_02") {
             navigate("/parent");

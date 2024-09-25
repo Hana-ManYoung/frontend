@@ -65,7 +65,7 @@ export default function Diary() {
       setIsLoading(true);
       try {
         const result = await axios.get(`
-          http://localhost:8081/api/profile/${user.user_login_id}`);
+        ${BANK_CARD_URL}/api/profile/${user.user_login_id}`);
         setAccountTransactions(result.data.accountTransactions);
         setAccount(result.data.accountList[0]);
       } catch (error) {

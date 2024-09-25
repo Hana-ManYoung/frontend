@@ -13,7 +13,6 @@ export default function QuizComponent() {
       const response = await axios.get(
         `${MAN_YOUNG_URL}/challenge/get/quiz/all`
       );
-      console.log(response.data);
       setResult(response.data);
     } catch (error) {
       console.error(error);

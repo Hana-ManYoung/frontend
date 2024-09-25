@@ -25,6 +25,7 @@ import axios from "axios";
 import { init } from "./redux/user";
 import News from "./pages/main/news/News";
 import Chat from "./pages/main/chat/Chat";
+import { MAN_YOUNG_URL } from "./etc/url";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -36,7 +37,7 @@ function App() {
       if (token) {
         try {
           const result = await axios.post(
-            "http://localhost:8080/login/cookie",
+            `${MAN_YOUNG_URL}/login/cookie`,
             token
           );
           dispatch(init(result.data));

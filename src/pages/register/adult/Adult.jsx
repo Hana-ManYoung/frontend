@@ -73,8 +73,6 @@ export default function Adult() {
   };
 
   const handleRegist = () => {
-    console.log(userInfo);
-    console.log("axios 요청 및 로딩");
     swiperRef.current.slideNext();
   };
 

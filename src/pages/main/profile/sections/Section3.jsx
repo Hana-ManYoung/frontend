@@ -31,7 +31,6 @@ export default function Section3() {
         );
         setRelationList(response.data.relationList);
         setRelationRequestList(response.data.relationRequestList);
-        console.log(response.data.relationRequestList);
       } catch (error) {
         console.error(error);
       }
@@ -63,7 +62,6 @@ export default function Section3() {
 
   const handleClick = () => {
     if (Object.keys(searchResult).length !== 0) {
-      console.log("관계 추가");
       try {
         axios.post(`${MAN_YOUNG_URL}/user/relation/register`, relationInfo);
       } catch (error) {
@@ -110,8 +108,8 @@ export default function Section3() {
         <h1 className="ml-2 text-2xl text-gray-500 font-bold">관계</h1>
       </div>
       <div className="w-[98%] mt-3 mx-auto font-basic flex gap-10">
-        <div className="w-[50%] bg-white border px-7 py-5 rounded-xl">
-          <div className="mb-2 flex justify-between items-end">
+        <div className="w-[50%] bg-white border px-7 pt-3 pb-5 rounded-xl">
+          <div className="mb-3 flex justify-between items-end">
             <p>관계 목록</p>
             <p
               className="text-blue-500 text-xs cursor-pointer"
@@ -127,7 +125,7 @@ export default function Section3() {
               관계를 추가해주세요!
             </div>
           ) : (
-            <div className="mt-1 py-1 text-center border-b flex">
+            <div className="mt-1 py-1 text-center border-b bg-slate-100 flex">
               <p className="w-[25%]">아이디</p>
               <p className="w-[25%]">이름</p>
               <p className="w-[25%]">관계</p>

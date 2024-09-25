@@ -8,11 +8,7 @@ export default function ChallengeContent({ data, imgUrl, savingAccount }) {
     <>
       <ModalHeader>
         <div className="flex items-center">
-          <img
-            src={process.env.PUBLIC_URL + imgUrl}
-            alt=""
-            className="mr-2 w-5"
-          />
+          <img src={imgUrl} alt="" className="mr-2 w-5" />
           <h1 className="text-xl">{data.code_name}</h1>
         </div>
       </ModalHeader>
@@ -23,11 +19,7 @@ export default function ChallengeContent({ data, imgUrl, savingAccount }) {
     <>
       <ModalHeader>
         <div className="flex items-center">
-          <img
-            src={process.env.PUBLIC_URL + imgUrl}
-            alt=""
-            className="mr-2 w-5"
-          />
+          <img src={imgUrl} alt="" className="mr-2 w-5" />
           <h1 className="text-xl">{data.code_name}</h1>
         </div>
       </ModalHeader>
@@ -38,11 +30,7 @@ export default function ChallengeContent({ data, imgUrl, savingAccount }) {
     <>
       <ModalHeader>
         <div className="flex items-center">
-          <img
-            src={process.env.PUBLIC_URL + imgUrl}
-            alt=""
-            className="mr-2 w-5"
-          />
+          <img src={imgUrl} alt="" className="mr-2 w-5" />
           <h1 className="text-xl">{data.code_name}</h1>
         </div>
       </ModalHeader>

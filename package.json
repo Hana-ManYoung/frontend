@@ -56,6 +56,5 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.4.7"
-  },
-  "proxy": "https://e7ql6u6gvo.apigw.ntruss.com"
+  }
 }

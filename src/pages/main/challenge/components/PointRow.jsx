@@ -1,5 +1,3 @@
-import { extractTime } from "../../../../js/extractTime";
-
 export default function PointRow({ data }) {
   let amountColor = data.acc_t_amount > 0 ? "text-hana" : "text-orange-500";
   return (

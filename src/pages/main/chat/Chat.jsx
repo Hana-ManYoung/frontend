@@ -190,6 +190,7 @@ export default function Chat() {
             data={account}
             setSelectModal={setSelectModal}
             onOpen={onOpen}
+            setAccount={setAccount}
           />
         </div>
         <div className="w-[65%]">

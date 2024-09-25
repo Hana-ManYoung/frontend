@@ -36,8 +36,6 @@ export default function PocketMoney() {
         setRelation(relationResponse.data);
         setCurrentPocket(pocketMoneyResponse.data);
         setPocketSuccess(pocketSuccessResponse.data);
-        console.log(pocketMoneyResponse.data);
-        console.log(pocketSuccessResponse.data);
         if (pocketMoneyResponse.data === "") {
           setCurrentPocket([]);
         }

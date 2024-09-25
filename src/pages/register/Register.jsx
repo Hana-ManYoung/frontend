@@ -15,7 +15,7 @@ export default function Register() {
           >
             <div className="w-40">
               <img
-                src="/images/hana/children.png"
+                src={process.env.PUBLIC_URL + "/images/hana/children.png"}
                 alt="children"
                 className="w-full"
               />
@@ -32,7 +32,7 @@ export default function Register() {
           >
             <div className="w-40">
               <img
-                src="/images/hana/adult.png"
+                src={process.env.PUBLIC_URL + "/images/hana/adult.png"}
                 alt="children"
                 className="w-full"
               />

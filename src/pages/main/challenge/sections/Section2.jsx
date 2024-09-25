@@ -29,14 +29,14 @@ export default function Section2({
         <ChallengeCard
           data={challengeInfo[0]}
           bg={"bg-blue-50"}
-          imgUrl={"/images/challenge/quiz.png"}
+          imgUrl={process.env.PUBLIC_URL + "/images/challenge/quiz.png"}
           done={alreadyDone(challengeInfo[0])}
           id={0}
         />
         <ChallengeCard
           data={challengeInfo[1]}
           bg={"bg-red-50"}
-          imgUrl={"/images/challenge/plan.png"}
+          imgUrl={process.env.PUBLIC_URL + "/images/challenge/plan.png"}
           done={alreadyDone(challengeInfo[1])}
           id={1}
         />
@@ -45,7 +45,7 @@ export default function Section2({
         <ChallengeCard
           data={challengeInfo[2]}
           bg={"bg-amber-50"}
-          imgUrl={"/images/challenge/account.png"}
+          imgUrl={process.env.PUBLIC_URL + "/images/challenge/account.png"}
           done={savingChallenge.acc_num !== null}
           id={2}
           savingAccount={savingAccount}
@@ -53,7 +53,7 @@ export default function Section2({
         <ChallengeCard
           data={challengeInfo[3]}
           bg={"bg-purple-50"}
-          imgUrl={"/images/challenge/tarot.png"}
+          imgUrl={process.env.PUBLIC_URL + "/images/challenge/tarot.png"}
           done={alreadyDone(challengeInfo[3])}
           id={3}
         />
@@ -66,7 +66,7 @@ export default function Section2({
           <ChallengeCard
             data={challengeInfo[4]}
             bg={"bg-stone-100"}
-            imgUrl={"/images/challenge/parent.png"}
+            imgUrl={process.env.PUBLIC_URL + "/images/challenge/parent.png"}
             done={alreadyDone(challengeInfo[4])}
             id={4}
             pocketMoneyStatus={pocketMoneyStatus}

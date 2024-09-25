@@ -48,8 +48,7 @@ export default function SavingCard({
                 {savingChallenge.challenge_saving_monthly_amount.toLocaleString(
                   "ko-KR"
                 )}
-                원 (
-                {monthsRemaining(savingChallenge.challenge_saving_end_date) - 1}
+                원 ({monthsRemaining(savingChallenge.challenge_saving_end_date)}
                 달 남음)
               </div>
             </div>

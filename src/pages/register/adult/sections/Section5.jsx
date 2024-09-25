@@ -22,7 +22,11 @@ export default function Section5({ setAccountNumber }) {
       </div>
       <div className="mt-6">
         <div className="my-2 flex items-center">
-          <img src="/images/hana/logo.png" alt="bank_logo" className="w-8" />
+          <img
+            src={process.env.PUBLIC_URL + "/images/hana/logo.png"}
+            alt="bank_logo"
+            className="w-8"
+          />
           <p className="text-hana font-bold">하나은행</p>
         </div>
         <div className="ml-2">계좌 번호를 입력해주세요</div>

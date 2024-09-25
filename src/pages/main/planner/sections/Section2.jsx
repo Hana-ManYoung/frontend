@@ -134,7 +134,7 @@ export default function Section2() {
             </div>
             <div className="w-[50%] px-5">
               <div className="flex justify-between items-end">
-                <p>가장 많은 지출은?</p>
+                <p className="text-sm">가장 많은 지출은?</p>
                 <div className="flex justify-center">
                   <IoMdSquare
                     size="10"

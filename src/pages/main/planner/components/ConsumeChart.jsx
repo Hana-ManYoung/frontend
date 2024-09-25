@@ -2,7 +2,7 @@ import { Bar, BarChart, Legend, Tooltip, XAxis, YAxis } from "recharts";
 
 export default function ConsumeChart({ consumeChartData }) {
   return (
-    <BarChart width={525} height={325} data={consumeChartData}>
+    <BarChart width={525} height={325} data={consumeChartData} className="pt-5">
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip

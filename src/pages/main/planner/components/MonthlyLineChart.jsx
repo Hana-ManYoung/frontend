@@ -9,8 +9,8 @@ import {
 } from "recharts";
 
 export default function MonthlyLineChart({ data }) {
-  const inComeColor = "#6ebaee";
-  const expenseColor = "#f49a9a";
+  const inComeColor = "#4cb67b";
+  const expenseColor = "#fea841";
   return (
     <AreaChart width={450} height={230} data={data}>
       <defs>
@@ -32,14 +32,14 @@ export default function MonthlyLineChart({ data }) {
       <Tooltip />
       <CartesianGrid strokeDasharray="3 3" />
       <Area
-        type="monotone"
+        type="temperature"
         dataKey="지출"
         stroke={expenseColor}
         fill="url(#colorExpense)" // 그라데이션 ID를 fill에 적용
         strokeWidth={2}
       />
       <Area
-        type="monotone"
+        type="temperature"
         dataKey="수입"
         stroke={inComeColor}
         fill="url(#colorIncome)" // 그라데이션 ID를 fill에 적용

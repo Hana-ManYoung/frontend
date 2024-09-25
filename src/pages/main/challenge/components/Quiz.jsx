@@ -56,7 +56,7 @@ export default function Quiz() {
     } catch (error) {
       console.error(error);
     }
-    window.location.href = process.env.PUBLIC_URL + "/challenge";
+    window.location.reload();
   };
 
   const handleRetry = () => {
@@ -151,7 +151,7 @@ function QuizData({ quizData, setSelected, selected, handleSubmit }) {
         </div>
       </div>
       <div
-        className="mb-4 py-3 text-white text-xl text-center rounded-xl btn-hana-green cursor-pointer hover:opacity-85 transition-all duration-300"
+        className="mb-4 py-3 text-white text-xl text-center rounded-lg btn-hana-green cursor-pointer hover:opacity-85 transition-all duration-300"
         onClick={() => handleSubmit()}
       >
         제출하기

@@ -34,7 +34,7 @@ export default function Profile() {
   return (
     <div className="w-[90%] mx-auto flex flex-col animate__animated animate__fadeIn">
       <Section1 />
-      <Section2 savingData={savingData} />
+      <Section2 />
       <Section3 />
     </div>
   );

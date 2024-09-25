@@ -2,7 +2,7 @@ import { IoIosArrowForward } from "react-icons/io";
 export default function HanaAccountInfo({ account, handleClick }) {
   return (
     <div
-      class="h-20 mt-4 pl-6 pr-4 py-3 text-gray-500 font-basic bg-gradient-to-r from-green-300 to-red-200 rounded-xl cursor-pointer shadow-md shadow-gray-200 hover:opacity-80 transition-all duration-300 ease-in-out flex justify-between items-center group"
+      class="h-20 mt-4 pl-6 pr-4 py-3 text-white font-basic bg-gradient-to-r from-teal-500 to-emerald-400 rounded-xl cursor-pointer shadow-md shadow-gray-200 hover:opacity-80 transition-all duration-300 ease-in-out flex justify-between items-center group"
       onClick={() => handleClick(3)}
     >
       <div className="flex items-center">

@@ -16,10 +16,8 @@ import ConsumeRowBoxModal from "../components/ConsumeRowBoxModal";
 import CheckCardModal from "../components/CheckCardModal";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import LoadingSkeleton from "../../../common/LoadingSkeleton";
-import LoadingSpinner from "../../../common/LoadingSpinner";
 import { BANK_CARD_URL, MAN_YOUNG_URL } from "../../../../etc/url";
-export default function Section2({ savingData }) {
+export default function Section2() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalId, setModalId] = useState(0);
   const [modalSize, setModalSize] = useState("lg");

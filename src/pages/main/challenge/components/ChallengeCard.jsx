@@ -80,11 +80,7 @@ export default function ChallengeCard({
     >
       <div className="ml-2">
         <div className="flex items-center">
-          <img
-            src={process.env.PUBLIC_URL + imgUrl}
-            alt=""
-            className="mr-2 w-5"
-          />
+          <img src={imgUrl} alt="" className="mr-2 w-5" />
           <h1 className="text-xl">{data.code_name}</h1>
         </div>
         <p className="text-xs text-gray-500">{data.code_description}</p>

@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function ReceiveMessage({ message, type }) {
-  console.log(message.chat_message_time);
   let temp = "";
   if (type === "CMT_03") {
     temp = message.chat_message_content.split(", ").slice();

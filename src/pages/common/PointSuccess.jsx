@@ -12,13 +12,13 @@ export default function PointSuccess({ onClose }) {
         </div>
       </div>
       <div
-        className="text-center my-3 py-2 btn-hana-green text-white text-lg rounded-lg cursor-pointer hover:opacity-80 duration-300"
+        className="text-center my-3 py-2 btn-hana-blue text-white text-lg rounded-lg cursor-pointer hover:opacity-80 duration-300"
         onClick={() => {
           onClose();
-          window.location.href = process.env.PUBLIC_URL + "/";
+          window.location.href = process.env.PUBLIC_URL + "/challenge";
         }}
       >
-        메인으로 돌아가기
+        확인
       </div>
     </>
   );

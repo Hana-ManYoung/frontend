@@ -3,36 +3,40 @@ import { OCR_URL } from "../etc/url";
 
 let base64String = "";
 
-export const readURL = (input) => {
+export const readURL = (input, imgRef) => {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     reader.onload = function (e) {
-      document.getElementById("preview").src = e.target.result;
+      if (imgRef.current) {
+        imgRef.current.src = e.target.result; // useRef로 이미지 요소에 접근
+      }
     };
     reader.readAsDataURL(input.files[0]);
   } else {
-    document.getElementById("preview").src = "";
+    if (imgRef.current) {
+      imgRef.current.src = "";
+    }
   }
 };
-
-export const readBase64 = (input, callback) => {
+export const readBase64 = (input, callback, setIsLoading) => {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = function (e) {
       const result = e.target.result;
       base64String = result.split(",")[1];
-      handleSubmit(callback);
+      handleSubmit(callback, setIsLoading); // handleSubmit에 setIsLoading 전달
     };
     reader.onerror = function (error) {
+      setIsLoading(false); // 에러 발생 시 로딩 종료
       callback(null);
     };
     reader.readAsDataURL(input.files[0]);
   } else {
+    setIsLoading(false); // 파일 없을 경우 로딩 종료
     callback(null);
   }
 };
-
-const handleSubmit = async (callback) => {
+const handleSubmit = async (callback, setIsLoading) => {
   try {
     const response = await axios.post(
       OCR_URL,
@@ -59,6 +63,10 @@ const handleSubmit = async (callback) => {
     callback(findSchoolName(response.data.images[0].fields));
   } catch (error) {
     console.log(error);
+  } finally {
+    setTimeout(() => {
+      setIsLoading(false); // 요청 완료 후 1.5초 후에 로딩 종료
+    }, 1000);
   }
 };
 

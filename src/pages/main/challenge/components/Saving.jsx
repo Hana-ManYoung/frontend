@@ -65,7 +65,6 @@ export default function Saving({ savingAccount }) {
   ]);
 
   const handleChallengeSaving = () => {
-    console.log("챌린지 적금 시작하기");
     try {
       axios.post(`${MAN_YOUNG_URL}/challenge/register/saving`, challengeSaving);
     } catch (error) {

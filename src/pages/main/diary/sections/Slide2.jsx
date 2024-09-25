@@ -12,6 +12,7 @@ import {
   getExpenseAmount,
   getIncomeAmount,
 } from "../../../../js/getTotalAmount";
+import { MAN_YOUNG_URL } from "../../../../etc/url";
 
 export default function Slide2({ categorySums, accountTransactions }) {
   const user = useSelector((state) => state.user);
@@ -26,7 +27,7 @@ export default function Slide2({ categorySums, accountTransactions }) {
     const getPlanner = async () => {
       try {
         const result = await axios.get(
-          `http://localhost:8080/diary/getPlanner/${user.user_login_id}`
+          `${MAN_YOUNG_URL}/diary/getPlanner/${user.user_login_id}`
         );
         setPlannerItems(result.data.plannerItems);
         setPlanner(result.data.planner);

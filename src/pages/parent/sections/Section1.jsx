@@ -368,104 +368,161 @@ export default function Section1({
       <Modal isOpen={isOpen} onClose={onClose} size="md" isCentered="true">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>관계 목록</ModalHeader>
+          <ModalHeader>
+            {selected === 0 ? <>관계 목록</> : <>용돈 이체 관리</>}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <div className="font-basic">
-              <div>
-                <p className="ml-1 font-bold">받은 관계 요청</p>
-                <div className="w-full h-32 mt-2 overflow-y-auto border rounded-xl">
-                  {relationRequestList.length !== 0 ? (
-                    <div className="w-full py-1 border-b flex text-center">
-                      <p className="w-[25%]">아이디</p>
-                      <p className="w-[25%]">이름</p>
-                      <p className="w-[25%]">일자</p>
-                      <p className="w-[25%]">수락</p>
-                    </div>
-                  ) : (
-                    <p className="w-full h-full flex justify-center items-center">
-                      받은 요청이 없습니다
-                    </p>
-                  )}
-                  {relationRequestList.map((data, index) => {
-                    return (
-                      <div className="w-full my-2 text-center flex items-center">
-                        <p className="w-[25%]">{data.relation_user_request}</p>
-                        <p className="w-[25%]">{data.relation_user_name}</p>
-                        <p className="w-[25%]">{data.relation_date}</p>
-                        <div className="w-[25%] text-white">
-                          <p
-                            className="w-[80%] py-1 mx-auto text-sm bg-blue-500 rounded-md hover:opacity-80 duration-300 cursor-pointer"
-                            onClick={() => {
-                              handleAccept(data);
-                            }}
-                          >
-                            수락
-                          </p>
+            {selected === 0 ? (
+              <>
+                <div className="font-basic">
+                  <div>
+                    <p className="ml-1 font-bold">받은 관계 요청</p>
+                    <div className="w-full h-32 mt-2 overflow-y-auto border rounded-xl">
+                      {relationRequestList.length !== 0 ? (
+                        <div className="w-full py-1 border-b flex text-center">
+                          <p className="w-[25%]">아이디</p>
+                          <p className="w-[25%]">이름</p>
+                          <p className="w-[25%]">일자</p>
+                          <p className="w-[25%]">수락</p>
                         </div>
+                      ) : (
+                        <p className="w-full h-full flex justify-center items-center">
+                          받은 요청이 없습니다
+                        </p>
+                      )}
+                      {relationRequestList.map((data, index) => {
+                        return (
+                          <div className="w-full my-2 text-center flex items-center">
+                            <p className="w-[25%]">
+                              {data.relation_user_request}
+                            </p>
+                            <p className="w-[25%]">{data.relation_user_name}</p>
+                            <p className="w-[25%]">{data.relation_date}</p>
+                            <div className="w-[25%] text-white">
+                              <p
+                                className="w-[80%] py-1 mx-auto text-sm bg-blue-500 rounded-md hover:opacity-80 duration-300 cursor-pointer"
+                                onClick={() => {
+                                  handleAccept(data);
+                                }}
+                              >
+                                수락
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <p className="ml-1 font-bold">관계 등록</p>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="추가하실 아이디를 입력해주세요"
+                        className="w-full h-12 mt-2 px-3 py-1 border rounded-xl"
+                        onChange={(e) => {
+                          setSearchUser(e.target.value);
+                        }}
+                      />
+                    </div>
+                    {searchResult === "" ? (
+                      <></>
+                    ) : Object.keys(searchResult).length !== 0 ? (
+                      <>
+                        <div className="w-full mt-3 mx-auto px-4 py-1 font-basic flex justify-between items-center">
+                          <div className="w-[50%] flex gap-5">
+                            <p className="text-gray-500">아이디</p>
+                            <p className="font-bold">
+                              {searchResult.user_login_id}
+                            </p>
+                          </div>
+                          <div className="w-[50%] flex gap-5">
+                            <p className="text-gray-500">성함</p>
+                            <p className="font-bold">
+                              {searchResult.user_name}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="w-full mx-auto px-4 py-1 font-basic flex justify-between items-center">
+                          <div className="w-full flex gap-5">
+                            <p className="w-[12%] text-gray-500">학교</p>
+                            <p className="font-bold">
+                              {searchResult.user_school}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="w-full mx-auto px-4 py-1 font-basic flex justify-between items-center">
+                          <div className="w-full flex gap-5">
+                            <p className="w-[12%] text-gray-500">주소</p>
+                            <p className="font-bold">
+                              {searchResult.user_address}
+                            </p>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="mt-3 py-3 text-center text-red-500 text-sm">
+                        해당하는 아이디가 없습니다.
                       </div>
-                    );
-                  })}
+                    )}
+                    <div
+                      className="mt-4 mb-5 py-2 text-white text-xl text-center rounded-xl btn-hana-blue cursor-pointer hover:opacity-80 duration-300"
+                      onClick={() => {
+                        searchUserInfo();
+                      }}
+                    >
+                      {Object.keys(searchResult).length !== 0
+                        ? "추가하기"
+                        : "검색하기"}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-3">
-                <p className="ml-1 font-bold">관계 등록</p>
+              </>
+            ) : (
+              <>
+                <div className="py-4 mb-4 text-center text-gray-500 bg-slate-50 text-xs">
+                  용돈 이체 일자 변경 적용일은 다음달입니다.
+                </div>
+                {childAccountList.map((child, index) => {
+                  return (
+                    <p className="my-2 text-lg font-bold text-gray-600">
+                      {child.relation_user_name}님
+                    </p>
+                  );
+                })}
                 <div>
+                  <p className="ml-1">
+                    현재 이체 일자{" "}
+                    <span className="text-sm text-gray-400">1일</span>
+                  </p>
                   <input
-                    type="text"
-                    placeholder="추가하실 아이디를 입력해주세요"
-                    className="w-full h-12 mt-2 px-3 py-1 border rounded-xl"
-                    onChange={(e) => {
-                      setSearchUser(e.target.value);
-                    }}
+                    type="number"
+                    placeholder="변경일자 입력"
+                    className="border rounded-xl w-full border-gray-400 h-12 px-3 my-1"
                   />
                 </div>
-                {searchResult === "" ? (
-                  <></>
-                ) : Object.keys(searchResult).length !== 0 ? (
-                  <>
-                    <div className="w-full mt-3 mx-auto px-4 py-1 font-basic flex justify-between items-center">
-                      <div className="w-[50%] flex gap-5">
-                        <p className="text-gray-500">아이디</p>
-                        <p className="font-bold">
-                          {searchResult.user_login_id}
-                        </p>
-                      </div>
-                      <div className="w-[50%] flex gap-5">
-                        <p className="text-gray-500">성함</p>
-                        <p className="font-bold">{searchResult.user_name}</p>
-                      </div>
-                    </div>
-                    <div className="w-full mx-auto px-4 py-1 font-basic flex justify-between items-center">
-                      <div className="w-full flex gap-5">
-                        <p className="w-[12%] text-gray-500">학교</p>
-                        <p className="font-bold">{searchResult.user_school}</p>
-                      </div>
-                    </div>
-                    <div className="w-full mx-auto px-4 py-1 font-basic flex justify-between items-center">
-                      <div className="w-full flex gap-5">
-                        <p className="w-[12%] text-gray-500">주소</p>
-                        <p className="font-bold">{searchResult.user_address}</p>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="mt-3 py-3 text-center text-red-500 text-sm">
-                    해당하는 아이디가 없습니다.
-                  </div>
-                )}
-                <div
-                  className="mt-4 mb-5 py-2 text-white text-xl text-center rounded-xl btn-hana-blue cursor-pointer hover:opacity-80 duration-300"
-                  onClick={() => {
-                    searchUserInfo();
-                  }}
-                >
-                  {Object.keys(searchResult).length !== 0
-                    ? "추가하기"
-                    : "검색하기"}
+                <div className="mt-4">
+                  <p className="ml-1">
+                    현재 용돈{" "}
+                    <span className="text-sm text-gray-400">
+                      {(500000).toLocaleString("ko-KR")}원
+                    </span>
+                  </p>
+                  <input
+                    type="number"
+                    placeholder="용돈 입력"
+                    value={500000}
+                    className="border rounded-xl w-full border-gray-400 h-12 px-3 my-1"
+                  />
                 </div>
-              </div>
-            </div>
+                <div className="mt-5">
+                  <div className="py-3 mb-3 text-center btn-hana-blue text-white font-bold rounded-lg cursor-pointer hover:opacity-80 duration-300">
+                    변경하기
+                  </div>
+                </div>
+              </>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>

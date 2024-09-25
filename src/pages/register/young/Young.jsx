@@ -22,6 +22,7 @@ import SwipeButton from "./components/SwipeButton";
 import AddressFinder from "../../common/AddressFinder";
 import axios from "axios";
 import { date, month, year } from "../../../js/getDateInfo";
+import { MAN_YOUNG_URL } from "../../../etc/url";
 
 export default function Young() {
   const swiperRef = useRef(0);
@@ -72,9 +73,8 @@ export default function Young() {
   };
 
   const handleRegist = () => {
-    console.log(userInfo);
     try {
-      axios.post("http://localhost:8080/user/register/young", userInfo);
+      axios.post(`${MAN_YOUNG_URL}/user/register/young`, userInfo);
     } catch (error) {
       console.error(error);
     } finally {

@@ -19,7 +19,7 @@ export default function useChat(chatRoomId, setAccount) {
     stompClient.current.connect({}, () => {
       stompClient.current.subscribe(`/topic/${chatRoomId}`, (message) => {
         const receivedMessage = JSON.parse(message.body);
-        console.log("Received message: ", receivedMessage);
+        // console.log("Received message: ", receivedMessage);
 
         if (receivedMessage.chat_message_type === "CMT_02") {
           // 송금 메시지를 수신한 경우 받는 사람의 계좌 정보 업데이트
@@ -36,7 +36,6 @@ export default function useChat(chatRoomId, setAccount) {
           `${MAN_YOUNG_URL}/chat/getMessages/${chatRoomId}`
         );
         setMessages(response.data);
-        console.log("Fetched messages: ", response.data);
       } catch (error) {
         console.error(error);
       }
@@ -67,7 +66,7 @@ export default function useChat(chatRoomId, setAccount) {
       const response = await axios.get(
         `${BANK_CARD_URL}/api/profile/${user.user_login_id}`
       );
-      console.log("Updated receiver's account info: ", response.data);
+      // console.log("Updated receiver's account info: ", response.data);
       setAccount(response.data.accountList[0]);
       // 필요한 경우 이 정보를 다른 컴포넌트에 전달하거나 상태로 관리
     } catch (error) {

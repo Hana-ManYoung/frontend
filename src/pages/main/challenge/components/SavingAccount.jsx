@@ -7,18 +7,12 @@ export default function SavingAccount({
   savingChallenge,
   savingAccount,
 }) {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-  // const handleGiveUpClick = () => {
-  //   onClose();
-  //   setIsSavingGiveUp(true);
-  // };
-
   const handleSavePoint = () => {
     if (
       savingChallenge.challenge_saving_target_amount ===
       savingAccount.acc_balance
     ) {
-      console.log("하나머니 챌린지 포인트 적립");
+      // console.log("하나머니 챌린지 포인트 적립");
       // axios 로직 추가
     }
     // else {
@@ -77,9 +71,7 @@ export default function SavingAccount({
               <div className="w-[45%] flex justify-between items-center">
                 <p className="text-gray-400 text-sm">남은 기간</p>
                 <p className="font-bold">
-                  {monthsRemaining(savingChallenge.challenge_saving_end_date) -
-                    1}
-                  달
+                  {monthsRemaining(savingChallenge.challenge_saving_end_date)}달
                 </p>
               </div>
             </div>
